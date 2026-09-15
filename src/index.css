@@ -1,0 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Times New Roman', Times, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-bg-tertiary: var(--bg-tertiary);
+  --color-footer-bg: var(--footer-bg);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  
+  --color-border-color: var(--border-color);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-glow: var(--accent-glow);
+}
+
+:root {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --footer-bg: #e30613; /* Bold red logo color background */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --accent: #e30613; /* Bold logo red color */
+  --accent-hover: #c40510;
+  --accent-glow: rgba(227, 6, 19, 0.1);
+  color-scheme: light;
+}
+
+:root.dark {
+  --bg-primary: #080b11;
+  --bg-secondary: #0f131c;
+  --bg-tertiary: #171d2b;
+  --footer-bg: #e30613; /* Bold red logo color background */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: #1e293b;
+  --accent: #ff3b47; /* Neon red for dark mode contrast and accessibility */
+  --accent-hover: #ff5c66;
+  --accent-glow: rgba(255, 59, 71, 0.15);
+  color-scheme: dark;
+}
+
+* {
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Typography Hierarchy Styling */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Entire website font changes */
+/* navbar, h1, h2, h3, h4, h5, h6, .section-title, .section-heading, .hero-heading, .card-heading, label: Times New Roman */
+nav, 
+.navbar,
+.nav-link,
+nav a,
+nav span,
+h1, h2, h3, h4, h5, h6, 
+.section-title, 
+.section-heading, 
+.hero-heading, 
+.card-heading,
+label,
+.label {
+  font-family: 'Times New Roman', Times, serif !important;
+}
+
+/* buttons, <p>: Inter */
+button, 
+p,
+a.btn,
+.btn,
+button span,
+button p {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* small labels: Inter or JetBrains Mono */
+small,
+.small,
+.text-xs,
+.text-\[10px\],
+.text-\[11px\] {
+  font-family: 'Inter', sans-serif !important;
+}
+
+h1, .hero-heading {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2, .section-heading {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h3, h4, .card-heading {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+p, span, li, a, button, input, select, textarea {
+  letter-spacing: -0.01em;
+}
+
+/* Custom premium card animations */
+.aws-card {
+  border-radius: 24px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+  position: relative;
+}
+
+.aws-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  border-color: var(--accent);
+}
+
+.aws-card-image-container {
+  position: relative;
+  overflow: hidden;
+  height: 60%;
+  aspect-ratio: 16/10;
+}
+
+.aws-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.aws-card:hover .aws-card-image {
+  transform: scale(1.1);
+}
+
+/* Marquee infinite slider */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Custom glassmorphism classes */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.light .glass {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Premium Aurora Mesh Gradient for Hero backgrounds */
+.hero-mesh-bg {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 5% 10%, rgba(227, 6, 19, 0.12) 0px, transparent 45%),
+    radial-gradient(at 95% 15%, rgba(99, 102, 241, 0.08) 0px, transparent 45%),
+    radial-gradient(at 50% 90%, rgba(227, 6, 19, 0.07) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(244, 63, 94, 0.09) 0px, transparent 40%);
+  background-attachment: scroll;
+}
+
+.dark .hero-mesh-bg {
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 5% 10%, rgba(255, 59, 71, 0.06) 0px, transparent 40%),
+    radial-gradient(at 95% 15%, rgba(99, 102, 241, 0.04) 0px, transparent 40%),
+    radial-gradient(at 50% 90%, rgba(255, 59, 71, 0.03) 0px, transparent 50%);
+}
+
+@keyframes slow-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-slow-bounce {
+  animation: slow-bounce 4s ease-in-out infinite;
+}
+
+.animate-slow-bounce:hover {
+  animation-play-state: paused;
+}
+
+/* Dark theme overrides for Admin page */
+.dark .admin-panel {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .admin-panel aside {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+}
+
+.dark .admin-panel aside h2,
+.dark .admin-panel aside h3,
+.dark .admin-panel aside span,
+.dark .admin-panel aside strong {
+  color: var(--text-primary) !important;
+}
+
+.dark .admin-panel aside .text-slate-500,
+.dark .admin-panel aside .text-slate-600 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .admin-panel aside button {
+  border-color: var(--border-color) !important;
+}
+
+.dark .admin-panel aside button:not(.bg-accent) {
+  color: var(--text-secondary) !important;
+}
+
+.dark .admin-panel aside button:not(.bg-accent):hover {
+  background-color: var(--bg-tertiary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Card components inside admin panel */
+.dark .admin-panel .bg-white,
+.dark .admin-panel .bg-slate-50 {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.dark .admin-panel .text-slate-900,
+.dark .admin-panel .text-slate-800,
+.dark .admin-panel h3,
+.dark .admin-panel h4,
+.dark .admin-panel strong {
+  color: var(--text-primary) !important;
+}
+
+.dark .admin-panel .text-slate-600,
+.dark .admin-panel .text-slate-500,
+.dark .admin-panel p,
+.dark .admin-panel span:not(.text-accent):not(.text-green-600):not(.text-white) {
+  color: var(--text-secondary) !important;
+}
+
+.dark .admin-panel .border-slate-200,
+.dark .admin-panel .border-slate-100 {
+  border-color: var(--border-color) !important;
+}
+
+/* Forms and Inputs */
+.dark .admin-panel input,
+.dark .admin-panel select,
+.dark .admin-panel textarea {
+  background-color: var(--bg-tertiary) !important;
+  border-color: var(--border-color) !important;
+  color: #ffffff !important;
+}
+
+.dark .admin-panel input::placeholder,
+.dark .admin-panel textarea::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.6;
+}
+
+.dark .admin-panel .bg-slate-50 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+/* Modals inside Admin panel */
+.dark .admin-panel .fixed.inset-0.bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.dark .admin-panel .fixed.inset-0.bg-black\/50 .bg-white {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Creative Admin Panel Background with Grid overlay and Ambient Lights */
+.admin-panel-bg {
+  background-color: var(--bg-primary) !important;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(227, 6, 19, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
+    linear-gradient(rgba(15, 23, 42, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+  background-attachment: fixed;
+}
+
+.dark .admin-panel-bg {
+  background-color: #080b11 !important;
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(255, 59, 71, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.03) 0%, transparent 45%),
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+}
+
