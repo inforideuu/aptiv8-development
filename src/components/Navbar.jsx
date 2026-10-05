@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Navbar({ theme, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showSubMenu, setShowSubMenu] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -27,8 +28,15 @@ export default function Navbar({ theme, toggleTheme }) {
     { name: 'About Us', href: '/about' },
     { name: 'Services Offered', href: '/services' },
     { name: 'AI Products Suite', href: '/products' },
+    { 
+      name: 'AI Powered Smart Integrated Facilities Management', 
+      href: '/a8-cmms',
+      subPages: [
+        { title: 'A8 CMMS', href: '/a8-cmms', desc: 'Computerized Maintenance Management System' },
+        { title: 'A8 IOT', href: '/a8-iot', desc: 'IoT & Condition-Based Monitoring Platform' }
+      ]
+    },
     { name: 'Co-Developed Projects', href: '/projects' },
-    { name: 'Operations & Maintenance', href: '/solutions' },    
     { name: 'Case Studies', href: '/case-studies' },
     { name: 'Industries We Serve', href: '/industries' },
     { name: 'Partners Ecosystem', href: '/partners' },
@@ -130,31 +138,98 @@ export default function Navbar({ theme, toggleTheme }) {
                   animate="show"
                   className="flex flex-col gap-1.5"
                 >
-                  {navLinks.map((link) => (
-                    <motion.div
-                      key={link.name}
-                      variants={{
-                        hidden: { opacity: 0, x: 25 },
-                        show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 120, damping: 14 } }
-                      }}
-                    >
-                      <Link
-                        to={link.href}
-                        className="group flex items-center justify-between py-2.5 border-b border-border-color/30 dark:border-slate-800/40 hover:border-accent/40 transition-colors cursor-pointer"
+                  {navLinks.map((link) => {
+                    const hasSubPages = Boolean(link.subPages);
+                    return (
+                      <motion.div
+                        key={link.name}
+                        variants={{
+                          hidden: { opacity: 0, x: 25 },
+                          show: { opacity: 1, x: 0, transition: { type: 'spring', stiffness: 120, damping: 14 } }
+                        }}
+                        className="relative group/item"
+                        onMouseEnter={() => hasSubPages && setShowSubMenu(true)}
+                        onMouseLeave={() => hasSubPages && setShowSubMenu(false)}
                       >
-                        <span className={`text-lg font-bold font-display group-hover:text-accent transition-colors ${
-                          location.pathname === link.href 
-                            ? 'bg-clip-text text-transparent bg-gradient-to-r from-accent via-[#ff6a75] to-amber-500 font-extrabold drop-shadow-sm' 
-                            : 'text-text-primary dark:text-slate-100'
-                        }`}>
-                          {link.name}
-                        </span>
-                        <span className="text-xs font-semibold text-accent/0 group-hover:text-accent/100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all font-display">
-                          Explore →
-                        </span>
-                      </Link>
-                    </motion.div>
-                  ))}
+                        <div className="flex flex-col">
+                          {hasSubPages ? (
+                            <button
+                              onClick={() => setShowSubMenu(!showSubMenu)}
+                              className="group flex items-start justify-between py-2.5 border-b border-border-color/30 dark:border-slate-800/40 hover:border-accent/40 transition-colors cursor-pointer text-left w-full"
+                            >
+                              <span className={`text-base sm:text-lg font-bold font-display group-hover:text-accent transition-colors leading-snug pr-2 ${
+                                location.pathname.startsWith('/a8-') 
+                                  ? 'bg-clip-text text-transparent bg-gradient-to-r from-accent via-[#ff6a75] to-amber-500 font-extrabold drop-shadow-sm' 
+                                  : 'text-text-primary dark:text-slate-100'
+                              }`}>
+                                {link.name}
+                              </span>
+                              <ChevronDown className={`w-4 h-4 text-accent transition-transform duration-300 shrink-0 mt-1 ${showSubMenu ? 'rotate-180' : ''}`} />
+                            </button>
+                          ) : (
+                            <Link
+                              to={link.href}
+                              className="group flex items-start justify-between py-2.5 border-b border-border-color/30 dark:border-slate-800/40 hover:border-accent/40 transition-colors cursor-pointer"
+                            >
+                              <span className={`text-base sm:text-lg font-bold font-display group-hover:text-accent transition-colors leading-snug pr-2 ${
+                                location.pathname === link.href 
+                                  ? 'bg-clip-text text-transparent bg-gradient-to-r from-accent via-[#ff6a75] to-amber-500 font-extrabold drop-shadow-sm' 
+                                  : 'text-text-primary dark:text-slate-100'
+                              }`}>
+                                {link.name}
+                              </span>
+                              <span className="text-xs font-semibold text-accent/0 group-hover:text-accent/100 transform translate-x-[-10px] group-hover:translate-x-0 transition-all font-display shrink-0 mt-1">
+                                Explore →
+                              </span>
+                            </Link>
+                          )}
+
+                          {/* Hover / Click Interactive Small Window Popover for SubPages */}
+                          <AnimatePresence>
+                            {hasSubPages && showSubMenu && (
+                              <motion.div
+                                initial={{ opacity: 0, y: -8, height: 0 }}
+                                animate={{ opacity: 1, y: 0, height: 'auto' }}
+                                exit={{ opacity: 0, y: -8, height: 0 }}
+                                transition={{ duration: 0.25 }}
+                                className="mt-2 mb-2 p-3 bg-bg-primary dark:bg-slate-900 border border-border-color dark:border-accent/30 rounded-2xl shadow-xl backdrop-blur-md overflow-hidden"
+                              >
+                                <span className="text-[10px] uppercase tracking-wider text-accent font-mono font-bold block mb-2 px-1">
+                                  Select Module (2)
+                                </span>
+                                <div className="grid grid-cols-1 gap-2">
+                                  {link.subPages.map((sub) => (
+                                    <Link
+                                      key={sub.title}
+                                      to={sub.href}
+                                      onClick={() => {
+                                        setIsOpen(false);
+                                        setShowSubMenu(false);
+                                      }}
+                                      className="p-2.5 rounded-xl bg-bg-secondary dark:bg-slate-800/80 hover:bg-accent/15 dark:hover:bg-accent/20 border border-border-color dark:border-slate-700/50 hover:border-accent transition-all group/sub flex items-center justify-between"
+                                    >
+                                      <div>
+                                        <div className="text-xs font-bold text-text-primary dark:text-white group-hover/sub:text-accent font-display flex items-center gap-1.5">
+                                          <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
+                                          {sub.title}
+                                        </div>
+                                        <span className="text-[10px] text-text-secondary dark:text-slate-400 font-sans block mt-0.5">
+                                          {sub.desc}
+                                        </span>
+                                      </div>
+                                      <span className="text-xs text-accent font-bold opacity-0 group-hover/sub:opacity-100 transition-opacity">
+                                        →
+                                      </span>
+                                    </Link>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </motion.div>
               </div>
 

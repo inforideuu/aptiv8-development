@@ -52,8 +52,9 @@ export default function Footer() {
               <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
               <li><a href="/services" className="hover:text-white transition-colors">Services Offered</a></li>
               <li><a href="/projects" className="hover:text-white transition-colors">Co-Developed Projects</a></li>
-              <li><a href="/solutions" className="hover:text-white transition-colors">Solutions</a></li>
               <li><a href="/products" className="hover:text-white transition-colors">AI Products Suite</a></li>
+              <li><a href="/a8-cmms" className="hover:text-white transition-colors">A8 CMMS</a></li>
+              <li><a href="/a8-iot" className="hover:text-white transition-colors">A8 IOT Platform</a></li>
               <li><a href="/case-studies" className="hover:text-white transition-colors">Case Studies</a></li>
               <li><a href="/industries" className="hover:text-white transition-colors">Industries</a></li>
               <li><a href="/admin" className="text-red-400 hover:text-red-300 font-semibold transition-colors">Admin Console</a></li>

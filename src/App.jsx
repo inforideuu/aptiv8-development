@@ -5,8 +5,9 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
-import SolutionsPage from './pages/SolutionsPage';
 import ProductsPage from './pages/ProductsPage';
+import A8CmmsPage from './pages/A8CmmsPage';
+import A8IotPage from './pages/A8IotPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import IndustriesPage from './pages/IndustriesPage';
 import PartnersPage from './pages/PartnersPage';
@@ -97,8 +98,9 @@ function AppContent({ theme, toggleTheme }) {
         <Route path="/about" element={<Page3DReveal><AboutPage /></Page3DReveal>} />
         <Route path="/services" element={<Page3DReveal><ServicesPage /></Page3DReveal>} />
         <Route path="/projects" element={<Page3DReveal><ProjectsPage /></Page3DReveal>} />
-        <Route path="/solutions" element={<Page3DReveal><SolutionsPage /></Page3DReveal>} />
         <Route path="/products" element={<Page3DReveal><ProductsPage /></Page3DReveal>} />
+        <Route path="/a8-cmms" element={<Page3DReveal><A8CmmsPage /></Page3DReveal>} />
+        <Route path="/a8-iot" element={<Page3DReveal><A8IotPage /></Page3DReveal>} />
         <Route path="/case-studies" element={<Page3DReveal><CaseStudiesPage /></Page3DReveal>} />
         <Route path="/industries" element={<Page3DReveal><IndustriesPage /></Page3DReveal>} />
         <Route path="/partners" element={<Page3DReveal><PartnersPage /></Page3DReveal>} />
