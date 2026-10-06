@@ -113,7 +113,7 @@ export default function Navbar({ theme, toggleTheme }) {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 bottom-0 z-50 w-full sm:w-[400px] max-w-full bg-bg-secondary/98 border-l border-border-color shadow-2xl dark:bg-gradient-to-b dark:from-[#0a0d14] dark:via-[#06080d] dark:to-black dark:border-accent/35 dark:shadow-[0_0_50px_rgba(227,6,19,0.15)] p-6 sm:p-8 pt-28 pb-8 flex flex-col justify-between overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 z-50 w-full sm:w-[480px] max-w-full bg-bg-secondary/98 border-l border-border-color shadow-2xl dark:bg-gradient-to-b dark:from-[#0a0d14] dark:via-[#06080d] dark:to-black dark:border-accent/35 dark:shadow-[0_0_50px_rgba(227,6,19,0.15)] p-6 sm:p-8 pt-28 pb-8 flex flex-col justify-between overflow-y-auto"
             >
               {/* Tech grid overlay inside sidebar */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(227,6,19,0.03),transparent_50%)] pointer-events-none" />
@@ -157,7 +157,7 @@ export default function Navbar({ theme, toggleTheme }) {
                               onClick={() => setShowSubMenu(!showSubMenu)}
                               className="group flex items-start justify-between py-2.5 border-b border-border-color/30 dark:border-slate-800/40 hover:border-accent/40 transition-colors cursor-pointer text-left w-full"
                             >
-                              <span className={`text-base sm:text-lg font-bold font-display group-hover:text-accent transition-colors leading-snug pr-2 ${
+                              <span className={`text-xs sm:text-sm md:text-base font-bold font-display group-hover:text-accent transition-colors leading-snug whitespace-nowrap overflow-hidden text-ellipsis ${
                                 location.pathname.startsWith('/a8-') 
                                   ? 'bg-clip-text text-transparent bg-gradient-to-r from-accent via-[#ff6a75] to-amber-500 font-extrabold drop-shadow-sm' 
                                   : 'text-text-primary dark:text-slate-100'

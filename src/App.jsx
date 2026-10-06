@@ -12,6 +12,7 @@ import CaseStudiesPage from './pages/CaseStudiesPage';
 import IndustriesPage from './pages/IndustriesPage';
 import PartnersPage from './pages/PartnersPage';
 import ResourcesPage from './pages/ResourcesPage';
+import SmartLightingPage from './pages/SmartLightingPage';
 import ContactPage from './pages/ContactPage';
 import ServicesPage from './pages/ServicesPage';
 import ProjectsPage from './pages/ProjectsPage';
@@ -99,6 +100,7 @@ function AppContent({ theme, toggleTheme }) {
         <Route path="/services" element={<Page3DReveal><ServicesPage /></Page3DReveal>} />
         <Route path="/projects" element={<Page3DReveal><ProjectsPage /></Page3DReveal>} />
         <Route path="/products" element={<Page3DReveal><ProductsPage /></Page3DReveal>} />
+        <Route path="/smart-lighting" element={<Page3DReveal><SmartLightingPage /></Page3DReveal>} />
         <Route path="/a8-cmms" element={<Page3DReveal><A8CmmsPage /></Page3DReveal>} />
         <Route path="/a8-iot" element={<Page3DReveal><A8IotPage /></Page3DReveal>} />
         <Route path="/case-studies" element={<Page3DReveal><CaseStudiesPage /></Page3DReveal>} />

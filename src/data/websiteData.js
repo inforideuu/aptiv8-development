@@ -127,6 +127,7 @@ export const lifecycleStages = [
       { name: 'Gen AI Assistant for Data Centre Design (Akira)', media: 'video' },
       { name: 'Gen AI Chatbot and Assistant for Regulatory and Codes Compliance', media: 'video' },
       { name: 'Gen AI Mentor for Fire Safety and Protection', media: 'slides', note: '(Seeking Partner)' },
+      { name: 'Structural Engineering Smart Advisor (SESA)', media: 'slides', note: '(SESA • CORENET X)' },
       { name: 'Gen AI Mentor for Professional Engineers, Geotechnical Engineers and Accredited Checkers', media: 'slides' }
     ],
     image: svgs.planning,

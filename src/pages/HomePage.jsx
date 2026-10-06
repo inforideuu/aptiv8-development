@@ -96,6 +96,7 @@ export default function HomePage({ theme }) {
 
   // Section 3: Horizontal Timeline State
   const [activeStage, setActiveStage] = useState(lifecycleStages[0].id);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [tiltX, setTiltX] = useState(0);
   const [tiltY, setTiltY] = useState(0);
 
@@ -227,7 +228,7 @@ export default function HomePage({ theme }) {
             transition={{ duration: 0.8, delay: 0.45 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <a href="/solutions" className="group relative w-full sm:w-auto px-8 py-4 bg-accent text-white rounded-full font-semibold transition-all duration-500 ease-out text-center flex items-center justify-center gap-3 overflow-hidden shadow-[0_8px_30px_rgba(239,68,68,0.18)] hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_16px_45px_rgba(239,68,68,0.32)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:-translate-x-full before:skew-x-[-20deg] before:transition-transform before:duration-700 hover:before:translate-x-full">
+            <a href="/products" className="group relative w-full sm:w-auto px-8 py-4 bg-accent text-white rounded-full font-semibold transition-all duration-500 ease-out text-center flex items-center justify-center gap-3 overflow-hidden shadow-[0_8px_30px_rgba(239,68,68,0.18)] hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_16px_45px_rgba(239,68,68,0.32)] before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:-translate-x-full before:skew-x-[-20deg] before:transition-transform before:duration-700 hover:before:translate-x-full">
               <span className="relative z-10">Explore Solutions</span>
               <ArrowRight className="relative z-10 h-5 w-5 transition-transform duration-500 group-hover:translate-x-1.5 group-hover:-rotate-6" />
             </a>
@@ -651,8 +652,8 @@ transition-all duration-500"> */}
                     title: 'Smart Lighting',
                     subtitle: '',
                     description: 'Intelligent lighting control for energy efficiency, comfort and sustainable buildings.',
-                    href: 'https://uniqix-website.zenelaitproject.workers.dev/#products',
-                    isExternal: true,
+                    href: '/smart-lighting',
+                    isExternal: false,
                     icon: (
                       <svg className="w-6 h-6 text-[#e30613] transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
@@ -909,33 +910,234 @@ transition-all duration-500"> */}
                             <Layers className="h-4.5 w-4.5 text-accent animate-pulse" /> Installed Products & Engine Integrations
                           </h4>
                           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                            {stage.products.map((prod, i) => (
-                              <li key={i} className="flex items-start gap-3 text-xs md:text-sm text-text-secondary hover:text-text-primary transition-colors">
-                                <CheckCircle2 className="h-4 w-4 text-accent shrink-0 mt-0.5" />
-                                <div className="flex flex-wrap items-center gap-1.5">
-                                  <span className="font-medium text-text-primary">{prod.name}</span>
-                                  {prod.media && (
-                                    <span className="text-[9px] px-2 py-0.5 rounded-full font-mono font-bold uppercase tracking-wider shrink-0 bg-accent/10 text-accent border border-accent/20">
-                                      {prod.media === 'video' ? '• Video' : '• Slide(s)'}
-                                    </span>
-                                  )}
-                                  {prod.note && (
-                                    <span className="text-[9px] px-2 py-0.5 rounded-full font-mono font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
-                                      {prod.note}
-                                    </span>
-                                  )}
-                                </div>
-                              </li>
-                            ))}
+                            {stage.products.map((prod, i) => {
+                              const isFireSafety = prod.name.includes('Fire Safety');
+                              const isSesa = prod.name.includes('Structural Engineering') || prod.name.includes('SESA');
+                              const isInteractive = isFireSafety || isSesa;
+                              const isSelected = selectedProduct === prod.name;
+
+                              return (
+                                <li key={i} className="flex items-start gap-3 text-xs md:text-sm text-text-secondary transition-colors">
+                                  <CheckCircle2 className={`h-4 w-4 shrink-0 mt-0.5 ${isSelected ? 'text-red-500' : 'text-accent'}`} />
+                                  <div className="flex flex-wrap items-center gap-1.5">
+                                    {isInteractive ? (
+                                      <button
+                                        onClick={() => setSelectedProduct(isSelected ? null : prod.name)}
+                                        className={`font-semibold text-left transition-all px-2 py-1 rounded-lg border group/btn flex items-center gap-1.5 cursor-pointer ${
+                                          isSelected
+                                            ? 'bg-red-500/15 text-red-500 border-red-500/40 shadow-sm'
+                                            : 'bg-accent/5 hover:bg-accent/15 text-text-primary border-accent/20 hover:border-accent'
+                                        }`}
+                                      >
+                                        <span>{prod.name}</span>
+                                        <span className="text-[9px] px-1.5 py-0.5 rounded bg-red-500 text-white font-mono font-bold uppercase tracking-wider animate-pulse">
+                                          {isFireSafety ? 'Click to View FSSA' : 'Click to View SESA'}
+                                        </span>
+                                      </button>
+                                    ) : (
+                                      <span className="font-medium text-text-primary">{prod.name}</span>
+                                    )}
+                                    {prod.media && !isInteractive && (
+                                      <span className="text-[9px] px-2 py-0.5 rounded-full font-mono font-bold uppercase tracking-wider shrink-0 bg-accent/10 text-accent border border-accent/20">
+                                        {prod.media === 'video' ? '• Video' : '• Slide(s)'}
+                                      </span>
+                                    )}
+                                    {prod.note && !isInteractive && (
+                                      <span className="text-[9px] px-2 py-0.5 rounded-full font-mono font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                                        {prod.note}
+                                      </span>
+                                    )}
+                                  </div>
+                                </li>
+                              );
+                            })}
                           </ul>
+                          {stage.id === 'planning-design' && (
+                            <div className="mt-4 p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-between text-xs text-red-500 font-medium">
+                              <span className="flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 animate-spin text-red-500 shrink-0" />
+                                💡 <strong>Interactive Hint:</strong> Click <u>"Fire Safety (FSSA)"</u> or <u>"Structural Engineering (SESA)"</u> to view detailed AI breakdowns on the right panel.
+                              </span>
+                              {selectedProduct && (
+                                <button 
+                                  onClick={() => setSelectedProduct(null)}
+                                  className="text-[10px] underline hover:text-red-400 shrink-0 ml-2 font-mono font-bold"
+                                >
+                                  Reset View
+                                </button>
+                              )}
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
 
-                    {/* Right large image */}
-                    <div className="rounded-[24px] overflow-hidden border border-border-color aspect-[16/10] relative shadow-lg">
-                      <img src={stage.image} alt={stage.name} className="w-full h-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/20 to-transparent" />
+                    {/* Right side panel: Switches between Default Stage Image and Interactive Cards (FSSA / SESA) */}
+                    <div className="rounded-[28px] overflow-hidden border border-border-color min-h-[420px] relative shadow-2xl bg-bg-secondary flex flex-col justify-between p-6 sm:p-8">
+                      {selectedProduct && stage.id === 'planning-design' ? (
+                        <motion.div
+                          key={selectedProduct}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3 }}
+                          className="h-full flex flex-col justify-between space-y-6"
+                        >
+                          {selectedProduct.includes('Structural Engineering') || selectedProduct.includes('SESA') ? (
+                            /* SESA — Structural Engineering Smart Advisor Content */
+                            <>
+                              <div>
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 text-[10px] font-mono font-bold uppercase tracking-wider">
+                                    GEN AI PROJECT 03 • CORENET X
+                                  </span>
+                                  <button 
+                                    onClick={() => setSelectedProduct(null)}
+                                    className="text-xs text-text-secondary hover:text-accent font-mono"
+                                  >
+                                    ✕ Close Details
+                                  </button>
+                                </div>
+                                <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary font-display tracking-tight">
+                                  SESA — <span className="text-red-500">Structural Engineering Smart Advisor</span>
+                                </h3>
+                                <p className="text-xs sm:text-sm text-text-secondary dark:text-slate-400 mt-1 font-sans">
+                                  A QP/AC mentor that closes CORENET X submission gaps before they cause rework
+                                </p>
+                              </div>
+
+                              {/* 2 Column Comparison Grid */}
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-auto">
+                                {/* Left Box: The bottleneck today */}
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-red-500/20 shadow-inner flex flex-col justify-between space-y-4">
+                                  <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
+                                    The bottleneck today
+                                  </span>
+                                  <ul className="space-y-3 text-xs text-text-secondary dark:text-slate-300 leading-relaxed font-sans">
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-red-500 font-bold shrink-0">•</span>
+                                      <span>Submissions bounce for any of 5 separate reasons — IFC-SG attributes, wrong gateway, incomplete package, piling data, AC checklist alignment</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-red-500 font-bold shrink-0">•</span>
+                                      <span>Catching all 5 depends on senior QP judgment that doesn't scale across a growing project pipeline</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-red-500 font-bold shrink-0">•</span>
+                                      <span>Trade-offs like DfMA vs. embodied carbon go unflagged — PPVC can top the DfMA score while carrying the highest carbon per m² GFA</span>
+                                    </li>
+                                  </ul>
+                                </div>
+
+                                {/* Right Box: What SESA can do */}
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-emerald-500/20 dark:border-red-500/30 shadow-inner flex flex-col justify-between space-y-4">
+                                  <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
+                                    What SESA can do
+                                  </span>
+                                  <ul className="space-y-3 text-xs text-text-secondary dark:text-slate-300 leading-relaxed font-sans">
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-emerald-500 dark:text-red-400 font-bold shrink-0">•</span>
+                                      <span>Maps compliance gaps across all five failure layers before submission, not after rejection</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-emerald-500 dark:text-red-400 font-bold shrink-0">•</span>
+                                      <span>Starts with the most deployable module: a GM:2021 → CORENET X sequencing coordinator</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-emerald-500 dark:text-red-400 font-bold shrink-0">•</span>
+                                      <span>Surfaces carbon/DfMA trade-offs at the design decision point, not after it's locked in</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+
+                              {/* Footer Tagline */}
+                              <div className="pt-3 border-t border-border-color/60 flex items-center justify-between text-[11px] font-mono text-text-secondary">
+                                <span>QP / AC Submission Guidance</span>
+                                <span className="text-red-500 font-bold">• Active CORENET X Engine</span>
+                              </div>
+                            </>
+                          ) : (
+                            /* FSSA — Fire Safety Smart Advisor Content */
+                            <>
+                              <div>
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-500 text-[10px] font-mono font-bold uppercase tracking-wider">
+                                    SCDF Compliance AI
+                                  </span>
+                                  <button 
+                                    onClick={() => setSelectedProduct(null)}
+                                    className="text-xs text-text-secondary hover:text-accent font-mono"
+                                  >
+                                    ✕ Close Details
+                                  </button>
+                                </div>
+                                <h3 className="text-2xl sm:text-3xl font-extrabold text-text-primary font-display tracking-tight">
+                                  FSSA — <span className="text-red-500">Fire Safety Smart Advisor</span>
+                                </h3>
+                                <p className="text-xs sm:text-sm text-text-secondary dark:text-slate-400 mt-1 font-sans">
+                                  Pairing SCDF-level domain judgment with automated IFC rule-checking
+                                </p>
+                              </div>
+
+                              {/* 2 Column Comparison Grid */}
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-auto">
+                                {/* Left Box: The bottleneck today */}
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-red-500/20 shadow-inner flex flex-col justify-between space-y-4">
+                                  <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
+                                    The bottleneck today
+                                  </span>
+                                  <ul className="space-y-3 text-xs text-text-secondary dark:text-slate-300 leading-relaxed font-sans">
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-red-500 font-bold shrink-0">•</span>
+                                      <span>Fire safety review depends on a handful of senior specialists — a scarce, non-scalable resource</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-red-500 font-bold shrink-0">•</span>
+                                      <span>Geometric/spatial checks — egress width, travel distance, compartmentation — are done manually, project by project</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-red-500 font-bold shrink-0">•</span>
+                                      <span>Feedback lands late in the design cycle, after issues are costly to fix</span>
+                                    </li>
+                                  </ul>
+                                </div>
+
+                                {/* Right Box: What FSSA does */}
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-emerald-500/20 dark:border-red-500/30 shadow-inner flex flex-col justify-between space-y-4">
+                                  <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
+                                    What FSSA does
+                                  </span>
+                                  <ul className="space-y-3 text-xs text-text-secondary dark:text-slate-300 leading-relaxed font-sans">
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-emerald-500 dark:text-red-400 font-bold shrink-0">•</span>
+                                      <span>A Domain Expert on Fire Safety anchors the domain governance and rule authoring</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-emerald-500 dark:text-red-400 font-bold shrink-0">•</span>
+                                      <span>Solibri's rule-checking engine automates the IFC geometric/spatial compliance checks</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                      <span className="text-emerald-500 dark:text-red-400 font-bold shrink-0">•</span>
+                                      <span>A Gen AI layer explains the "why" behind every flag, reasoning the way a fire safety engineer would</span>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+
+                              {/* Footer Tagline */}
+                              <div className="pt-3 border-t border-border-color/60 flex items-center justify-between text-[11px] font-mono text-text-secondary">
+                                <span>SCDF Code Compliance Automation</span>
+                                <span className="text-red-500 font-bold">• Active AI Rule Engine</span>
+                              </div>
+                            </>
+                          )}
+                        </motion.div>
+                      ) : (
+                        <div className="w-full h-full relative inset-0 rounded-[20px] overflow-hidden">
+                          <img src={stage.image} alt={stage.name} className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/30 to-transparent" />
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 ))}
