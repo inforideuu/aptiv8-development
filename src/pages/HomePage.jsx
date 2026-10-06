@@ -355,21 +355,20 @@ export default function HomePage({ theme }) {
               </div>
 
               {/* Right Column - Premium Built Environment Image */}
-              <div className="lg:col-span-5 w-full flex">
+              <div className="lg:col-span-5 w-full flex items-center justify-center">
                 <motion.div
-                  whileHover={{ rotateY: -10, rotateX: 5, scale: 1.02 }}
+                  whileHover={{ rotateY: -6, rotateX: 3, scale: 1.01 }}
                   transition={{ type: "spring", stiffness: 150, damping: 15 }}
-                  className="rounded-3xl overflow-hidden border border-border-color relative shadow-2xl w-full h-full min-h-[380px] lg:min-h-full aspect-auto cursor-default group"
+                  className="rounded-[32px] overflow-hidden border border-slate-200 dark:border-slate-800 relative shadow-xl w-full h-full min-h-[420px] lg:min-h-full flex flex-col items-center justify-start bg-white dark:bg-white cursor-default group pt-10 pb-4 px-4"
                   style={{ transformStyle: 'preserve-3d', perspective: '1000px' }}
                 >
                   <img
-                    src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1000&q=80"
+                    src="/profile.png"
                     alt="Aptiv8 Singapore Built Environment AI"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full object-contain max-h-[500px] transition-transform duration-700 group-hover:scale-[1.02]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b1528]/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
 
-                  <div className="absolute bottom-6 left-6 right-6 p-6 bg-white/10 dark:bg-black/20 backdrop-blur-md border border-white/20 rounded-2xl transition-all duration-500 group-hover:bg-white/15">
+                  <div className="mt-auto w-full p-5 bg-slate-900/90 backdrop-blur-md border border-slate-700/50 rounded-2xl transition-all duration-500">
                     <span className="text-[10px] font-mono text-[#D4AF37] uppercase tracking-wider font-bold block mb-1">A8 Platform</span>
                     <p className="text-xs text-white font-medium leading-relaxed">
                       A8 is an AI solutions provider transforming the Built Environment through intelligent, custom-trained technology.
