@@ -1,21 +1,143 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Sparkles, CheckCircle2, ArrowRight, Smartphone, Mic, BookOpen, 
-  ClipboardCheck, Bot, FileText, ChevronRight, Layers, ShieldCheck, 
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Sparkles, CheckCircle2, ArrowRight, Smartphone, Mic, BookOpen,
+  ClipboardCheck, Bot, FileText, ChevronRight, Layers, ShieldCheck,
   Zap, TrendingUp, DollarSign, Cpu, Clock, Award, Star, CheckSquare,
   Activity, MapPin, Fingerprint, History, PlusCircle, RefreshCw, Wrench,
   Globe, Bell, BarChart3, Navigation, Workflow, Shield, Monitor, Coins, Check, FileCheck, ArrowUpRight,
-  CheckCircle, Users, BarChart2, Calendar, Settings, Sparkle
+  CheckCircle, Users, BarChart2, Calendar, Settings, Sparkle, ChevronDown, HelpCircle, Rocket, Leaf
 } from 'lucide-react';
 import Reveal3D from '../components/Reveal3D';
 
 export default function A8CmmsPage() {
+  const [activePage, setActivePage] = React.useState(1);
+  const [activeSolutionTab, setActiveSolutionTab] = React.useState('maintenance');
+  const [openFaqIndex, setOpenFaqIndex] = React.useState(0);
+
+  const faqData = [
+    {
+      q: "What does CMMS software do?",
+      a: "CMMS, or Computerized Maintenance Management System software, manages and tracks organizational maintenance activities. It centralizes maintenance data, schedules preventive tasks, monitors equipment health, and manages work orders. CMMS helps reduce equipment downtime, optimize inventory, and improve resource allocation. It streamlines maintenance processes, ensuring efficient and timely upkeep of assets."
+    },
+    {
+      q: "Who uses CMMS?",
+      a: "CMMS is used by maintenance teams across various industries, including manufacturing, healthcare, hospitality, education, and government. Facility managers, technicians, and maintenance supervisors utilize it to schedule tasks, track equipment health, and manage work orders. Organizations, big or small, employ CMMS to optimize their maintenance operations, enhance asset longevity, and reduce operational costs. It's a vital tool for any entity aiming for efficient asset management."
+    },
+    {
+      q: "Is CMMS part of ERP?",
+      a: "CMMS (Computerized Maintenance Management System) and ERP (Enterprise Resource Planning) are distinct systems. However, CMMS can be a module within an ERP or integrated. While ERP manages core business processes, CMMS focuses on maintenance management tasks. Integrating CMMS with ERP allows organizations to streamline operations, share data seamlessly, and optimize asset and resource management across departments."
+    },
+    {
+      q: "Is Aptiv8 CMMS software cloud based or do I need to install it on premises?",
+      a: "Aptiv8 CMMS software is cloud-based, allowing users to access it from anywhere with an internet connection. This eliminates the need for on-premises installation and provides flexibility, scalability, and real-time data access. With cloud-based solutions like Aptiv8, organizations can reduce IT overhead, ensure automatic updates, and benefit from enhanced security features."
+    },
+    {
+      q: "How does the mobile CMMS work and what features does it offer?",
+      a: "The mobile CMMS app lets users manage maintenance tasks from their devices. It offers real-time notifications, work order management, asset tracking, barcode scanning, and offline mode. Users can also attach photos, schedule tasks, and use GPS tracking. It streamlines operations, improves accuracy, and aids in swift decision-making, all on the go."
+    },
+    {
+      q: "What kind of training and support do you provide for CMMS implementation?",
+      a: "We offer comprehensive training for CMMS implementation, ensuring users are well-equipped to utilize all features. Our support includes hands-on tutorials, webinars, and user manuals. Additionally, our dedicated support team is available for real-time assistance and queries. We aim to ensure a smooth transition and maximize the software's benefits for your organization."
+    },
+    {
+      q: "What security measures are in place to protect our data?",
+      a: "Our CMMS prioritizes data security. We employ advanced encryption techniques to safeguard your data during transmission and storage. Regular security audits, firewall protections, and secure hosting environments further enhance data safety. Additionally, we adhere to global data protection regulations, ensuring your information remains confidential and secure at all times. Your data's integrity and privacy are our top concerns."
+    },
+    {
+      q: "How does Aptiv8 CMMS software assist in preventive maintenance scheduling?",
+      a: "Aptiv8 CMMS software streamlines preventive maintenance by allowing users to set routine schedules for equipment checks and services. It sends timely alerts and reminders, ensuring no task is missed. By logging equipment history and performance data, the software aids in predicting potential issues, reducing downtime, and prolonging equipment life. This systematic approach ensures optimal equipment performance and reduces costly breakdowns."
+    },
+    {
+      q: "Can I track and manage inventory and spare parts using the CMMS?",
+      a: "Yes, with Aptiv8 CMMS, you can efficiently track and manage inventory and spare parts. The software provides real-time visibility into stock levels, helping prevent shortages or overstocking. It logs usage patterns, facilitates reorder triggers, and maintains a detailed record of parts used in maintenance tasks. This centralized system ensures the timely availability of essential parts, optimizing maintenance operations."
+    },
+    {
+      q: "How often do you release updates and how are they implemented?",
+      a: "Aptiv8 regularly releases updates to enhance functionality and address user feedback. Updates are rolled out periodically, ensuring the software remains up-to-date with industry standards. Implementation is seamless, with most updates being cloud-based, requiring no manual intervention. Users are notified in advance, and comprehensive support is provided to ensure a smooth transition and minimal disruption to operations."
+    },
+    {
+      q: "How does the CMMS software help in reducing equipment downtime?",
+      a: "CMMS software reduces equipment downtime by facilitating proactive maintenance scheduling, real-time equipment monitoring, and swift response to issues. It provides insights into equipment performance, predicts potential failures, and ensures timely preventive maintenance. By centralizing data and automating workflows, CMMS enables quick decision-making, ensures timely repairs, and minimizes unplanned outages, increasing equipment availability and operational efficiency."
+    }
+  ];
+
+  const solutionTabs = [
+    {
+      id: 'maintenance',
+      title: 'Maintenance Management',
+      shortTitle: 'Maintenance Management',
+      icon: Wrench,
+      badge: 'Proactive Maintenance',
+      description: 'Aptiv8 CMMS elevates maintenance management to new heights, streamlining tasks and ensuring equipment longevity. Our platform offers predictive maintenance, real-time monitoring, and efficient scheduling. Reduce downtimes, enhance productivity, and ensure safety with our advanced tools. With Aptiv8, maintenance becomes proactive, not reactive, driving operational excellence and maximizing ROI.',
+      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
+      imageTag: 'Predictive & Real-Time Monitoring',
+      features: [
+        'Predictive maintenance & automated work orders',
+        'Real-time equipment performance monitoring',
+        'Efficient technician scheduling & safety compliance',
+        'Maximized ROI with proactive operational workflows'
+      ],
+      stats: { val: '99.4%', label: 'Equipment Uptime' }
+    },
+    {
+      id: 'asset',
+      title: 'Asset Management',
+      shortTitle: 'Asset Management',
+      icon: Layers,
+      badge: 'Lifecycle Optimization',
+      description: "Aptiv8 CMMS revolutionizes asset management by offering comprehensive tracking and monitoring. Our platform ensures assets' longevity, optimizes their lifecycle, and reduces operational costs. With real-time data analytics, make informed decisions and prevent asset failures. Experience a holistic approach where assets are managed and optimized for peak performance. Trust Aptiv8 for a seamless asset management journey.",
+      image: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=1200&q=80',
+      imageTag: 'Complete Asset Lifecycle Tracking',
+      features: [
+        'Comprehensive asset tracking & condition monitoring',
+        'Lifecycle optimization & reduced operational costs',
+        'Real-time data analytics for failure prevention',
+        'Holistic peak performance asset strategies'
+      ],
+      stats: { val: '35%', label: 'Cost Reduction' }
+    },
+    {
+      id: 'facility',
+      title: 'Facility Management',
+      shortTitle: 'Facility Management',
+      icon: Monitor,
+      badge: 'Smart Building Operations',
+      description: "Aptiv8 CMMS revolutionizes facility management, offering a comprehensive suite to optimize building operations. Our platform provides real-time insights and automated workflows, from space utilization to energy conservation. Ensure safety, enhance comfort, and reduce operational costs with our state-of-the-art solutions. With Aptiv8, facilities are not just managed; they're transformed into efficient, sustainable, and technologically advanced spaces.",
+      image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80',
+      imageTag: 'Automated Facility Operations',
+      features: [
+        'Space utilization & energy conservation insights',
+        'Automated workflows for facility maintenance',
+        'Enhanced safety, occupant comfort & cost control',
+        'Sustainable & technologically advanced space transformation'
+      ],
+      stats: { val: '40%', label: 'Energy Saved' }
+    },
+    {
+      id: 'field_service',
+      title: 'Field Service Management',
+      shortTitle: 'Field Service Management',
+      icon: Navigation,
+      badge: 'On-Demand Service Excellence',
+      description: 'Aptiv8 CMMS streamlines field service operations, ensuring timely and efficient service delivery. Our platform offers real-time tracking, automated scheduling, and detailed reporting. Technicians receive instant updates, reducing response times and enhancing customer satisfaction. Integrated with advanced analytics, Aptiv8 optimizes routes, manages resources, and ensures top-notch service quality. Elevate your field services with precision and reliability through Aptiv8.',
+      image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1200&q=80',
+      imageTag: 'Real-Time Field Dispatch & Analytics',
+      features: [
+        'Real-time GPS tracking & automated technician dispatch',
+        'Instant updates & faster customer response times',
+        'Route optimization & resource management analytics',
+        'High-precision, reliable field service quality'
+      ],
+      stats: { val: '45m', label: 'Avg Response Time' }
+    }
+  ];
+
   return (
     <div className="relative pt-20 bg-bg-primary text-text-primary min-h-screen font-sans selection:bg-[#e30613] selection:text-white overflow-hidden">
-      
+
       {/* 1. HERO SECTION */}
-      <section 
+      <section
         className="relative py-36 px-4 bg-cover bg-center overflow-hidden flex items-center justify-center min-h-[calc(100vh-80px)] w-full"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80')" }}
       >
@@ -56,482 +178,1013 @@ export default function A8CmmsPage() {
         </div>
       </section>
 
-      {/* SECTION 1: TOP RATED CMMS SOFTWARE IN SINGAPORE */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/50 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
-        <div className="absolute top-8 right-12 w-32 h-32 opacity-20 pointer-events-none hidden sm:block bg-[radial-gradient(#e30613_1px,transparent_1px)] [background-size:12px_12px]" />
+      {/* CMMS View Bar (Placed AFTER Hero Section) */}
+      <section className="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-4 px-4 shadow-sm transition-colors">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">CMMS View:</span>
+            <span className="px-3 py-1 rounded-full bg-red-100 border border-red-200 text-[#e30613] dark:bg-red-500/10 dark:border-red-500/20 text-xs font-bold font-mono">
+              {activePage === 1 ? 'Page 1 — Main Overview' : 'Page 2 — Features & Capabilities'}
+            </span>
+          </div>
 
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column Content */}
-            <div className="lg:col-span-7 space-y-6">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setActivePage(1)}
+              className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all ${activePage === 1
+                  ? 'bg-[#e30613] text-white shadow-lg shadow-red-500/30'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:border-transparent dark:hover:bg-slate-700 dark:hover:text-white'
+                }`}
+            >
+              Page 1
+            </button>
+            <button
+              onClick={() => setActivePage(2)}
+              className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 ${activePage === 2
+                  ? 'bg-[#e30613] text-white shadow-lg shadow-red-500/30'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:border-transparent dark:hover:bg-slate-700 dark:hover:text-white'
+                }`}
+            >
+              <span>Page 2</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {activePage === 2 ? (
+        /* PAGE 2 CONTENT: SPLIT INTO SEPARATE DISTINCT SECTIONS */
+        <>
+
+          {/* SECTION 1: TOUCHING THE BASICS OF CMMS SOFTWARE */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#fbfcfd] dark:bg-bg-secondary text-slate-900 dark:text-white relative overflow-hidden border-b border-slate-200/60 dark:border-border-color">
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Section 1 Header Banner */}
               <Reveal3D direction="up">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 text-[#e30613] text-xs font-bold font-sans">
-                  <span>★</span>
-                  <span>Trusted by Businesses in Singapore</span>
-                </div>
-              </Reveal3D>
+                <div className="text-center max-w-4xl mx-auto space-y-4">
+                  {/* Pill Badge with horizontal accent lines */}
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="w-12 sm:w-16 h-[1px] bg-red-300 dark:bg-red-900/60" />
+                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-red-200 dark:border-red-900/40 bg-red-50/50 dark:bg-red-950/30 text-[#e30613] text-[11px] font-bold tracking-widest uppercase font-sans">
+                      <BookOpen className="w-3.5 h-3.5 text-[#e30613]" />
+                      <span>FOUNDATION & BASICS</span>
+                    </div>
+                    <span className="w-12 sm:w-16 h-[1px] bg-red-300 dark:bg-red-900/60" />
+                  </div>
 
-              <Reveal3D direction="up" delay={0.1}>
-                <div className="space-y-3">
-                  <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                    Top Rated CMMS Software in <span className="text-[#e30613]">Singapore</span>
+                  {/* Elegant Title */}
+                  <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-[#0f172a] dark:text-white tracking-tight leading-tight">
+                    Touching the basis of CMS software
                   </h2>
-                  <div className="w-14 h-1 bg-[#e30613] rounded-full" />
+
+                  {/* Subtitle / Intro Description */}
+                  <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto font-normal">
+                    A Computerized Maintenance Management System (CMMS) is a sophisticated software solution to centralize and streamline maintenance management tasks. </p>
                 </div>
               </Reveal3D>
 
-              <Reveal3D direction="up" delay={0.15}>
-                <p className="text-xs font-mono font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
-                  ADVANCED MAINTENANCE EXCELLENCE WITH CRYOTOS
-                </p>
-              </Reveal3D>
-
-              <Reveal3D direction="up" delay={0.2}>
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-medium">
-                  Cryotos CMMS is the leading all-in-one preventive maintenance management, helping organizations achieve greater asset uptime, reduce downtime, and extend equipment life. With a focus on intuitive design, real-time tracking, and powerful analytics, Cryotos empowers businesses in Singapore and beyond to maintain operational excellence across every facility.
-                </p>
-              </Reveal3D>
-
-              <Reveal3D direction="up" delay={0.25}>
-                <div className="flex flex-wrap items-center gap-4 pt-1">
-                  <a
-                    href="/contact"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#e30613] hover:bg-[#c00510] text-white font-bold text-sm tracking-wide shadow-lg shadow-red-500/25 hover:scale-105 transition-all cursor-pointer"
-                  >
-                    <span>Request for Free Trial</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                  <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
-                    <ShieldCheck className="w-4 h-4 text-slate-400" />
-                    <span>No credit card required</span>
-                  </div>
-                </div>
-              </Reveal3D>
-
-              {/* 4 Feature Cards */}
-              <Reveal3D direction="up" delay={0.3}>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                  <div className="p-4 rounded-2xl bg-red-50/60 dark:bg-slate-900/60 border border-red-100 dark:border-slate-800 flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-red-100 text-[#e30613] flex items-center justify-center shrink-0">
-                      <FileText className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">500+ Assets</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">of Preventive Services</span>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-slate-900/60 border border-purple-100 dark:border-slate-800 flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
-                      <Award className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">2000+ Active</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Users</span>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-slate-900/60 border border-emerald-100 dark:border-slate-800 flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                      <TrendingUp className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">270% Increase</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">in ROI</span>
-                    </div>
-                  </div>
-
-                  <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-slate-900/60 border border-amber-100 dark:border-slate-800 flex items-center gap-3.5">
-                    <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                      <Zap className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">100% Digital</span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Transformation</span>
-                    </div>
-                  </div>
-                </div>
-              </Reveal3D>
-
-              {/* Bottom Quote Banner */}
-              <Reveal3D direction="up" delay={0.35}>
-                <div className="p-4 rounded-2xl bg-purple-50/80 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-purple-600 dark:text-purple-400 text-xl font-serif font-black">“</span>
-                    <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                      No.1 Top 10 Global EAM Products by G2 Users
-                    </span>
-                  </div>
-                  <div className="flex text-amber-500 text-xs tracking-tight shrink-0">
-                    ★★★★★
-                  </div>
-                </div>
-              </Reveal3D>
+              {/* 10 Strategic Benefits Grid (2 Rows of 5 Cards) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {[
+                  {
+                    title: "Boost your Bottom line:",
+                    desc: "With CMMS, you can significantly reduce maintenance costs and unexpected downtimes, ensuring your assets are always up and running. This means more productivity and more profits!",
+                    icon: Rocket,
+                    iconBg: "bg-emerald-100/70 border-emerald-200/80 text-emerald-600 dark:bg-emerald-950/40 dark:border-emerald-800/60 dark:text-emerald-400"
+                  },
+                  {
+                    title: "Illuminate your decision making:",
+                    desc: "Dive deep into data-driven insights. CMMS provides detailed analytics and reports, helping you make informed decisions that can transform your maintenance operations and drive growth.",
+                    icon: BarChart3,
+                    iconBg: "bg-blue-100/70 border-blue-200/80 text-blue-600 dark:bg-blue-950/40 dark:border-blue-800/60 dark:text-blue-400"
+                  },
+                  {
+                    title: "Global operations, seamless management:",
+                    desc: "Whether your assets are in New York or New Delhi, manage them effortlessly from one centralized platform. CMMS offers real-time tracking and management, no matter where your assets are located.",
+                    icon: Globe,
+                    iconBg: "bg-purple-100/70 border-purple-200/80 text-purple-600 dark:bg-purple-950/40 dark:border-purple-800/60 dark:text-purple-400"
+                  },
+                  {
+                    title: "Time is money!, save both:",
+                    desc: "Automate routine tasks, streamline work orders, and reduce manual paperwork. With CMMS, you get more done in less time, freeing up resources for other revenue-generating activities.",
+                    icon: Clock,
+                    iconBg: "bg-amber-100/70 border-amber-200/80 text-amber-600 dark:bg-amber-950/40 dark:border-amber-800/60 dark:text-amber-400"
+                  },
+                  {
+                    title: "Maximize asset lifespan:",
+                    desc: "Ensure your assets are always in tip-top shape. Regular maintenance schedules and timely repairs mean your equipment lasts longer and performs better.",
+                    icon: Zap,
+                    iconBg: "bg-cyan-100/70 border-cyan-200/80 text-cyan-600 dark:bg-cyan-950/40 dark:border-cyan-800/60 dark:text-cyan-400"
+                  },
+                  {
+                    title: "Stay connected always:",
+                    desc: "With mobile integrations, receive real-time notifications and updates. You're always in the loop whether in the office or on the go.",
+                    icon: Smartphone,
+                    iconBg: "bg-red-100/70 border-red-200/80 text-red-500 dark:bg-red-950/40 dark:border-red-800/60 dark:text-red-400"
+                  },
+                  {
+                    title: "Elevate customer satisfaction:",
+                    desc: "Deliver consistent and efficient service to your clients. With reduced downtimes and efficient operations, ensure your clients are always satisfied, leading to repeat business and glowing reviews.",
+                    icon: Users,
+                    iconBg: "bg-pink-100/70 border-pink-200/80 text-pink-500 dark:bg-pink-950/40 dark:border-pink-800/60 dark:text-pink-400"
+                  },
+                  {
+                    title: "Safety first always:",
+                    desc: "Ensure compliance with industry standards and maintain a safe working environment. CMMS helps track safety protocols and certifications and ensures all equipment is up to code.",
+                    icon: ShieldCheck,
+                    iconBg: "bg-emerald-100/70 border-emerald-200/80 text-emerald-600 dark:bg-emerald-950/40 dark:border-emerald-800/60 dark:text-emerald-400"
+                  },
+                  {
+                    title: "Professionalism at its best:",
+                    desc: "Present detailed and professional work order quotations, maintenance reports, and more. Impress clients and stakeholders with your organized and efficient approach.",
+                    icon: Users,
+                    iconBg: "bg-indigo-100/70 border-indigo-200/80 text-indigo-600 dark:bg-indigo-950/40 dark:border-indigo-800/60 dark:text-indigo-400"
+                  },
+                  {
+                    title: "Go green, save green:",
+                    desc: "Implement sustainable maintenance practices, reduce waste, and optimize resource usage. Not only is it good for the planet, but it's also great for your brand image and savings!",
+                    icon: Leaf,
+                    iconBg: "bg-teal-100/70 border-teal-200/80 text-teal-600 dark:bg-teal-950/40 dark:border-teal-800/60 dark:text-teal-400"
+                  }
+                ].map((item, idx) => {
+                  const IconComp = item.icon;
+                  return (
+                    <Reveal3D key={idx} direction="up" delay={0.04 * idx}>
+                      <div className="h-full p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:scale-105 transition-all duration-300 ease-out flex flex-col justify-between cursor-pointer">
+                        <div className="space-y-4">
+                          {/* Soft colored rounded icon badge */}
+                          <div className={`w-11 h-11 rounded-2xl border flex items-center justify-center ${item.iconBg}`}>
+                            <IconComp className="w-5 h-5 stroke-[2]" />
+                          </div>
+                          {/* Card Heading */}
+                          <h3 className="text-sm font-extrabold text-[#0f172a] dark:text-white font-sans leading-snug">
+                            {item.title}
+                          </h3>
+                          {/* Card Text */}
+                          <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </div>
+                    </Reveal3D>
+                  );
+                })}
+              </div>
             </div>
+          </section>
 
-            {/* Right Column: Clean White Dashboard Mockup */}
-            <div className="lg:col-span-5">
-              <Reveal3D direction="left">
-                <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-2xl space-y-5 text-slate-900 dark:text-white">
-                  <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3.5">
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 rounded-full bg-[#e30613] text-white text-xs font-bold font-mono flex items-center gap-1.5">
-                        <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                        Cryotos
-                      </span>
-                      <span className="px-3 py-1 rounded-full bg-red-100 text-[#e30613] text-[11px] font-bold">
-                        Work Orders
-                      </span>
-                      <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium">
-                        Preventive
-                      </span>
-                    </div>
-                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold font-mono">
-                      ● System Online
-                    </span>
+          {/* SECTION 2: THE ROBUST FEATURES OF A CMMS */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary text-slate-900 dark:text-white relative overflow-hidden border-b border-border-color">
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Section 2 Header Banner */}
+              <Reveal3D direction="up">
+                <div className="text-center max-w-4xl mx-auto space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/90 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold font-mono uppercase tracking-widest">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                    <span>Advanced Enterprise Suite</span>
                   </div>
+                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    The Robust Features of a CMMS
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto">
+                    Harness the capabilities of state-of-the-art CMMS Software designed to streamline maintenance operations. With a focus on proactive management, this platform ensures optimal utilization of facilities, assets, equipment, and work orders. Dive into a comprehensive solution that prioritizes preventive measures, mitigating potential issues before they become costly challenges.
+                  </p>
+                </div>
+              </Reveal3D>
 
-                  <div className="grid grid-cols-3 gap-2.5">
-                    <div className="p-3 rounded-2xl bg-red-50/70 dark:bg-slate-800/60 border border-red-100 dark:border-slate-800 text-center">
-                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase block">Open Orders</span>
-                      <span className="text-lg font-black text-red-600 dark:text-red-400 font-mono">12</span>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-blue-50/70 dark:bg-slate-800/60 border border-blue-100 dark:border-slate-800 text-center">
-                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase block">In Progress</span>
-                      <span className="text-lg font-black text-blue-600 dark:text-blue-400 font-mono">8</span>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-emerald-50/70 dark:bg-slate-800/60 border border-emerald-100 dark:border-slate-800 text-center">
-                      <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase block">Completed Today</span>
-                      <span className="text-lg font-black text-emerald-600 dark:text-emerald-400 font-mono">15</span>
-                    </div>
-                  </div>
+              {/* 18 Feature Modules Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  {
+                    title: "Work Order Management:",
+                    desc: "Every top-notch CMMS has a special tool called the Work Order Management feature. Think of it as a super-organized assistant that helps keep track of all maintenance tasks. Whether it's a regular check-up or a sudden repair, this feature ensures everything is noted and watched closely. It's like having a diary that updates itself in real-time.\n\nBut there's more to it than just keeping notes. This feature ensures everyone involved, from the technicians fixing things to the managers overseeing them, knows what's happening. It's like a group chat where everyone stays updated.\n\nNow, why is this so great for businesses? When tasks are sorted out quickly, machines and equipment don't stay broken for long. This means work can continue without long breaks, saving time and money. Plus, when everyone knows their job and has the right tools, things get done faster and better. In short, the Work Order Management feature ensures everything runs smoothly, and that's a big win for any company.",
+                    icon: ClipboardCheck,
+                    color: "text-red-600 bg-red-100 border-red-200 dark:text-red-400 dark:bg-red-500/10 dark:border-red-500/20",
+                    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Preventive Maintenance:",
+                    desc: "Preventive maintenance is like giving equipment regular health check-ups to avoid unexpected breakdowns. It's about being proactive, ensuring things are in top shape before any issues arise. With a CMMS, this approach becomes a breeze. The system is a multitasker: it sends timely reminders for upcoming maintenance tasks and schedules them based on equipment usage or set timeframes. Every maintenance activity is meticulously logged, making audits and compliance checks straightforward. But the real magic lies in its capabilities. The CMMS automates the entire process, ensuring no task is missed. It also provides a detailed history of each piece of equipment, helping businesses understand wear and tear patterns. In essence, when powered by a CMMS, preventive maintenance ensures equipment runs efficiently, lasts longer, and ultimately saves businesses both time and money.",
+                    icon: ShieldCheck,
+                    color: "text-emerald-600 bg-emerald-100 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
+                    image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Predictive Maintenance:",
+                    desc: "Predictive maintenance is akin to having a futuristic crystal ball for all your machinery and equipment. It's not just about regular checks; it's an advanced system that dives deep into the heart of each machine, understanding its every pulse and rhythm. By harnessing the power of cutting-edge technologies like AI and machine learning, predictive maintenance doesn't just detect issues - it anticipates them. It continuously monitors various parameters, such as vibration patterns, temperature fluctuations, and pressure changes. Any slight deviation or anomaly? The system catches it, often long before human eyes would notice.\n\nBut what truly sets it apart is its integration with a CMMS. This combination transforms raw data into actionable insights. The system can predict when a component might fail or when a machine will likely break down, allowing teams to intervene before a minor issue morphs into a major setback. The benefits are manifold: machinery runs smoother for longer, unexpected downtimes become a rarity, and maintenance costs plummet. Moreover, the extended lifespan of equipment means significant savings in the long run. In essence, with predictive maintenance, businesses are not just reacting to the present but proactively shaping a more efficient and cost-effective future.",
+                    icon: Cpu,
+                    color: "text-purple-600 bg-purple-100 border-purple-200 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20",
+                    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Workflow Automation:",
+                    desc: "Think of a CMMS with workflow automation as a smart helper, ensuring everything runs smoothly. It's like having a checklist that automatically ticks things off as they get done. Everything is set up to move without a hitch, from assigning jobs to sending reminders and getting the green light for tasks.\n\nThe best part? It cuts down on mistakes. Because things are automated, there's less chance of mix-ups or forgetting steps. This means jobs get done the right way every time. For the maintenance crew, it's a big help. They can spend less time on routine stuff and more on important tasks. And for the whole business, it means things are clear, organized, and efficient.",
+                    icon: Workflow,
+                    color: "text-blue-600 bg-blue-100 border-blue-200 dark:text-blue-400 dark:bg-blue-500/10 dark:border-blue-500/20",
+                    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Maintenance Checklist:",
+                    desc: "The maintenance checklist in a CMMS is like a trusty guidebook for every maintenance task, ensuring no detail is overlooked. It's not just a list; it's a roadmap guiding technicians through each step, from inspections to final tests. This thoroughness means equipment gets top-notch care, reducing unexpected issues.\n\nFor businesses, the advantages are clear. Machines run smoother, resulting in fewer interruptions. This checklist ensures all standards are met in sectors with strict regulations, sidestepping potential penalties. In short, the maintenance checklist offers consistency and peace of mind in all maintenance endeavors.",
+                    icon: CheckSquare,
+                    color: "text-amber-600 bg-amber-100 border-amber-200 dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/20",
+                    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "IoT Meter Reading:",
+                    desc: "IoT Meter Reading integrates the power of the Internet of Things to automatically collect data from various meters, such as energy, water, or gas. This feature allows for real-time data transmission to a centralized system, eliminating the need for manual readings and ensuring up-to-the-minute accuracy.With IoT Meter Readings, organizations can achieve more accurate billing, timely detection of anomalies, and efficient resource usage. It also reduces human error and labor costs associated with manual readings.",
+                    icon: Activity,
+                    color: "text-cyan-600 bg-cyan-100 border-cyan-200 dark:text-cyan-400 dark:bg-cyan-500/10 dark:border-cyan-500/20",
+                    image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Schedule of Rates:",
+                    desc: "The Schedule of Rates feature provides a detailed list of standardized costs associated with various maintenance tasks or services. It acts as a reference point for budgeting, billing, and contract formulation, ensuring that all stakeholders clearly understand the costs involved.\n\nThis feature promotes financial transparency and consistency. It aids in avoiding billing disputes, streamlines procurement processes, and ensures that maintenance tasks are carried out within the stipulated budget.",
+                    icon: Coins,
+                    color: "text-pink-600 bg-pink-100 border-pink-200 dark:text-pink-400 dark:bg-pink-500/10 dark:border-pink-500/20",
+                    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Inventory Management:",
+                    desc: "Inventory Management in CMMS allows organizations to keep track of all maintenance-related inventory, from spare parts to essential tools. It monitors stock levels, sends alerts for low-stock items, and even integrates with procurement systems for automatic reordering.\n\nEfficient inventory management ensures that maintenance tasks are not delayed due to a lack of necessary parts or tools. It also aids in reducing carrying costs and prevents overstocking or stockouts.",
+                    icon: Layers,
+                    color: "text-indigo-600 bg-indigo-100 border-indigo-200 dark:text-indigo-400 dark:bg-indigo-500/10 dark:border-indigo-500/20",
+                    image: "https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Spare Parts:",
+                    desc: "The Spare Parts feature provides a detailed catalog of all replacement parts for maintenance tasks. It includes information like part specifications, quantities in stock, suppliers, and lead times.\n\nA well-organized spare parts system ensures that maintenance teams can quickly find and utilize the needed parts, reducing equipment downtime and enhancing operational efficiency.",
+                    icon: Wrench,
+                    color: "text-teal-600 bg-teal-100 border-teal-200 dark:text-teal-400 dark:bg-teal-500/10 dark:border-teal-500/20",
+                    image: "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Asset QR Code Scanning:",
+                    desc: "This feature allows assets to be tagged with QR codes, which can be scanned to retrieve all relevant information about the asset, such as its maintenance history, specifications, and current status.\n\nQR code scanning offers a quick and efficient way to access asset information on the go, reducing the time technicians spend searching for asset details and ensuring they have all the information they need at their fingertips.",
+                    icon: Fingerprint,
+                    color: "text-[#e30613] bg-red-100 border-red-200 dark:text-[#e30613] dark:bg-red-500/10 dark:border-red-500/20",
+                    image: "https://images.unsplash.com/photo-1526304106518-2a900782cfa8?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Work Request:",
+                    desc: "The Work Request feature allows employees or stakeholders to submit maintenance requests directly to the CMMS. These requests can include details about the issue, urgency level, and other relevant information.\n\nThis feature streamlines the process of identifying and addressing maintenance needs. It ensures that issues are promptly reported, prioritized, and assigned to the appropriate personnel, leading to faster resolution times and improved asset uptime.",
+                    icon: FileText,
+                    color: "text-blue-600 bg-blue-100 border-blue-200 dark:text-blue-400 dark:bg-blue-500/10 dark:border-blue-500/20",
+                    image: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Project and Budget:",
+                    desc: "This feature provides tools to plan, monitor, and control maintenance projects and their associated budgets. Users can set budget limits, track expenses in real-time, and get alerts if costs approach or exceed the set budget.\n\nEffective project and budget management ensures that maintenance activities are carried out within financial constraints, preventing cost overruns and ensuring optimal allocation of resources.",
+                    icon: BarChart3,
+                    color: "text-emerald-600 bg-emerald-100 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20",
+                    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Team Communication:",
+                    desc: "Team Communication tools within a CMMS facilitate real-time communication between maintenance team members, managers, and other stakeholders. This can include chat features, notification systems, and collaboration boards.\n\nEnhanced communication ensures everyone is aligned on tasks, priorities, and updates. It fosters collaboration, reduces misunderstandings, and ensures faster response times.",
+                    icon: Users,
+                    color: "text-purple-600 bg-purple-100 border-purple-200 dark:text-purple-400 dark:bg-purple-500/10 dark:border-purple-500/20",
+                    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "License Management:",
+                    desc: "License Management tracks and manages licenses, warranties, and certifications associated with various assets and equipment. It sends reminders for renewals and keeps a record of all license-related documentation.\n\nThis feature ensures compliance with regulatory standards, avoids potential legal complications, and all equipment operates with valid licenses and certifications.",
+                    icon: Shield,
+                    color: "text-amber-600 bg-amber-100 border-amber-200 dark:text-amber-400 dark:bg-amber-500/10 dark:border-amber-500/20",
+                    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Report Builder:",
+                    desc: "The Report Builder allows users to create customized reports based on various maintenance metrics and data points. These reports can be used for analysis, decision-making, and presenting insights to stakeholders.\n\nCustomized reporting provides insights tailored to an organization's specific needs, aiding in informed decision-making and continuous improvement of maintenance operations.",
+                    icon: BarChart2,
+                    color: "text-cyan-600 bg-cyan-100 border-cyan-200 dark:text-cyan-400 dark:bg-cyan-500/10 dark:border-cyan-500/20",
+                    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "WhatsApp Integration:",
+                    desc: "This feature integrates the CMMS with WhatsApp, sending notifications, alerts, and communications directly through the popular messaging platform.\n\nLeveraging a platform like WhatsApp ensures that important notifications are seen promptly, enhances team communication, and provides a convenient way for teams to stay connected.",
+                    icon: Smartphone,
+                    color: "text-[#e30613] bg-red-100 border-red-200 dark:text-[#e30613] dark:bg-red-500/10 dark:border-red-500/20",
+                    image: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Work Request Quotation:",
+                    desc: "This allows users to generate and send quotations for maintenance work requests. It shows costs, materials, labor, and other expenses associated with a particular job.\n\nWork request quotations ensure transparency in billing, help in budgeting, and provide a clear understanding of costs to stakeholders.",
+                    icon: FileCheck,
+                    color: "text-indigo-600 bg-indigo-100 border-indigo-200 dark:text-indigo-400 dark:bg-indigo-500/10 dark:border-indigo-500/20",
+                    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80"
+                  },
+                  {
+                    title: "Document Management:",
+                    desc: "Document Management in CMMS provides a centralized repository for all maintenance-related documents, including manuals, SOPs, warranties, and contracts. It offers features like version control, search functionality, and access controls.\n\nCentralized document management ensures that all relevant information is easily accessible, organized, and secure, improving efficiency and compliance.",
+                    icon: History,
+                    color: "text-teal-600 bg-teal-100 border-teal-200 dark:text-teal-400 dark:bg-teal-500/10 dark:border-teal-500/20",
+                    image: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=600&q=80"
+                  }
+                ].map((item, idx) => {
+                  const IconComp = item.icon;
+                  return (
+                    <Reveal3D key={idx} direction="up" delay={0.03 * idx}>
+                      <div className="h-full rounded-3xl bg-slate-50/70 dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800/90 border border-slate-200/80 dark:border-slate-800 transition-all duration-300 flex flex-col justify-between group shadow-sm hover:shadow-xl overflow-hidden">
 
-                  <div className="space-y-2.5">
-                    <div className="flex justify-between items-center text-xs font-bold text-slate-700 dark:text-slate-300">
-                      <span>Recent Work Orders</span>
-                      <span className="text-[11px] text-blue-600 dark:text-blue-400 flex items-center gap-0.5 cursor-pointer">View All →</span>
-                    </div>
+                        {/* Realistic Card Cover Image */}
+                        <div className="relative h-44 sm:h-48 w-full overflow-hidden shrink-0">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-80" />
+                          <div className={`absolute top-3 left-3 w-9 h-9 rounded-xl border flex items-center justify-center backdrop-blur-md shadow-md ${item.color}`}>
+                            <IconComp className="w-4 h-4" />
+                          </div>
+                        </div>
 
-                    <div className="space-y-2 text-xs">
-                      {[
-                        { title: 'AC Unit Maintenance', loc: 'Building A -- Floor 3', status: 'In Progress', color: 'bg-blue-100 text-blue-700', dot: 'bg-blue-500', time: '2h ago' },
-                        { title: 'Generator Inspection', loc: 'Power House', status: 'Pending', color: 'bg-amber-100 text-amber-700', dot: 'bg-amber-500', time: '4h ago' },
-                        { title: 'Fire Alarm Check', loc: 'Building B -- Ground Floor', status: 'Completed', color: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-500', time: '6h ago' },
-                        { title: 'Water Pump Service', loc: 'Utility Room', status: 'In Progress', color: 'bg-blue-100 text-blue-700', dot: 'bg-blue-500', time: '8h ago' }
-                      ].map((item, idx) => (
-                        <div key={idx} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                          <div className="flex items-center gap-2.5">
-                            <span className={`w-2 h-2 rounded-full ${item.dot}`} />
-                            <div>
-                              <span className="font-bold text-slate-900 dark:text-white block text-xs">{item.title}</span>
-                              <span className="text-[10px] text-slate-400 block">{item.loc}</span>
+                        {/* Card Content Body */}
+                        <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                          <div className="space-y-2.5">
+                            <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display leading-tight group-hover:text-[#e30613] transition-colors">
+                              {item.title}
+                            </h3>
+                            <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans whitespace-pre-line">
+                              {item.desc}
                             </div>
                           </div>
-                          <div className="flex items-center gap-3">
-                            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${item.color}`}>
-                              {item.status}
-                            </span>
-                            <span className="text-[10px] text-slate-400 font-mono">{item.time}</span>
+                        </div>
+
+                      </div>
+                    </Reveal3D>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* SECTION: INTEGRATED SOLUTIONS FOR MAINTENANCE, ASSETS, FACILITIES */}
+            <div className="max-w-7xl mx-auto mt-20 pt-16 border-t border-slate-200 dark:border-slate-800 space-y-12 relative z-10">
+
+              {/* Section Header */}
+              <Reveal3D direction="up">
+                <div className="text-center max-w-3xl mx-auto space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-sans">
+                    <Sparkles className="w-4 h-4 text-[#e30613]" />
+                    <span>Integrated Platform</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    Integrated Solutions for Maintenance, Assets, Facilities
+                  </h2>
+
+                  <div className="w-16 h-1 bg-[#e30613] rounded-full mx-auto" />
+
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    Empower your organization with connected maintenance, asset intelligence, facility automation, and field service management.
+                  </p>
+                </div>
+              </Reveal3D>
+
+              {/* Interactive Navigation Navbar / Tabs */}
+              <Reveal3D direction="up" delay={0.1}>
+                <div className="flex items-center justify-center">
+                  <div className="inline-flex p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl max-w-full overflow-x-auto gap-1">
+                    {solutionTabs.map((tab) => {
+                      const IconComp = tab.icon;
+                      const isActive = activeSolutionTab === tab.id;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => setActiveSolutionTab(tab.id)}
+                          className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap cursor-pointer ${isActive
+                              ? 'bg-[#e30613] text-white shadow-md scale-[1.02]'
+                              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                            }`}
+                        >
+                          <IconComp className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
+                          <span>{tab.shortTitle}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </Reveal3D>
+
+              {/* Dynamic Tab Content (Card Left + Realistic Image Right) */}
+              {(() => {
+                const currentTab = solutionTabs.find(t => t.id === activeSolutionTab) || solutionTabs[0];
+                const DynamicIcon = currentTab.icon;
+                return (
+                  <motion.div
+                    key={currentTab.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4 }}
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                  >
+                    {/* Left Side Card */}
+                    <div className="lg:col-span-6 space-y-6">
+                      <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 dark:bg-red-500/10 rounded-full blur-2xl pointer-events-none" />
+
+                        <div className="space-y-6 relative z-10">
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-mono">
+                            <span className="w-2 h-2 rounded-full bg-[#e30613] animate-pulse" />
+                            {currentTab.badge}
                           </div>
+
+                          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display leading-tight">
+                            {currentTab.title}
+                          </h3>
+
+                          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                            {currentTab.description}
+                          </p>
+
+                          <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                              Key Capabilities & Benefits
+                            </h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                              {currentTab.features.map((feat, idx) => (
+                                <div key={idx} className="flex items-start gap-2.5">
+                                  <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5 border border-emerald-200 dark:border-emerald-800/50">
+                                    ✓
+                                  </div>
+                                  <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                                    {feat}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Stat badge & CTA */}
+                          <div className="pt-4 flex flex-wrap items-center justify-between gap-4">
+                            <div className="flex items-center gap-3 p-3 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+                              <div className="text-xl font-black text-[#e30613] font-mono">
+                                {currentTab.stats.val}
+                              </div>
+                              <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 leading-tight">
+                                {currentTab.stats.label}
+                              </div>
+                            </div>
+
+                            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#e30613] hover:bg-[#c20510] text-white text-xs sm:text-sm font-bold shadow-lg hover:shadow-red-500/25 transition-all cursor-pointer">
+                              <span>Explore Solution</span>
+                              <ArrowRight className="w-4 h-4" />
+                            </button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Side Realistic Image */}
+                    <div className="lg:col-span-6 relative">
+                      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+                        <img
+                          src={currentTab.image}
+                          alt={currentTab.title}
+                          className="w-full h-[400px] sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                        />
+
+                        {/* Gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+
+                        {/* Floating badge bottom left */}
+                        <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-white/20 dark:border-slate-700/50 shadow-xl flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-[#e30613] text-white flex items-center justify-center shrink-0 shadow-md">
+                              <DynamicIcon className="w-5 h-5" />
+                            </div>
+                            <div>
+                              <h5 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                                {currentTab.title}
+                              </h5>
+                              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                                {currentTab.imageTag}
+                              </span>
+                            </div>
+                          </div>
+                          <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50 text-[10px] font-bold font-mono">
+                            Active Module
+                          </span>
+                        </div>
+
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })()}
+
+            </div>
+
+            {/* SECTION: FREQUENTLY ASKED QUESTIONS */}
+            <div className="max-w-4xl mx-auto mt-20 pt-16 border-t border-slate-200 dark:border-slate-800 space-y-10 relative z-10">
+              <Reveal3D direction="up">
+                <div className="text-center space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-mono">
+                    <HelpCircle className="w-4 h-4 text-[#e30613]" />
+                    <span>Frequently Asked Questions</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    Frequently Asked Questions
+                  </h2>
+
+                  <div className="w-16 h-1 bg-[#e30613] rounded-full mx-auto" />
+
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl mx-auto">
+                    Get answers to common questions about Aptiv8 CMMS features, cloud architecture, mobile apps, integrations, and deployment.
+                  </p>
+                </div>
+              </Reveal3D>
+
+              <div className="space-y-4">
+                {faqData.map((item, idx) => {
+                  const isOpen = openFaqIndex === idx;
+                  return (
+                    <Reveal3D key={idx} direction="up" delay={0.03 * idx}>
+                      <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
+                        <button
+                          onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                          className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer group"
+                        >
+                          <div className="flex items-center gap-3.5">
+                            <span className="w-7 h-7 rounded-lg bg-red-100 dark:bg-red-500/10 text-[#e30613] border border-red-200 dark:border-red-500/20 flex items-center justify-center text-xs font-bold font-mono shrink-0">
+                              {idx + 1}
+                            </span>
+                            <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white group-hover:text-[#e30613] transition-colors font-display">
+                              {item.q}
+                            </h3>
+                          </div>
+                          <div className={`w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-red-100 dark:bg-red-500/20 text-[#e30613]' : 'text-slate-500 dark:text-slate-400'}`}>
+                            <ChevronDown className="w-4 h-4" />
+                          </div>
+                        </button>
+
+                        <AnimatePresence>
+                          {isOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="px-5 pb-6 sm:px-6 sm:pb-6 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans border-t border-slate-100 dark:border-slate-800/60 pt-4 ml-10">
+                                {item.a}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </Reveal3D>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Pagination Controls at Bottom of Page 2 */}
+            <div className="pt-12 flex justify-center">
+              <button
+                onClick={() => setActivePage(1)}
+                className="px-6 py-3 rounded-2xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 border border-slate-200 dark:border-slate-700 transition-all shadow-md cursor-pointer"
+              >
+                <span>← Return to Page 1 — Main Overview</span>
+              </button>
+            </div>
+
+          </section>
+        </>
+      ) : (
+        /* PAGE 1 CONTENT ONLY */
+        <>
+          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/70 via-white to-slate-50/50 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
+            <div className="absolute top-8 right-12 w-32 h-32 opacity-20 pointer-events-none hidden sm:block bg-[radial-gradient(#e30613_1px,transparent_1px)] [background-size:12px_12px]" />
+
+            <div className="max-w-7xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column Content */}
+                <div className="lg:col-span-7 space-y-6">
+                  <Reveal3D direction="up">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 text-[#e30613] text-xs font-bold font-sans">
+                      <span>★</span>
+                      <span>Trusted by Businesses in Singapore</span>
+                    </div>
+                  </Reveal3D>
+
+                  <Reveal3D direction="up" delay={0.1}>
+                    <div className="space-y-3">
+                      <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                        Top Rated CMMS Software in <span className="text-[#e30613]">Singapore</span>
+                      </h2>
+                      <div className="w-14 h-1 bg-[#e30613] rounded-full" />
+                    </div>
+                  </Reveal3D>
+
+                  <Reveal3D direction="up" delay={0.15}>
+                    <p className="text-xs font-mono font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
+                      ADVANCED MAINTENANCE EXCELLENCE WITH Aptiv8
+                    </p>
+                  </Reveal3D>
+
+                  <Reveal3D direction="up" delay={0.2}>
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-medium">
+                      Aptiv8 CMMS is the leading all-in-one preventive maintenance management, helping organizations achieve greater asset uptime, reduce downtime, and extend equipment life. With a focus on intuitive design, real-time tracking, and powerful analytics, Aptiv8 empowers businesses in Singapore and beyond to maintain operational excellence across every facility.
+                    </p>
+                  </Reveal3D>
+
+                  <Reveal3D direction="up" delay={0.25}>
+                    <div className="flex flex-wrap items-center gap-4 pt-1">
+                      <a
+                        href="/contact"
+                        className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#e30613] hover:bg-[#c00510] text-white font-bold text-sm tracking-wide shadow-lg shadow-red-500/25 hover:scale-105 transition-all cursor-pointer"
+                      >
+                        <span>Request for Free Trial</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                      <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                        <ShieldCheck className="w-4 h-4 text-slate-400" />
+                        <span>No credit card required</span>
+                      </div>
+                    </div>
+                  </Reveal3D>
+
+                  {/* 4 Feature Cards */}
+                  <Reveal3D direction="up" delay={0.3}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                      <div className="p-4 rounded-2xl bg-red-50/60 dark:bg-slate-900/60 border border-red-100 dark:border-slate-800 flex items-center gap-3.5">
+                        <div className="w-10 h-10 rounded-xl bg-red-100 text-[#e30613] flex items-center justify-center shrink-0">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">500+ Assets</span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">of Preventive Services</span>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-2xl bg-purple-50/60 dark:bg-slate-900/60 border border-purple-100 dark:border-slate-800 flex items-center gap-3.5">
+                        <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0">
+                          <Award className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">2000+ Active</span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Users</span>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-2xl bg-emerald-50/60 dark:bg-slate-900/60 border border-emerald-100 dark:border-slate-800 flex items-center gap-3.5">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                          <TrendingUp className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">270% Increase</span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">in ROI</span>
+                        </div>
+                      </div>
+
+                      <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-slate-900/60 border border-amber-100 dark:border-slate-800 flex items-center gap-3.5">
+                        <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                          <Zap className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <span className="text-base font-extrabold text-slate-900 dark:text-white block font-display">100% Digital</span>
+                          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">Transformation</span>
+                        </div>
+                      </div>
+                    </div>
+                  </Reveal3D>
+
+                  {/* Bottom Quote Banner */}
+                  <Reveal3D direction="up" delay={0.35}>
+                    <div className="p-4 rounded-2xl bg-purple-50/80 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/40 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-purple-600 dark:text-purple-400 text-xl font-serif font-black">“</span>
+                        <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                          No.1 Top 10 Global EAM Products by G2 Users
+                        </span>
+                      </div>
+                      <div className="flex text-amber-500 text-xs tracking-tight shrink-0">
+                        ★★★★★
+                      </div>
+                    </div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column: Clean White Dashboard Mockup */}
+                <div className="lg:col-span-5">
+                  <Reveal3D direction="left">
+                    <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200/80 dark:border-slate-800 shadow-2xl space-y-5 text-slate-900 dark:text-white">
+                      <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3.5">
+                        <div className="flex items-center gap-2">
+                          <span className="px-3 py-1 rounded-full bg-[#e30613] text-white text-xs font-bold font-mono flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                            Aptiv8
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-red-100 text-[#e30613] text-[11px] font-bold">
+                            Work Orders
+                          </span>
+                          <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium">
+                            Preventive
+                          </span>
+                        </div>
+                        <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold font-mono">
+                          ● System Online
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-2.5">
+                        <div className="p-3 rounded-2xl bg-red-50/70 dark:bg-slate-800/60 border border-red-100 dark:border-slate-800 text-center">
+                          <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase block">Open Orders</span>
+                          <span className="text-lg font-black text-red-600 dark:text-red-400 font-mono">12</span>
+                        </div>
+                        <div className="p-3 rounded-2xl bg-blue-50/70 dark:bg-slate-800/60 border border-blue-100 dark:border-slate-800 text-center">
+                          <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase block">In Progress</span>
+                          <span className="text-lg font-black text-blue-600 dark:text-blue-400 font-mono">8</span>
+                        </div>
+                        <div className="p-3 rounded-2xl bg-emerald-50/70 dark:bg-slate-800/60 border border-emerald-100 dark:border-slate-800 text-center">
+                          <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase block">Completed Today</span>
+                          <span className="text-lg font-black text-emerald-600 dark:text-emerald-400 font-mono">15</span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2.5">
+                        <div className="flex justify-between items-center text-xs font-bold text-slate-700 dark:text-slate-300">
+                          <span>Recent Work Orders</span>
+
+                        </div>
+
+                        <div className="space-y-2 text-xs">
+                          {[
+                            { title: 'AC Unit Maintenance', loc: 'Building A -- Floor 3', status: 'In Progress', color: 'bg-blue-100 text-blue-700', dot: 'bg-blue-500', time: '2h ago' },
+                            { title: 'Generator Inspection', loc: 'Power House', status: 'Pending', color: 'bg-amber-100 text-amber-700', dot: 'bg-amber-500', time: '4h ago' },
+                            { title: 'Fire Alarm Check', loc: 'Building B -- Ground Floor', status: 'Completed', color: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-500', time: '6h ago' },
+                            { title: 'Water Pump Service', loc: 'Utility Room', status: 'In Progress', color: 'bg-blue-100 text-blue-700', dot: 'bg-blue-500', time: '8h ago' }
+                          ].map((item, idx) => (
+                            <div key={idx} className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                              <div className="flex items-center gap-2.5">
+                                <span className={`w-2 h-2 rounded-full ${item.dot}`} />
+                                <div>
+                                  <span className="font-bold text-slate-900 dark:text-white block text-xs">{item.title}</span>
+                                  <span className="text-[10px] text-slate-400 block">{item.loc}</span>
+                                </div>
+                              </div>
+                              <div className="flex items-center gap-3">
+                                <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${item.color}`}>
+                                  {item.status}
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-mono">{item.time}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                            <ShieldCheck className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <span className="text-xs font-bold text-slate-900 dark:text-white block">Keep Your Assets Running</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Prevent downtime. Improve efficiency. Maximize value.</span>
+                          </div>
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                      </div>
+                    </div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+
+
+
+
+          {/* SECTION 2: HOW DOES Aptiv8 CMMS SOFTWARE SIMPLIFY YOUR MAINTENANCE OPERATIONS? */}
+          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary border-b border-border-color relative">
+            <div className="max-w-7xl mx-auto space-y-12">
+
+              {/* Top Pill & Headline */}
+              <Reveal3D direction="up">
+                <div className="text-center max-w-3xl mx-auto space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/80 dark:bg-red-950/40 text-[#e30613] text-xs font-bold font-sans">
+                    <span className="text-sm">⚙️</span>
+                    <span>Maintenance Operations Made Simple</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    How Does Aptiv8 CMMS Software Simplify Your Maintenance Operations?
+                  </h2>
+
+                  <div className="w-12 h-1 bg-[#e30613] rounded-full mx-auto" />
+
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    From work order management to asset tracking, <strong className="text-slate-900 dark:text-white font-bold">Aptiv8 CMMS</strong> brings <strong className="text-slate-900 dark:text-white font-bold">everything together</strong> — helping you work smarter, reduce downtime and achieve operational excellence.
+                  </p>
+                </div>
+              </Reveal3D>
+
+              {/* 6 Pastel Floating Feature Cards Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* Card 1 */}
+                <Reveal3D direction="up" delay={0.05}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-red-100 text-[#e30613] flex items-center justify-center shrink-0 shadow-xs">
+                        <Wrench className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                          Increased Equipment Reliability
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                          Minimize unexpected breakdowns and keep your assets running at peak performance with planned and preventive maintenance.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 2 */}
+                <Reveal3D direction="up" delay={0.1}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Monitor className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                          Increased Equipment Uptime
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                          Reduce downtime with real-time tracking, quick issue resolution and efficient work order management.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 3 */}
+                <Reveal3D direction="up" delay={0.15}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <ShieldCheck className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                          Improved Safety Compliance
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                          Stay compliant with industry regulations and safety standards through scheduled inspections and complete audit trails.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 4 */}
+                <Reveal3D direction="up" delay={0.2}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Coins className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                          Enhanced Maintenance Cost
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                          Optimize resources, prevent costly repairs and extend asset life with data-driven maintenance planning.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 5 */}
+                <Reveal3D direction="up" delay={0.25}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <FileCheck className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                          Inventory Control
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                          Track spare parts and inventory in real-time to ensure availability and avoid disruptions to your operations.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 6 */}
+                <Reveal3D direction="up" delay={0.3}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <TrendingUp className="w-6 h-6" />
+                      </div>
+                      <div className="space-y-1">
+                        <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                          Complete Digital Transformation
+                        </h3>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                          Move from reactive to proactive maintenance with a fully digital, integrated CMMS solution for greater visibility and control.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION: MOBILE CMMS APP */}
+          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50/70 dark:bg-bg-secondary/50 border-b border-border-color relative overflow-hidden">
+            <div className="max-w-7xl mx-auto relative z-10">
+              <Reveal3D direction="up">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                  {/* Left Side: Content */}
+                  <div className="lg:col-span-6 space-y-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-mono">
+                      <Smartphone className="w-4 h-4 text-[#e30613]" />
+                      <span>Native iOS & Android App</span>
+                    </div>
+
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                      Mobile CMMS App
+                    </h2>
+
+                    <div className="w-16 h-1 bg-[#e30613] rounded-full" />
+
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                      Technicians open work orders, scan QR codes, log hours, capture photos, and update task status — all from their Android or iOS device. GPS tracking shows managers where field teams are in real time. Updates sync instantly to the central system.
+                    </p>
+
+                    {/* 6 Feature Items Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                      {[
+                        "Work orders, asset records, and checklists on mobile.",
+                        "QR code scanning to pull up any asset instantly.",
+                        "Photo and video capture directly on work orders.",
+                        "GPS tracking for field technicians.",
+                        "Instant push notifications on task assignment.",
+                        "Real-time data sync — no end-of-day update needed."
+                      ].map((item, idx) => (
+                        <div key={idx} className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
+                          <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5">
+                            ✓
+                          </div>
+                          <span className="text-xs font-medium text-slate-700 dark:text-slate-300 leading-normal">
+                            {item}
+                          </span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0">
-                        <ShieldCheck className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <span className="text-xs font-bold text-slate-900 dark:text-white block">Keep Your Assets Running</span>
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Prevent downtime. Improve efficiency. Maximize value.</span>
-                      </div>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                  </div>
-                </div>
-              </Reveal3D>
-            </div>
+                  {/* Right Side: Realistic Image */}
+                  <div className="lg:col-span-6 relative">
+                    <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+                      <img
+                        src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&w=1200&q=80"
+                        alt="Mobile CMMS App Interface"
+                        className="w-full h-[420px] sm:h-[500px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 2: HOW DOES CRYOTOS CMMS SOFTWARE SIMPLIFY YOUR MAINTENANCE OPERATIONS? */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary border-b border-border-color relative">
-        <div className="max-w-7xl mx-auto space-y-12">
-          
-          {/* Top Pill & Headline */}
-          <Reveal3D direction="up">
-            <div className="text-center max-w-3xl mx-auto space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/80 dark:bg-red-950/40 text-[#e30613] text-xs font-bold font-sans">
-                <span className="text-sm">⚙️</span>
-                <span>Maintenance Operations Made Simple</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                How Does Cryotos CMMS Software Simplify Your Maintenance Operations?
-              </h2>
-
-              <div className="w-12 h-1 bg-[#e30613] rounded-full mx-auto" />
-
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                From work order management to asset tracking, <strong className="text-slate-900 dark:text-white font-bold">Cryotos CMMS</strong> brings <strong className="text-slate-900 dark:text-white font-bold">everything together</strong> — helping you work smarter, reduce downtime and achieve operational excellence.
-              </p>
-            </div>
-          </Reveal3D>
-
-          {/* 6 Pastel Floating Feature Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            {/* Card 1 */}
-            <Reveal3D direction="up" delay={0.05}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-red-100 text-[#e30613] flex items-center justify-center shrink-0 shadow-xs">
-                    <Wrench className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                      Increased Equipment Reliability
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                      Minimize unexpected breakdowns and keep your assets running at peak performance with planned and preventive maintenance.
-                    </p>
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-red-100 text-[#e30613] flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 2 */}
-            <Reveal3D direction="up" delay={0.1}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Monitor className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                      Increased Equipment Uptime
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                      Reduce downtime with real-time tracking, quick issue resolution and efficient work order management.
-                    </p>
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 3 */}
-            <Reveal3D direction="up" delay={0.15}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                      Improved Safety Compliance
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                      Stay compliant with industry regulations and safety standards through scheduled inspections and complete audit trails.
-                    </p>
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 4 */}
-            <Reveal3D direction="up" delay={0.2}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Coins className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                      Enhanced Maintenance Cost
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                      Optimize resources, prevent costly repairs and extend asset life with data-driven maintenance planning.
-                    </p>
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 5 */}
-            <Reveal3D direction="up" delay={0.25}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <FileCheck className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                      Inventory Control
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                      Track spare parts and inventory in real-time to ensure availability and avoid disruptions to your operations.
-                    </p>
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 6 */}
-            <Reveal3D direction="up" delay={0.3}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all flex items-center justify-between gap-5 group cursor-default">
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <TrendingUp className="w-6 h-6" />
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                      Complete Digital Transformation
-                    </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                      Move from reactive to proactive maintenance with a fully digital, integrated CMMS solution for greater visibility and control.
-                    </p>
-                  </div>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                  <ArrowRight className="w-4 h-4" />
-                </div>
-              </div>
-            </Reveal3D>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 3: SEAMLESS MAINTENANCE OPERATIONS ANYTIME, ANYWHERE WITH MOBILE CMMS (EXACT MATCH IMAGE DESIGN) */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-blue-50/40 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay: Mobile Field Engineer & Smart Maintenance */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.09] dark:opacity-25 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.14] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Multi-Device Dashboard & Smartphone Overlay Mockup */}
-            <div className="lg:col-span-6 relative">
-              <Reveal3D direction="right">
-                <div className="relative py-10 px-2 min-h-[420px] flex items-center justify-center">
-                  
-                  {/* Floating Pill Badges (Styled to match design) */}
-                  <div className="absolute top-2 left-0 z-30 px-4 py-2 rounded-full bg-emerald-50 dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 text-xs font-bold shadow-md border border-emerald-200/80 dark:border-emerald-900/50 flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">✓</div>
-                    <span>Real-time Asset Status</span>
-                  </div>
-
-                  <div className="absolute top-2 left-48 sm:left-56 z-30 px-4 py-2 rounded-full bg-purple-50 dark:bg-slate-900 text-purple-700 dark:text-purple-400 text-xs font-bold shadow-md border border-purple-200/80 dark:border-purple-900/50 flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-full bg-purple-500 text-white flex items-center justify-center text-[10px]">📱</div>
-                    <span>Access Anytime, Anywhere</span>
-                  </div>
-
-                  <div className="absolute -bottom-2 right-2 z-30 px-4 py-2 rounded-full bg-blue-50 dark:bg-slate-900 text-blue-800 dark:text-blue-300 text-xs font-bold shadow-md border border-blue-200/80 dark:border-blue-900/50 flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">☁️</div>
-                    <span>Improved Efficiency & Reduced Downtime</span>
-                  </div>
-
-                  {/* Tablet/Desktop Main Dashboard Card (Background) */}
-                  <div className="ml-12 sm:ml-16 w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xl space-y-4 text-slate-900 dark:text-white relative z-0">
-                    <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 rounded-full bg-[#e30613] text-white flex items-center justify-center text-[10px] font-bold font-mono">C</div>
-                        <span className="font-bold text-xs font-mono">CMMS Dashboard</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-[10px] text-slate-400">
-                        <span>🔍 Search...</span>
-                      </div>
-                    </div>
-
-                    {/* KPI Counters */}
-                    <div className="grid grid-cols-4 gap-2 text-center text-xs">
-                      <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
-                        <span className="text-[9px] text-slate-400 block font-bold">Open Orders</span>
-                        <span className="text-base font-black text-slate-900 dark:text-white font-mono">12</span>
-                      </div>
-                      <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400">
-                        <span className="text-[9px] block font-bold">Completed</span>
-                        <span className="text-base font-black font-mono">28 ✓</span>
-                      </div>
-                      <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900 text-purple-700 dark:text-purple-400">
-                        <span className="text-[9px] block font-bold">In Progress</span>
-                        <span className="text-base font-black font-mono">7</span>
-                      </div>
-                      <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900 text-amber-700 dark:text-amber-400">
-                        <span className="text-[9px] block font-bold">Overdue</span>
-                        <span className="text-base font-black font-mono">3 ⚠️</span>
-                      </div>
-                    </div>
-
-                    {/* Recent Work Orders Table */}
-                    <div className="space-y-2 pt-1">
-                      <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">Recent Work Orders</span>
-                      <div className="space-y-1.5 text-[10px]">
-                        {[
-                          { id: 'WO-1001', asset: 'HVAC Unit', prio: 'High', status: 'In Progress', pColor: 'text-red-500', sColor: 'bg-blue-100 text-blue-700' },
-                          { id: 'WO-1002', asset: 'Pump', prio: 'Medium', status: 'Open', pColor: 'text-amber-500', sColor: 'bg-amber-100 text-amber-700' },
-                          { id: 'WO-1003', asset: 'Generator', prio: 'Critical', status: 'Completed', pColor: 'text-red-600', sColor: 'bg-emerald-100 text-emerald-700' },
-                          { id: 'WO-1004', asset: 'Lift', prio: 'Medium', status: 'Open', pColor: 'text-amber-500', sColor: 'bg-amber-100 text-amber-700' }
-                        ].map((row, rIdx) => (
-                          <div key={rIdx} className="flex justify-between items-center p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 font-mono">
-                            <span className="font-bold text-slate-800 dark:text-slate-200">{row.id}</span>
-                            <span className="text-slate-600 dark:text-slate-400">{row.asset}</span>
-                            <span className={`font-bold ${row.pColor}`}>{row.prio}</span>
-                            <span className={`px-2 py-0.5 rounded-full font-bold ${row.sColor}`}>{row.status}</span>
+                      <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-white/20 dark:border-slate-700/50 shadow-xl flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-[#e30613] text-white flex items-center justify-center shrink-0 shadow-md">
+                            <Smartphone className="w-5 h-5" />
                           </div>
-                        ))}
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* Smartphone Overlay Mockup (Foreground Left) */}
-                  <div className="absolute top-12 left-0 w-44 sm:w-48 bg-slate-950 text-white rounded-3xl p-3 border-4 border-slate-800 shadow-2xl z-20 space-y-3 font-sans">
-                    <div className="flex justify-between items-center text-[9px] font-mono text-slate-400">
-                      <span>11:31</span>
-                      <span>📶 🔋</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 border-b border-slate-800 pb-2">
-                      <div className="w-4 h-4 rounded-full bg-[#e30613] flex items-center justify-center text-[8px] font-bold">C</div>
-                      <span className="text-xs font-bold font-mono">CMMS</span>
-                    </div>
-                    <div className="space-y-1.5">
-                      <span className="text-[10px] font-bold block">Work Orders</span>
-                      <div className="space-y-1.5 text-[9px]">
-                        <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                          <div className="flex justify-between"><span className="font-bold">WO-1001 HVAC</span><span className="text-red-400 font-bold">High</span></div>
-                          <span className="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono inline-block">In Progress</span>
+                          <div>
+                            <h5 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                              Mobile CMMS App
+                            </h5>
+                            <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                              Instant Field Connectivity & Real-Time Sync
+                            </span>
+                          </div>
                         </div>
-                        <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
-                          <div className="flex justify-between"><span className="font-bold">WO-1002 Pump</span><span className="text-amber-400 font-bold">Medium</span></div>
-                          <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono inline-block">Open</span>
-                        </div>
+                        <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50 text-[10px] font-bold font-mono">
+                          iOS & Android
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -539,1042 +1192,1082 @@ export default function A8CmmsPage() {
                 </div>
               </Reveal3D>
             </div>
+          </section>
 
-            {/* Right Column Content */}
-            <div className="lg:col-span-6 space-y-6">
-              {/* Badge */}
+          {/* SECTION 3: SEAMLESS MAINTENANCE OPERATIONS ANYTIME, ANYWHERE WITH MOBILE CMMS (EXACT MATCH IMAGE DESIGN) */}
+          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-blue-50/40 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay: Mobile Field Engineer & Smart Maintenance */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.09] dark:opacity-25 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.14] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column: Multi-Device Dashboard & Smartphone Overlay Mockup */}
+                <div className="lg:col-span-6 relative">
+                  <Reveal3D direction="right">
+                    <div className="relative py-10 px-2 min-h-[420px] flex items-center justify-center">
+
+                      {/* Floating Pill Badges (Styled to match design) */}
+                      <div className="absolute top-2 left-0 z-30 px-4 py-2 rounded-full bg-emerald-50 dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 text-xs font-bold shadow-md border border-emerald-200/80 dark:border-emerald-900/50 flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px]">✓</div>
+                        <span>Real-time Asset Status</span>
+                      </div>
+
+                      <div className="absolute top-2 left-48 sm:left-56 z-30 px-4 py-2 rounded-full bg-purple-50 dark:bg-slate-900 text-purple-700 dark:text-purple-400 text-xs font-bold shadow-md border border-purple-200/80 dark:border-purple-900/50 flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-full bg-purple-500 text-white flex items-center justify-center text-[10px]">📱</div>
+                        <span>Access Anytime, Anywhere</span>
+                      </div>
+
+                      <div className="absolute -bottom-2 right-2 z-30 px-4 py-2 rounded-full bg-blue-50 dark:bg-slate-900 text-blue-800 dark:text-blue-300 text-xs font-bold shadow-md border border-blue-200/80 dark:border-blue-900/50 flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">☁️</div>
+                        <span>Improved Efficiency & Reduced Downtime</span>
+                      </div>
+
+                      {/* Tablet/Desktop Main Dashboard Card (Background) */}
+                      <div className="ml-12 sm:ml-16 w-full max-w-lg bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/90 dark:border-slate-800 shadow-2xl space-y-4 text-slate-900 dark:text-white relative z-0">
+                        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-5 h-5 rounded-full bg-[#e30613] text-white flex items-center justify-center text-[10px] font-bold font-mono">C</div>
+                            <span className="font-bold text-xs font-mono">CMMS Dashboard</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                            <span>🔍 Search...</span>
+                          </div>
+                        </div>
+
+                        {/* KPI Counters */}
+                        <div className="grid grid-cols-4 gap-2 text-center text-xs">
+                          <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+                            <span className="text-[9px] text-slate-400 block font-bold">Open Orders</span>
+                            <span className="text-base font-black text-slate-900 dark:text-white font-mono">12</span>
+                          </div>
+                          <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400">
+                            <span className="text-[9px] block font-bold">Completed</span>
+                            <span className="text-base font-black font-mono">28 ✓</span>
+                          </div>
+                          <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900 text-purple-700 dark:text-purple-400">
+                            <span className="text-[9px] block font-bold">In Progress</span>
+                            <span className="text-base font-black font-mono">7</span>
+                          </div>
+                          <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-100 dark:border-amber-900 text-amber-700 dark:text-amber-400">
+                            <span className="text-[9px] block font-bold">Overdue</span>
+                            <span className="text-base font-black font-mono">3 ⚠️</span>
+                          </div>
+                        </div>
+
+                        {/* Recent Work Orders Table */}
+                        <div className="space-y-2 pt-1">
+                          <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300 block">Recent Work Orders</span>
+                          <div className="space-y-1.5 text-[10px]">
+                            {[
+                              { id: 'WO-1001', asset: 'HVAC Unit', prio: 'High', status: 'In Progress', pColor: 'text-red-500', sColor: 'bg-blue-100 text-blue-700' },
+                              { id: 'WO-1002', asset: 'Pump', prio: 'Medium', status: 'Open', pColor: 'text-amber-500', sColor: 'bg-amber-100 text-amber-700' },
+                              { id: 'WO-1003', asset: 'Generator', prio: 'Critical', status: 'Completed', pColor: 'text-red-600', sColor: 'bg-emerald-100 text-emerald-700' },
+                              { id: 'WO-1004', asset: 'Lift', prio: 'Medium', status: 'Open', pColor: 'text-amber-500', sColor: 'bg-amber-100 text-amber-700' }
+                            ].map((row, rIdx) => (
+                              <div key={rIdx} className="flex justify-between items-center p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 font-mono">
+                                <span className="font-bold text-slate-800 dark:text-slate-200">{row.id}</span>
+                                <span className="text-slate-600 dark:text-slate-400">{row.asset}</span>
+                                <span className={`font-bold ${row.pColor}`}>{row.prio}</span>
+                                <span className={`px-2 py-0.5 rounded-full font-bold ${row.sColor}`}>{row.status}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                      </div>
+
+                      {/* Smartphone Overlay Mockup (Foreground Left) */}
+                      <div className="absolute top-12 left-0 w-44 sm:w-48 bg-slate-950 text-white rounded-3xl p-3 border-4 border-slate-800 shadow-2xl z-20 space-y-3 font-sans">
+                        <div className="flex justify-between items-center text-[9px] font-mono text-slate-400">
+                          <span>11:31</span>
+                          <span>📶 🔋</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 border-b border-slate-800 pb-2">
+                          <div className="w-4 h-4 rounded-full bg-[#e30613] flex items-center justify-center text-[8px] font-bold">C</div>
+                          <span className="text-xs font-bold font-mono">CMMS</span>
+                        </div>
+                        <div className="space-y-1.5">
+                          <span className="text-[10px] font-bold block">Work Orders</span>
+                          <div className="space-y-1.5 text-[9px]">
+                            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                              <div className="flex justify-between"><span className="font-bold">WO-1001 HVAC</span><span className="text-red-400 font-bold">High</span></div>
+                              <span className="px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono inline-block">In Progress</span>
+                            </div>
+                            <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                              <div className="flex justify-between"><span className="font-bold">WO-1002 Pump</span><span className="text-amber-400 font-bold">Medium</span></div>
+                              <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono inline-block">Open</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column Content */}
+                <div className="lg:col-span-6 space-y-6">
+                  {/* Badge */}
+                  <Reveal3D direction="up">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-extrabold font-sans">
+                      <span>⚙️</span>
+                      <span>Advanced Maintenance Excellence</span>
+                    </div>
+                  </Reveal3D>
+
+                  {/* Title */}
+                  <Reveal3D direction="up" delay={0.1}>
+                    <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                      Seamless Maintenance Operations Anytime, Anywhere with <span className="text-[#2563eb] dark:text-blue-400">Mobile CMMS</span>
+                    </h2>
+                  </Reveal3D>
+
+                  {/* Paragraph */}
+                  <Reveal3D direction="up" delay={0.15}>
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                      Experience unparalleled operational efficiency with Aptiv8 Mobile CMMS. Our platform is designed for on-the-go access and ensures real-time updates, swift task management, and better communication. Whether it's the field or the office, Aptiv8 empowers teams to manage maintenance tasks seamlessly, enhancing optimal performance anytime, anywhere. Embrace the future of maintenance with Aptiv8.
+                    </p>
+                  </Reveal3D>
+
+                  {/* 2 Highlight Feature Cards (Red & Blue pastel rounded boxes matching design) */}
+                  <Reveal3D direction="up" delay={0.2}>
+                    <div className="space-y-4 pt-2">
+                      <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-red-200/80 dark:border-red-950 flex items-center gap-4 shadow-sm">
+                        <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                          <Check className="w-5 h-5 stroke-[3]" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Real-time Access to Critical Data
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            Instant updates and full visibility, wherever you are.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950 flex items-center gap-4 shadow-sm">
+                        <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                          <Check className="w-5 h-5 stroke-[3]" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Streamline Your Maintenance Operations
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            From work orders to asset tracking — all in your hand.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </Reveal3D>
+
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* SECTION 4: KEY FEATURES OF MOBILE CMMS SOFTWARE (EXACT MATCH IMAGE DESIGN) */}
+          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary border-b border-border-color relative">
+            <div className="max-w-7xl mx-auto space-y-12">
+
+              {/* Top Badge & Headline */}
               <Reveal3D direction="up">
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-extrabold font-sans">
-                  <span>⚙️</span>
-                  <span>Advanced Maintenance Excellence</span>
+                <div className="text-center max-w-3xl mx-auto space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-100/80 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-extrabold font-sans uppercase tracking-wide">
+                    <span>MOBILE CAPABILITIES</span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    Key Features of Mobile CMMS Software
+                  </h2>
+
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    Powerful features, designed for flexibility and efficiency — all from your mobile device.
+                  </p>
                 </div>
               </Reveal3D>
 
-              {/* Title */}
-              <Reveal3D direction="up" delay={0.1}>
-                <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                  Seamless Maintenance Operations Anytime, Anywhere with <span className="text-[#2563eb] dark:text-blue-400">Mobile CMMS</span>
-                </h2>
-              </Reveal3D>
+              {/* 8 Floating Feature Cards Grid (4 cols x 2 rows with distinct light borders & colored icons) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-              {/* Paragraph */}
-              <Reveal3D direction="up" delay={0.15}>
-                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                  Experience unparalleled operational efficiency with Cryotos Mobile CMMS. Our platform is designed for on-the-go access and ensures real-time updates, swift task management, and better communication. Whether it's the field or the office, Cryotos empowers teams to manage maintenance tasks seamlessly, enhancing optimal performance anytime, anywhere. Embrace the future of maintenance with Cryotos.
-                </p>
-              </Reveal3D>
-
-              {/* 2 Highlight Feature Cards (Red & Blue pastel rounded boxes matching design) */}
-              <Reveal3D direction="up" delay={0.2}>
-                <div className="space-y-4 pt-2">
-                  <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-red-200/80 dark:border-red-950 flex items-center gap-4 shadow-sm">
-                    <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center shrink-0 shadow-md">
-                      <Check className="w-5 h-5 stroke-[3]" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Real-time Access to Critical Data
+                {/* Card 1: Create Work Orders */}
+                <Reveal3D direction="up" delay={0.05}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-red-200/80 dark:border-red-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Wrench className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Create Work Orders on the Go
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        Instant updates and full visibility, wherever you are.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Raise and manage work orders instantly from your mobile device. Keep your operations moving without delay.
                       </p>
                     </div>
                   </div>
+                </Reveal3D>
 
-                  <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950 flex items-center gap-4 shadow-sm">
-                    <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-md">
-                      <Check className="w-5 h-5 stroke-[3]" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Streamline Your Maintenance Operations
+                {/* Card 2: Monitor Asset Lifecycle */}
+                <Reveal3D direction="up" delay={0.1}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <ShieldCheck className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Monitor Complete Asset Lifecycle
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        From work orders to asset tracking — all in your hand.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Track asset performance, history, and maintenance needs — all in real time, from anywhere.
                       </p>
                     </div>
                   </div>
-                </div>
-              </Reveal3D>
+                </Reveal3D>
 
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4: KEY FEATURES OF MOBILE CMMS SOFTWARE (EXACT MATCH IMAGE DESIGN) */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary border-b border-border-color relative">
-        <div className="max-w-7xl mx-auto space-y-12">
-          
-          {/* Top Badge & Headline */}
-          <Reveal3D direction="up">
-            <div className="text-center max-w-3xl mx-auto space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-blue-100/80 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-extrabold font-sans uppercase tracking-wide">
-                <span>MOBILE CAPABILITIES</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                Key Features of Mobile CMMS Software
-              </h2>
-
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                Powerful features, designed for flexibility and efficiency — all from your mobile device.
-              </p>
-            </div>
-          </Reveal3D>
-
-          {/* 8 Floating Feature Cards Grid (4 cols x 2 rows with distinct light borders & colored icons) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            {/* Card 1: Create Work Orders */}
-            <Reveal3D direction="up" delay={0.05}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-red-200/80 dark:border-red-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Wrench className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Create Work Orders on the Go
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Raise and manage work orders instantly from your mobile device. Keep your operations moving without delay.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 2: Monitor Asset Lifecycle */}
-            <Reveal3D direction="up" delay={0.1}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Monitor Complete Asset Lifecycle
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Track asset performance, history, and maintenance needs — all in real time, from anywhere.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 3: Quickly Check Work Progress */}
-            <Reveal3D direction="up" delay={0.15}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-purple-200/80 dark:border-purple-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Zap className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Quickly Check Work Progress
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Get real-time updates on work status, assign tasks, and ensure faster resolution.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 4: Real-Time Work Order Tracking */}
-            <Reveal3D direction="up" delay={0.2}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <BarChart2 className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Real-Time Work Order Tracking
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Stay informed with live updates on work orders, technicians, and asset status.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 5: Asset Preventive Maintenance Tracking */}
-            <Reveal3D direction="up" delay={0.25}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-amber-200/80 dark:border-amber-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Calendar className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Asset Preventive Maintenance Tracking
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Schedule and track preventive maintenance to reduce downtime and extend asset life.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 6: Inventory Management */}
-            <Reveal3D direction="up" delay={0.3}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-teal-200/80 dark:border-teal-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Inventory Management
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Monitor stock levels, manage parts, and avoid delays with real-time inventory visibility.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 7: Generate Reports & Analytics */}
-            <Reveal3D direction="up" delay={0.35}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-indigo-200/80 dark:border-indigo-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <BarChart3 className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Generate Reports & Analytics
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Access detailed reports and insights to make smarter, faster decisions.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Card 8: Field Technician Support */}
-            <Reveal3D direction="up" delay={0.4}>
-              <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-pink-200/80 dark:border-pink-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center shrink-0 shadow-xs">
-                    <Settings className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
-                    Field Technician Support
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Enable your field team with mobile access, faster communication, and better coordination.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* SECTION 5: BENEFITS OF CRYOTOS MOBILE CMMS SOFTWARE */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/80 via-purple-50/20 to-slate-50/80 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay with Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.07] dark:opacity-20 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ec4899_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.10] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Top Pill Badge & Header */}
-          <Reveal3D direction="up">
-            <div className="text-center max-w-3xl mx-auto space-y-4">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-extrabold font-sans">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Strategic Advantage</span>
-              </div>
-              <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                Benefits of Cryotos Mobile CMMS <span className="text-purple-600 dark:text-purple-400 block sm:inline">Software</span>
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                Discover how Cryotos Mobile CMMS helps you work smarter, reduce downtime and get more value from your maintenance operations.
-              </p>
-            </div>
-          </Reveal3D>
-
-          {/* Top Row: 3 Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            {/* Red Card */}
-            <Reveal3D direction="up" delay={0.05}>
-              <div className="p-6 rounded-3xl bg-red-50/60 dark:bg-slate-900 border border-red-200/80 dark:border-red-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-red-500 text-white flex items-center justify-center shrink-0 shadow-md">
-                    <ShieldCheck className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
-                    Improved Asset Reliability
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Ensure the long life of your assets with proactive maintenance, reduced breakdowns, and optimized performance.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Blue Card */}
-            <Reveal3D direction="up" delay={0.1}>
-              <div className="p-6 rounded-3xl bg-blue-50/60 dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Clock className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
-                    Real-Time Visibility & Updates
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Get real-time insights into asset health, work orders and team activities, anytime, anywhere.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Green Card */}
-            <Reveal3D direction="up" delay={0.15}>
-              <div className="p-6 rounded-3xl bg-emerald-50/60 dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
-                    <BarChart3 className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
-                    Data-Driven Decision Making
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Leverage accurate data and analytics to plan better, reduce costs and improve operational efficiency.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-          </div>
-
-          {/* Bottom Row: 2 Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            {/* Purple Card */}
-            <Reveal3D direction="up" delay={0.2}>
-              <div className="p-6 rounded-3xl bg-purple-50/60 dark:bg-slate-900 border border-purple-200/80 dark:border-purple-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-purple-500 text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Settings className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
-                    Operational Compliance
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Stay compliant with industry standards and regulatory requirements with complete tracking and reporting.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-            {/* Amber Card */}
-            <Reveal3D direction="up" delay={0.25}>
-              <div className="p-6 rounded-3xl bg-amber-50/60 dark:bg-slate-900 border border-amber-200/80 dark:border-amber-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-md">
-                    <Users className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
-                    Streamlined Workflows
-                  </h3>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                    Digitize and automate maintenance processes to boost productivity, collaboration and response times.
-                  </p>
-                </div>
-                <div className="flex justify-end pt-2">
-                  <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-            </Reveal3D>
-
-          </div>
-
-        </div>
-      </section>
-
-      {/* ZIG-ZAG MODULE 1: AI FAULT REPORTING */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-blue-50/20 dark:bg-bg-primary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay with Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.08] dark:opacity-20 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.12] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Header & Tag */}
-          <Reveal3D direction="up">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-extrabold font-sans">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Smarter Maintenance with AI</span>
-              </div>
-              <h2 className="text-4xl sm:text-6xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                AI <span className="text-blue-600 dark:text-blue-400">Fault Reporting</span>
-              </h2>
-              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl">
-                Report, track and resolve issues faster with AI-powered fault reporting. Capture problems, get smart suggestions and keep your operations running smoothly.
-              </p>
-            </div>
-          </Reveal3D>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: 5 Stacked Feature Benefit Cards */}
-            <div className="lg:col-span-6 space-y-3.5">
-              
-              {/* Card 1 */}
-              <Reveal3D direction="right" delay={0.05}>
-                <div className="p-4 sm:p-5 rounded-2xl bg-red-50/80 dark:bg-slate-900 border border-red-200/80 dark:border-red-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950/80 text-red-600 flex items-center justify-center shrink-0 shadow-xs">
-                      <Smartphone className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Easy & Accurate Reporting
+                {/* Card 3: Quickly Check Work Progress */}
+                <Reveal3D direction="up" delay={0.15}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-purple-200/80 dark:border-purple-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Zap className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Quickly Check Work Progress
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        Log issues with photos, voice or text, with AI-powered categorization and details.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Get real-time updates on work status, assign tasks, and ensure faster resolution.
                       </p>
                     </div>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-red-100 text-red-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </Reveal3D>
+                </Reveal3D>
 
-              {/* Card 2 */}
-              <Reveal3D direction="right" delay={0.1}>
-                <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/80 dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/80 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
-                      <FileText className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Auto Prioritization
+                {/* Card 4: Real-Time Work Order Tracking */}
+                <Reveal3D direction="up" delay={0.2}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <BarChart2 className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Real-Time Work Order Tracking
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        AI analyzes the issue and suggests priority, category and required action.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Stay informed with live updates on work orders, technicians, and asset status.
                       </p>
                     </div>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </Reveal3D>
+                </Reveal3D>
 
-              {/* Card 3 */}
-              <Reveal3D direction="right" delay={0.15}>
-                <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50/80 dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
-                      <CheckCircle className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Faster Resolution
+                {/* Card 5: Asset Preventive Maintenance Tracking */}
+                <Reveal3D direction="up" delay={0.25}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-amber-200/80 dark:border-amber-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Calendar className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Asset Preventive Maintenance Tracking
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        Get the right team, tools and resources for quick resolution and minimal downtime.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Schedule and track preventive maintenance to reduce downtime and extend asset life.
                       </p>
                     </div>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </Reveal3D>
+                </Reveal3D>
 
-              {/* Card 4 */}
-              <Reveal3D direction="right" delay={0.2}>
-                <div className="p-4 sm:p-5 rounded-2xl bg-purple-50/80 dark:bg-slate-900 border border-purple-200/80 dark:border-purple-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/80 text-purple-600 flex items-center justify-center shrink-0 shadow-xs">
-                      <ShieldCheck className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Complete Audit Trail
+                {/* Card 6: Inventory Management */}
+                <Reveal3D direction="up" delay={0.3}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-teal-200/80 dark:border-teal-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-teal-100 text-teal-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Users className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Inventory Management
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        Track every step from submission to closure for better accountability and compliance.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Monitor stock levels, manage parts, and avoid delays with real-time inventory visibility.
                       </p>
                     </div>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </div>
-                </div>
-              </Reveal3D>
+                </Reveal3D>
 
-              {/* Card 5 */}
-              <Reveal3D direction="right" delay={0.25}>
-                <div className="p-4 sm:p-5 rounded-2xl bg-amber-50/80 dark:bg-slate-900 border border-amber-200/80 dark:border-amber-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
-                      <TrendingUp className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
-                        Continuous Improvement
+                {/* Card 7: Generate Reports & Analytics */}
+                <Reveal3D direction="up" delay={0.35}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-indigo-200/80 dark:border-indigo-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <BarChart3 className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Generate Reports & Analytics
                       </h3>
-                      <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
-                        Analyze trends and insights to prevent recurring issues and improve asset performance.
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Access detailed reports and insights to make smarter, faster decisions.
                       </p>
                     </div>
                   </div>
-                  <div className="w-7 h-7 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-transform">
-                    <ArrowRight className="w-3.5 h-3.5" />
+                </Reveal3D>
+
+                {/* Card 8: Field Technician Support */}
+                <Reveal3D direction="up" delay={0.4}>
+                  <div className="p-6 rounded-3xl bg-slate-50/70 dark:bg-slate-900 border border-pink-200/80 dark:border-pink-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center shrink-0 shadow-xs">
+                        <Settings className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display">
+                        Field Technician Support
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Enable your field team with mobile access, faster communication, and better coordination.
+                      </p>
+                    </div>
                   </div>
+                </Reveal3D>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* SECTION 5: BENEFITS OF Aptiv8 MOBILE CMMS SOFTWARE */}
+          <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/80 via-purple-50/20 to-slate-50/80 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay with Gradient Mask */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.07] dark:opacity-20 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#ec4899_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.10] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Top Pill Badge & Header */}
+              <Reveal3D direction="up">
+                <div className="text-center max-w-3xl mx-auto space-y-4">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-extrabold font-sans">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    <span>Strategic Advantage</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    Benefits of Aptiv8 Mobile CMMS <span className="text-purple-600 dark:text-purple-400 block sm:inline">Software</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    Discover how Aptiv8 Mobile CMMS helps you work smarter, reduce downtime and get more value from your maintenance operations.
+                  </p>
                 </div>
               </Reveal3D>
 
-            </div>
+              {/* 5 Benefits Grid: Top Row 3 Cards, Bottom Row 2 Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-            {/* Right Column: Slide Image */}
-            <div className="lg:col-span-6 flex flex-col">
-              <Reveal3D direction="left">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-3xl p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-[#e30613]/50 transition-all duration-300"
-                >
-                  <img 
-                    src="/ai_fault.png" 
-                    alt="AI Fault Reporting Slide Screenshot" 
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                </motion.div>
+                {/* Card 1: Unparalleled Accessibility */}
+                <Reveal3D direction="up" delay={0.05}>
+                  <div className="p-6 rounded-3xl bg-red-50/60 dark:bg-slate-900 border border-red-200/80 dark:border-red-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-red-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                        <Smartphone className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
+                        Unparalleled Accessibility
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Gone are the days of being tethered to a desk. With a Mobile CMMS App, you have the power of maintenance management right in your pocket. Whether on the factory floor, at a remote site, or even on vacation, you're always connected, ensuring seamless operations.
+                      </p>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 2: Real Time Notifications & Updates */}
+                <Reveal3D direction="up" delay={0.1}>
+                  <div className="p-6 rounded-3xl bg-blue-50/60 dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                        <Bell className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
+                        Real Time Notifications & Updates
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Stay in the loop, always. You're immediately alerted about maintenance issues, work order statuses, and other critical updates with instant notifications. This real-time connectivity ensures swift responses and proactive problem-solving.
+                      </p>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 3: Data-Driven Decision Making */}
+                <Reveal3D direction="up" delay={0.15}>
+                  <div className="p-6 rounded-3xl bg-emerald-50/60 dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                        <BarChart3 className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
+                        Data-Driven Decision Making
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Harness the power of data. Aptiv8 Mobile CMMS App provides real-time analytics and insights, allowing you to make informed decisions. Data is your strategic ally, from understanding asset performance to predicting potential downtimes.
+                      </p>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+              </div>
+
+              {/* Bottom Row: 2 Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                {/* Card 4: Geolocation Capabilities */}
+                <Reveal3D direction="up" delay={0.2}>
+                  <div className="p-6 rounded-3xl bg-purple-50/60 dark:bg-slate-900 border border-purple-200/80 dark:border-purple-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-purple-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                        <MapPin className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
+                        Geolocation Capabilities
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Precision meets efficiency. Whether tracking movable asset locations or assigning tasks based on technician proximity, geolocation features ensure optimal resource allocation and reduced response times.
+                      </p>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+                {/* Card 5: Streamlined Workflows */}
+                <Reveal3D direction="up" delay={0.25}>
+                  <div className="p-6 rounded-3xl bg-amber-50/60 dark:bg-slate-900 border border-amber-200/80 dark:border-amber-950/50 shadow-md hover:shadow-xl transition-all flex flex-col justify-between h-full group cursor-default space-y-4">
+                    <div className="space-y-4">
+                      <div className="w-12 h-12 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                        <Workflow className="w-6 h-6" />
+                      </div>
+                      <h3 className="text-lg font-extrabold text-slate-900 dark:text-white font-display">
+                        Streamlined Workflows
+                      </h3>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
+                        Simplify complex maintenance procedures. Aptiv8 Mobile CMMS streamlines work order approvals, task assignments, and checklist completion, ensuring your maintenance operations run smoothly without bottlenecks.
+                      </p>
+                    </div>
+                  </div>
+                </Reveal3D>
+
+              </div>
+
+            </div>
+          </section>
+
+          {/* ZIG-ZAG MODULE 1: AI FAULT REPORTING */}
+          <section className="py-28 px-4 sm:px-6 lg:px-8 bg-blue-50/20 dark:bg-bg-primary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay with Gradient Mask */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.08] dark:opacity-20 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#2563eb_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.12] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Header & Tag */}
+              <Reveal3D direction="up">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-extrabold font-sans">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Smarter Maintenance with AI</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-6xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    AI <span className="text-blue-600 dark:text-blue-400">Fault Reporting</span>
+                  </h2>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl">
+                    Report, track and resolve issues faster with AI-powered fault reporting. Capture problems, get smart suggestions and keep your operations running smoothly.
+                  </p>
+                </div>
               </Reveal3D>
-            </div>
 
-          </div>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-          {/* Bottom 3 Feature Pills */}
-          <Reveal3D direction="up" delay={0.3}>
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
-              <div className="px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
-                <Zap className="w-4 h-4 text-blue-500" />
-                <span>AI-Powered Suggestions</span>
-              </div>
-              <div className="px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
-                <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                <span>Improved Response Time</span>
-              </div>
-              <div className="px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
-                <TrendingUp className="w-4 h-4 text-purple-500" />
-                <span>Higher Asset Uptime</span>
-              </div>
-            </div>
-          </Reveal3D>
+                {/* Left Column: 5 Stacked Feature Benefit Cards */}
+                <div className="lg:col-span-6 space-y-3.5">
 
-        </div>
-      </section>
-
-      {/* ZIG-ZAG MODULE 2: AI FAULT REPORTING (VOICE DISPATCH) */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-purple-50/40 dark:bg-bg-secondary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay with Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-15 dark:opacity-25 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#a855f7_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.15] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Header & Tag */}
-          <Reveal3D direction="up">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100/80 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 text-xs font-extrabold font-sans">
-                <Mic className="w-3.5 h-3.5" />
-                <span>Voice AI Dispatch</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                AI Fault Reporting <span className="text-purple-600 dark:text-purple-400">(Voice-Based & Dispatch)</span>
-              </h2>
-            </div>
-          </Reveal3D>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Slide Image */}
-            <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
-              <Reveal3D direction="right">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300"
-                >
-                  <img 
-                    src="/ai_fault2.png" 
-                    alt="AI Fault Reporting Voice Based Dispatch Slide Screenshot" 
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                </motion.div>
-              </Reveal3D>
-            </div>
-
-            {/* Right Column: Text Cards */}
-            <div className="lg:col-span-7 space-y-3.5 order-1 lg:order-2">
-              <Reveal3D direction="left">
-                <div className="space-y-3.5">
-                  {[
-                    'Users can raise faults via mobile app, web portal, QR code, or integrated systems.',
-                    'Supports voice-based fault reporting in native languages for faster and easier fault submission.',
-                    'AI converts voice input into text and interprets the fault description.',
-                    'AI validates key details such as location, asset, fault type, severity, and issue description.',
-                    'Once validated, AI converts the fault into a work order / job sheet with a unique reference number.',
-                    'Work orders are automatically assigned to the respective maintenance team based on workflow, skillset, availability, and fault category.'
-                  ].map((bullet, idx) => {
-                    const colors = [
-                      'bg-white border-purple-200 text-purple-600',
-                      'bg-white border-blue-200 text-blue-600',
-                      'bg-white border-emerald-200 text-emerald-600',
-                      'bg-white border-amber-200 text-amber-600',
-                      'bg-white border-red-200 text-red-600',
-                      'bg-white border-indigo-200 text-indigo-600'
-                    ];
-                    return (
-                      <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-8 h-8 rounded-xl bg-purple-50 dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
-                            0{idx + 1}
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
-                            {bullet}
+                  {/* Card 1 */}
+                  <Reveal3D direction="right" delay={0.05}>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-red-50/80 dark:bg-slate-900 border border-red-200/80 dark:border-red-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-950/80 text-red-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <Smartphone className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Easy & Accurate Reporting
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            Log issues with photos, voice or text, with AI-powered categorization and details.
                           </p>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </Reveal3D>
-            </div>
+                    </div>
+                  </Reveal3D>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ZIG-ZAG MODULE 3: AI KNOWLEDGE MANAGEMENT SYSTEM */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-blue-50/30 dark:bg-bg-primary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay with Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.08] dark:opacity-20 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.12] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Header & Tag */}
-          <Reveal3D direction="up">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-extrabold font-sans">
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>Knowledge Base AI</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                AI-Based <span className="text-blue-600 dark:text-blue-400">Knowledge Management System</span>
-              </h2>
-            </div>
-          </Reveal3D>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Text Cards */}
-            <div className="lg:col-span-7 space-y-3.5">
-              <Reveal3D direction="right">
-                <div className="space-y-3.5">
-                  {[
-                    'Quick access to SOPs, manuals, guides, and maintenance documents.',
-                    'Users can ask questions in simple language and get relevant answers.',
-                    'Provides step-by-step troubleshooting guidance for technicians.',
-                    'Searches uploaded documents such as manuals, procedures, and safety guidelines.',
-                    'Recommends actions based on approved documents and past maintenance records.',
-                    'Supports faster onboarding and reduces dependency on senior staff.'
-                  ].map((bullet, idx) => {
-                    const colors = [
-                      'bg-blue-50/80 border-blue-200/80 text-blue-600',
-                      'bg-teal-50/80 border-teal-200/80 text-teal-600',
-                      'bg-emerald-50/80 border-emerald-200/80 text-emerald-600',
-                      'bg-purple-50/80 border-purple-200/80 text-purple-600',
-                      'bg-indigo-50/80 border-indigo-200/80 text-indigo-600',
-                      'bg-amber-50/80 border-amber-200/80 text-amber-600'
-                    ];
-                    return (
-                      <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
-                            0{idx + 1}
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
-                            {bullet}
+                  {/* Card 2 */}
+                  <Reveal3D direction="right" delay={0.1}>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-blue-50/80 dark:bg-slate-900 border border-blue-200/80 dark:border-blue-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/80 text-blue-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <FileText className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Auto Prioritization
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            AI analyzes the issue and suggests priority, category and required action.
                           </p>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </Reveal3D>
-            </div>
+                    </div>
+                  </Reveal3D>
 
-            {/* Right Column: Slide Image */}
-            <div className="lg:col-span-5 flex flex-col">
-              <Reveal3D direction="left">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-3xl p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-blue-500/50 transition-all duration-300"
-                >
-                  <img 
-                    src="/ai_knowledge.png" 
-                    alt="AI Knowledge Management System Slide Screenshot" 
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                </motion.div>
-              </Reveal3D>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ZIG-ZAG MODULE 4: AI CHECKLIST LIBRARY */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-emerald-50/40 dark:bg-bg-secondary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay with Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.10] dark:opacity-20 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#10b981_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.14] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Header & Tag */}
-          <Reveal3D direction="up">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 text-xs font-extrabold font-sans">
-                <ClipboardCheck className="w-3.5 h-3.5" />
-                <span>Checklist Digitalization</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                AI Checklist Library & <span className="text-emerald-600 dark:text-emerald-400">Digitalization</span>
-              </h2>
-            </div>
-          </Reveal3D>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Slide Image */}
-            <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
-              <Reveal3D direction="right">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-emerald-500/50 transition-all duration-300"
-                >
-                  <img 
-                    src="/ai_checklist.png" 
-                    alt="AI Checklist Library & Digitalization Slide Screenshot" 
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                </motion.div>
-              </Reveal3D>
-            </div>
-
-            {/* Right Column: Text Cards */}
-            <div className="lg:col-span-7 space-y-3.5 order-1 lg:order-2">
-              <Reveal3D direction="left">
-                <div className="space-y-3.5">
-                  {[
-                    'Provides a reusable checklist template library for inspection, maintenance, audit, and compliance.',
-                    'Users can select templates based on asset, location, service type, or frequency.',
-                    'AI can generate new checklists from simple text prompts.',
-                    'AI can import and digitalise existing PDFs, scanned forms, or paper checklists.',
-                    'Digital checklists can be linked to assets, PM schedules, work orders, and service teams.',
-                    'Helps reduce paperwork, improve consistency, and strengthen operational control.'
-                  ].map((bullet, idx) => {
-                    const colors = [
-                      'bg-white border-emerald-200 text-emerald-600',
-                      'bg-white border-teal-200 text-teal-600',
-                      'bg-white border-blue-200 text-blue-600',
-                      'bg-white border-purple-200 text-purple-600',
-                      'bg-white border-amber-200 text-amber-600',
-                      'bg-white border-red-200 text-red-600'
-                    ];
-                    return (
-                      <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
-                            0{idx + 1}
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
-                            {bullet}
+                  {/* Card 3 */}
+                  <Reveal3D direction="right" delay={0.15}>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-emerald-50/80 dark:bg-slate-900 border border-emerald-200/80 dark:border-emerald-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <CheckCircle className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Faster Resolution
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            Get the right team, tools and resources for quick resolution and minimal downtime.
                           </p>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </Reveal3D>
-            </div>
+                    </div>
+                  </Reveal3D>
 
-          </div>
-        </div>
-      </section>
-
-      {/* ZIG-ZAG MODULE 5: AI ASSISTANT */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-pink-50/30 dark:bg-bg-primary border-b border-border-color relative overflow-hidden">
-        {/* Background Image Overlay with Gradient Mask */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.08] dark:opacity-20 pointer-events-none transition-opacity"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=2000&q=80')` }}
-        />
-        {/* Background Decorative Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ec4899_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.12] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Header & Tag */}
-          <Reveal3D direction="up">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-extrabold font-sans">
-                <Bot className="w-3.5 h-3.5" />
-                <span>Intelligent AI Bot</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                AI <span className="text-pink-600 dark:text-pink-400">Assistant</span>
-              </h2>
-            </div>
-          </Reveal3D>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Text Cards */}
-            <div className="lg:col-span-7 space-y-3.5">
-              <Reveal3D direction="right">
-                <div className="space-y-3.5">
-                  {[
-                    'Enables users to interact with the CMMS using simple natural language.',
-                    'Users can ask about faults, work orders, assets, checklists, PM tasks, and compliance.',
-                    'Quickly retrieves information without searching multiple screens.',
-                    'Provides updates on pending jobs, overdue tasks, repeated faults, and job status.',
-                    'Gives management insights on service performance, response time, and maintenance trends.',
-                    'Supports chart and compliance analysis for SLA, checklist compliance, and fault trends.'
-                  ].map((bullet, idx) => {
-                    const colors = [
-                      'bg-pink-50/80 border-pink-200/80 text-pink-600',
-                      'bg-purple-50/80 border-purple-200/80 text-purple-600',
-                      'bg-blue-50/80 border-blue-200/80 text-blue-600',
-                      'bg-indigo-50/80 border-indigo-200/80 text-indigo-600',
-                      'bg-teal-50/80 border-teal-200/80 text-teal-600',
-                      'bg-red-50/80 border-red-200/80 text-red-600'
-                    ];
-                    return (
-                      <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
-                            0{idx + 1}
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
-                            {bullet}
+                  {/* Card 4 */}
+                  <Reveal3D direction="right" delay={0.2}>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-purple-50/80 dark:bg-slate-900 border border-purple-200/80 dark:border-purple-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-950/80 text-purple-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <ShieldCheck className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Complete Audit Trail
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            Track every step from submission to closure for better accountability and compliance.
                           </p>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </Reveal3D>
-            </div>
+                    </div>
+                  </Reveal3D>
 
-            {/* Right Column: Slide Image */}
-            <div className="lg:col-span-5 flex flex-col">
-              <Reveal3D direction="left">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-3xl p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-pink-500/50 transition-all duration-300"
-                >
-                  <img 
-                    src="/ai_assisstant.png" 
-                    alt="AI Assistant Slide Screenshot" 
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                </motion.div>
-              </Reveal3D>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ZIG-ZAG MODULE 6: AI CHECKLIST SUMMARY & INSIGHTS */}
-      <section className="py-28 px-4 sm:px-6 lg:px-8 bg-amber-50/40 dark:bg-bg-secondary border-b border-border-color relative overflow-hidden">
-        {/* Background Decorative Pattern (Clean Pattern Only) */}
-        <div className="absolute inset-0 bg-[radial-gradient(#f59e0b_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.14] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto space-y-12 relative z-10">
-          
-          {/* Header & Tag */}
-          <Reveal3D direction="up">
-            <div className="space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/80 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 text-xs font-extrabold font-sans">
-                <FileText className="w-3.5 h-3.5" />
-                <span>Automated Insights</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                AI Checklist <span className="text-amber-600 dark:text-amber-400">Summary & Insights</span>
-              </h2>
-            </div>
-          </Reveal3D>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Column: Slide Image */}
-            <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
-              <Reveal3D direction="right">
-                <motion.div 
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-300"
-                >
-                  <img 
-                    src="/ai_checklist_summary.png" 
-                    alt="AI Checklist Summary & Insights Slide Screenshot" 
-                    className="w-full h-auto object-cover rounded-2xl"
-                  />
-                </motion.div>
-              </Reveal3D>
-            </div>
-
-            {/* Right Column: Text Cards */}
-            <div className="lg:col-span-7 space-y-3.5 order-1 lg:order-2">
-              <Reveal3D direction="left">
-                <div className="space-y-3.5">
-                  {[
-                    'Automatically summarises completed checklist submissions.',
-                    'Identifies key observations from responses, remarks, readings, and photos.',
-                    'Highlights abnormal findings, failed items, missed checks, and incomplete responses.',
-                    'Summarises technician remarks into a clear and professional format.',
-                    'Identifies checklist items requiring follow-up action or supervisor review.',
-                    'Reduces manual review time and improves checklist review efficiency.'
-                  ].map((bullet, idx) => {
-                    const colors = [
-                      'bg-white border-amber-200 text-amber-600',
-                      'bg-white border-orange-200 text-orange-600',
-                      'bg-white border-red-200 text-red-600',
-                      'bg-white border-purple-200 text-purple-600',
-                      'bg-white border-blue-200 text-blue-600',
-                      'bg-white border-emerald-200 text-emerald-600'
-                    ];
-                    return (
-                      <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
-                        <div className="flex items-center gap-3.5">
-                          <div className="w-8 h-8 rounded-xl bg-amber-50 dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
-                            0{idx + 1}
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
-                            {bullet}
+                  {/* Card 5 */}
+                  <Reveal3D direction="right" delay={0.25}>
+                    <div className="p-4 sm:p-5 rounded-2xl bg-amber-50/80 dark:bg-slate-900 border border-amber-200/80 dark:border-amber-950 flex items-center justify-between gap-4 shadow-sm group cursor-default">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/80 text-amber-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <TrendingUp className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-display">
+                            Continuous Improvement
+                          </h3>
+                          <p className="text-xs text-slate-600 dark:text-slate-400 font-sans mt-0.5">
+                            Analyze trends and insights to prevent recurring issues and improve asset performance.
                           </p>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  </Reveal3D>
+
+                </div>
+
+                {/* Right Column: Slide Image */}
+                <div className="lg:col-span-6 flex flex-col">
+                  <Reveal3D direction="left">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="rounded-3xl p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-[#e30613]/50 transition-all duration-300"
+                    >
+                      <img
+                        src="/ai_fault.png"
+                        alt="AI Fault Reporting Slide Screenshot"
+                        className="w-full h-auto object-cover rounded-2xl"
+                      />
+                    </motion.div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+
+              {/* Bottom 3 Feature Pills */}
+              <Reveal3D direction="up" delay={0.3}>
+                <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
+                  <div className="px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <Zap className="w-4 h-4 text-blue-500" />
+                    <span>AI-Powered Suggestions</span>
+                  </div>
+                  <div className="px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <ShieldCheck className="w-4 h-4 text-emerald-500" />
+                    <span>Improved Response Time</span>
+                  </div>
+                  <div className="px-5 py-2 rounded-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <TrendingUp className="w-4 h-4 text-purple-500" />
+                    <span>Higher Asset Uptime</span>
+                  </div>
                 </div>
               </Reveal3D>
-            </div>
 
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
+
+          {/* ZIG-ZAG MODULE 2: AI FAULT REPORTING (VOICE DISPATCH) */}
+          <section className="py-28 px-4 sm:px-6 lg:px-8 bg-purple-50/40 dark:bg-bg-secondary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay with Gradient Mask */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-15 dark:opacity-25 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#a855f7_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.15] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Header & Tag */}
+              <Reveal3D direction="up">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-100/80 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 text-xs font-extrabold font-sans">
+                    <Mic className="w-3.5 h-3.5" />
+                    <span>Voice AI Dispatch</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    AI Fault Reporting <span className="text-purple-600 dark:text-purple-400">(Voice-Based & Dispatch)</span>
+                  </h2>
+                </div>
+              </Reveal3D>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column: Slide Image */}
+                <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
+                  <Reveal3D direction="right">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300"
+                    >
+                      <img
+                        src="/ai_fault2.png"
+                        alt="AI Fault Reporting Voice Based Dispatch Slide Screenshot"
+                        className="w-full h-auto object-cover rounded-2xl"
+                      />
+                    </motion.div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column: Text Cards */}
+                <div className="lg:col-span-7 space-y-3.5 order-1 lg:order-2">
+                  <Reveal3D direction="left">
+                    <div className="space-y-3.5">
+                      {[
+                        'Users can raise faults via mobile app, web portal, QR code, or integrated systems.',
+                        'Supports voice-based fault reporting in native languages for faster and easier fault submission.',
+                        'AI converts voice input into text and interprets the fault description.',
+                        'AI validates key details such as location, asset, fault type, severity, and issue description.',
+                        'Once validated, AI converts the fault into a work order / job sheet with a unique reference number.',
+                        'Work orders are automatically assigned to the respective maintenance team based on workflow, skillset, availability, and fault category.'
+                      ].map((bullet, idx) => {
+                        const colors = [
+                          'bg-white border-purple-200 text-purple-600',
+                          'bg-white border-blue-200 text-blue-600',
+                          'bg-white border-emerald-200 text-emerald-600',
+                          'bg-white border-amber-200 text-amber-600',
+                          'bg-white border-red-200 text-red-600',
+                          'bg-white border-indigo-200 text-indigo-600'
+                        ];
+                        return (
+                          <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
+                            <div className="flex items-center gap-3.5">
+                              <div className="w-8 h-8 rounded-xl bg-purple-50 dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
+                                0{idx + 1}
+                              </div>
+                              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
+                                {bullet}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* ZIG-ZAG MODULE 3: AI KNOWLEDGE MANAGEMENT SYSTEM */}
+          <section className="py-28 px-4 sm:px-6 lg:px-8 bg-blue-50/30 dark:bg-bg-primary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay with Gradient Mask */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.08] dark:opacity-20 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.12] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Header & Tag */}
+              <Reveal3D direction="up">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 text-xs font-extrabold font-sans">
+                    <BookOpen className="w-3.5 h-3.5" />
+                    <span>Knowledge Base AI</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    AI-Based <span className="text-blue-600 dark:text-blue-400">Knowledge Management System</span>
+                  </h2>
+                </div>
+              </Reveal3D>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column: Text Cards */}
+                <div className="lg:col-span-7 space-y-3.5">
+                  <Reveal3D direction="right">
+                    <div className="space-y-3.5">
+                      {[
+                        'Quick access to SOPs, manuals, guides, and maintenance documents.',
+                        'Users can ask questions in simple language and get relevant answers.',
+                        'Provides step-by-step troubleshooting guidance for technicians.',
+                        'Searches uploaded documents such as manuals, procedures, and safety guidelines.',
+                        'Recommends actions based on approved documents and past maintenance records.',
+                        'Supports faster onboarding and reduces dependency on senior staff.'
+                      ].map((bullet, idx) => {
+                        const colors = [
+                          'bg-blue-50/80 border-blue-200/80 text-blue-600',
+                          'bg-teal-50/80 border-teal-200/80 text-teal-600',
+                          'bg-emerald-50/80 border-emerald-200/80 text-emerald-600',
+                          'bg-purple-50/80 border-purple-200/80 text-purple-600',
+                          'bg-indigo-50/80 border-indigo-200/80 text-indigo-600',
+                          'bg-amber-50/80 border-amber-200/80 text-amber-600'
+                        ];
+                        return (
+                          <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
+                            <div className="flex items-center gap-3.5">
+                              <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
+                                0{idx + 1}
+                              </div>
+                              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
+                                {bullet}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column: Slide Image */}
+                <div className="lg:col-span-5 flex flex-col">
+                  <Reveal3D direction="left">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="rounded-3xl p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-blue-500/50 transition-all duration-300"
+                    >
+                      <img
+                        src="/ai_knowledge.png"
+                        alt="AI Knowledge Management System Slide Screenshot"
+                        className="w-full h-auto object-cover rounded-2xl"
+                      />
+                    </motion.div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* ZIG-ZAG MODULE 4: AI CHECKLIST LIBRARY */}
+          <section className="py-28 px-4 sm:px-6 lg:px-8 bg-emerald-50/40 dark:bg-bg-secondary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay with Gradient Mask */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.10] dark:opacity-20 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#10b981_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.14] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Header & Tag */}
+              <Reveal3D direction="up">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 text-xs font-extrabold font-sans">
+                    <ClipboardCheck className="w-3.5 h-3.5" />
+                    <span>Checklist Digitalization</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    AI Checklist Library & <span className="text-emerald-600 dark:text-emerald-400">Digitalization</span>
+                  </h2>
+                </div>
+              </Reveal3D>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column: Slide Image */}
+                <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
+                  <Reveal3D direction="right">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-emerald-500/50 transition-all duration-300"
+                    >
+                      <img
+                        src="/ai_checklist.png"
+                        alt="AI Checklist Library & Digitalization Slide Screenshot"
+                        className="w-full h-auto object-cover rounded-2xl"
+                      />
+                    </motion.div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column: Text Cards */}
+                <div className="lg:col-span-7 space-y-3.5 order-1 lg:order-2">
+                  <Reveal3D direction="left">
+                    <div className="space-y-3.5">
+                      {[
+                        'Provides a reusable checklist template library for inspection, maintenance, audit, and compliance.',
+                        'Users can select templates based on asset, location, service type, or frequency.',
+                        'AI can generate new checklists from simple text prompts.',
+                        'AI can import and digitalise existing PDFs, scanned forms, or paper checklists.',
+                        'Digital checklists can be linked to assets, PM schedules, work orders, and service teams.',
+                        'Helps reduce paperwork, improve consistency, and strengthen operational control.'
+                      ].map((bullet, idx) => {
+                        const colors = [
+                          'bg-white border-emerald-200 text-emerald-600',
+                          'bg-white border-teal-200 text-teal-600',
+                          'bg-white border-blue-200 text-blue-600',
+                          'bg-white border-purple-200 text-purple-600',
+                          'bg-white border-amber-200 text-amber-600',
+                          'bg-white border-red-200 text-red-600'
+                        ];
+                        return (
+                          <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
+                            <div className="flex items-center gap-3.5">
+                              <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
+                                0{idx + 1}
+                              </div>
+                              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
+                                {bullet}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* ZIG-ZAG MODULE 5: AI ASSISTANT */}
+          <section className="py-28 px-4 sm:px-6 lg:px-8 bg-pink-50/30 dark:bg-bg-primary border-b border-border-color relative overflow-hidden">
+            {/* Background Image Overlay with Gradient Mask */}
+            <div
+              className="absolute inset-0 bg-cover bg-center mix-blend-multiply opacity-[0.08] dark:opacity-20 pointer-events-none transition-opacity"
+              style={{ backgroundImage: `url('https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=2000&q=80')` }}
+            />
+            {/* Background Decorative Pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(#ec4899_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.12] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Header & Tag */}
+              <Reveal3D direction="up">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 text-xs font-extrabold font-sans">
+                    <Bot className="w-3.5 h-3.5" />
+                    <span>Intelligent AI Bot</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    AI <span className="text-pink-600 dark:text-pink-400">Assistant</span>
+                  </h2>
+                </div>
+              </Reveal3D>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column: Text Cards */}
+                <div className="lg:col-span-7 space-y-3.5">
+                  <Reveal3D direction="right">
+                    <div className="space-y-3.5">
+                      {[
+                        'Enables users to interact with the CMMS using simple natural language.',
+                        'Users can ask about faults, work orders, assets, checklists, PM tasks, and compliance.',
+                        'Quickly retrieves information without searching multiple screens.',
+                        'Provides updates on pending jobs, overdue tasks, repeated faults, and job status.',
+                        'Gives management insights on service performance, response time, and maintenance trends.',
+                        'Supports chart and compliance analysis for SLA, checklist compliance, and fault trends.'
+                      ].map((bullet, idx) => {
+                        const colors = [
+                          'bg-pink-50/80 border-pink-200/80 text-pink-600',
+                          'bg-purple-50/80 border-purple-200/80 text-purple-600',
+                          'bg-blue-50/80 border-blue-200/80 text-blue-600',
+                          'bg-indigo-50/80 border-indigo-200/80 text-indigo-600',
+                          'bg-teal-50/80 border-teal-200/80 text-teal-600',
+                          'bg-red-50/80 border-red-200/80 text-red-600'
+                        ];
+                        return (
+                          <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
+                            <div className="flex items-center gap-3.5">
+                              <div className="w-8 h-8 rounded-xl bg-white dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
+                                0{idx + 1}
+                              </div>
+                              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
+                                {bullet}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column: Slide Image */}
+                <div className="lg:col-span-5 flex flex-col">
+                  <Reveal3D direction="left">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="rounded-3xl p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-pink-500/50 transition-all duration-300"
+                    >
+                      <img
+                        src="/ai_assisstant.png"
+                        alt="AI Assistant Slide Screenshot"
+                        className="w-full h-auto object-cover rounded-2xl"
+                      />
+                    </motion.div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* ZIG-ZAG MODULE 6: AI CHECKLIST SUMMARY & INSIGHTS */}
+          <section className="py-28 px-4 sm:px-6 lg:px-8 bg-amber-50/40 dark:bg-bg-secondary border-b border-border-color relative overflow-hidden">
+            {/* Background Decorative Pattern (Clean Pattern Only) */}
+            <div className="absolute inset-0 bg-[radial-gradient(#f59e0b_1.5px,transparent_1.5px)] [background-size:28px_28px] opacity-[0.14] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+
+              {/* Header & Tag */}
+              <Reveal3D direction="up">
+                <div className="space-y-3">
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100/80 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 text-xs font-extrabold font-sans">
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>Automated Insights</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    AI Checklist <span className="text-amber-600 dark:text-amber-400">Summary & Insights</span>
+                  </h2>
+                </div>
+              </Reveal3D>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Column: Slide Image */}
+                <div className="lg:col-span-5 flex flex-col order-2 lg:order-1">
+                  <Reveal3D direction="right">
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                      className="rounded-3xl p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden hover:border-amber-500/50 transition-all duration-300"
+                    >
+                      <img
+                        src="/ai_checklist_summary.png"
+                        alt="AI Checklist Summary & Insights Slide Screenshot"
+                        className="w-full h-auto object-cover rounded-2xl"
+                      />
+                    </motion.div>
+                  </Reveal3D>
+                </div>
+
+                {/* Right Column: Text Cards */}
+                <div className="lg:col-span-7 space-y-3.5 order-1 lg:order-2">
+                  <Reveal3D direction="left">
+                    <div className="space-y-3.5">
+                      {[
+                        'Automatically summarises completed checklist submissions.',
+                        'Identifies key observations from responses, remarks, readings, and photos.',
+                        'Highlights abnormal findings, failed items, missed checks, and incomplete responses.',
+                        'Summarises technician remarks into a clear and professional format.',
+                        'Identifies checklist items requiring follow-up action or supervisor review.',
+                        'Reduces manual review time and improves checklist review efficiency.'
+                      ].map((bullet, idx) => {
+                        const colors = [
+                          'bg-white border-amber-200 text-amber-600',
+                          'bg-white border-orange-200 text-orange-600',
+                          'bg-white border-red-200 text-red-600',
+                          'bg-white border-purple-200 text-purple-600',
+                          'bg-white border-blue-200 text-blue-600',
+                          'bg-white border-emerald-200 text-emerald-600'
+                        ];
+                        return (
+                          <div key={idx} className={`p-4 rounded-2xl ${colors[idx % colors.length]} dark:bg-slate-900 dark:border-slate-800 border flex items-center justify-between gap-4 shadow-sm cursor-default`}>
+                            <div className="flex items-center gap-3.5">
+                              <div className="w-8 h-8 rounded-xl bg-amber-50 dark:bg-slate-800 font-bold font-mono text-xs flex items-center justify-center shrink-0 shadow-xs">
+                                0{idx + 1}
+                              </div>
+                              <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 font-medium font-sans leading-relaxed">
+                                {bullet}
+                              </p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </Reveal3D>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* FOOTER CTA (PREMIUM FLOATING CARD WITH HOVER EFFECT) */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50/60 dark:bg-bg-primary relative overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <Reveal3D direction="up">
-            <motion.div 
+            <motion.div
               whileHover={{ y: -8, scale: 1.01 }}
               transition={{ type: "spring", stiffness: 200, damping: 20 }}
               className="relative rounded-3xl p-8 sm:p-14 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white shadow-2xl border border-slate-800/80 overflow-hidden group cursor-default"
             >
               {/* Decorative Background Image Overlay */}
-              <div 
+              <div
                 className="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-20 pointer-events-none"
                 style={{ backgroundImage: `url('https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=2000&q=80')` }}
               />
@@ -1582,12 +2275,12 @@ export default function A8CmmsPage() {
               {/* Decorative Background Glow Shapes */}
               <div className="absolute top-0 right-0 w-96 h-96 bg-[#e30613]/20 rounded-full blur-3xl group-hover:bg-[#e30613]/30 transition-all duration-700 pointer-events-none" />
               <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl group-hover:bg-blue-600/25 transition-all duration-700 pointer-events-none" />
-              
+
               {/* Subtle Grid Pattern Overlay */}
               <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0d_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0d_1px,transparent_1px)] bg-[size:28px_28px] pointer-events-none" />
 
               <div className="relative z-10 text-center max-w-3xl mx-auto space-y-8">
-                
+
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[#e30613] text-xs font-mono font-bold uppercase tracking-widest shadow-inner">
                   <span>🚀 Enterprise Solution</span>
@@ -1613,7 +2306,7 @@ export default function A8CmmsPage() {
                     <ArrowRight className="w-4.5 h-4.5 group-hover/btn:translate-x-1.5 transition-transform" />
                   </a>
 
-                  
+
                 </div>
 
               </div>
