@@ -23,6 +23,8 @@ export default function Navbar({ theme, toggleTheme }) {
     setIsOpen(false);
   }, [location]);
 
+  const [cmmsOpen, setCmmsOpen] = useState(true);
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
@@ -32,7 +34,16 @@ export default function Navbar({ theme, toggleTheme }) {
       name: 'AI Powered Smart Integrated Facilities Management', 
       href: '/a8-cmms',
       subPages: [
-        { title: 'A8 CMMS', href: '/a8-cmms', desc: 'Computerized Maintenance Management System' },
+        { 
+          title: 'A8 CMMS', 
+          href: '/a8-cmms?page=1', 
+          desc: 'Computerized Maintenance Management System',
+          pages: [
+            { title: 'Page 1 — Main Overview', href: '/a8-cmms?page=1', desc: 'Basics, Mobile CMMS App & Strategic ROI' },
+            { title: 'Page 2 — Features & Capabilities', href: '/a8-cmms?page=2', desc: '18 Enterprise CMMS Feature Modules' },
+            { title: 'Page 3 — Integrated Solutions & FAQ', href: '/a8-cmms?page=3', desc: 'Integrated Solutions & Enterprise FAQ' },
+          ]
+        },
         { title: 'A8 IOT', href: '/a8-iot', desc: 'IoT & Condition-Based Monitoring Platform' }
       ]
     },
@@ -67,17 +78,6 @@ export default function Navbar({ theme, toggleTheme }) {
 
             {/* Menu trigger button & Theme Toggle */}
             <div className="flex items-center gap-4">
-              {/* Ask AI Button */}
-              <Link
-                to="/contact"
-                className="group p-[1px] rounded-full bg-border-color hover:bg-gradient-to-r hover:from-accent hover:to-[#ff3b46] transition-all duration-300 cursor-pointer block"
-              >
-                {/* <div className="px-4 py-2 rounded-full bg-bg-secondary text-text-primary group-hover:text-accent transition-colors duration-300 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider font-display">
-                  <span>Ask AI</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                </div> */}
-              </Link>
-
               <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
               
               <button
@@ -192,36 +192,102 @@ export default function Navbar({ theme, toggleTheme }) {
                                 animate={{ opacity: 1, y: 0, height: 'auto' }}
                                 exit={{ opacity: 0, y: -8, height: 0 }}
                                 transition={{ duration: 0.25 }}
-                                className="mt-2 mb-2 p-3 bg-bg-primary dark:bg-slate-900 border border-border-color dark:border-accent/30 rounded-2xl shadow-xl backdrop-blur-md overflow-hidden"
+                                className="mt-2 mb-2 p-3 bg-bg-primary dark:bg-slate-900 border border-border-color dark:border-accent/30 rounded-2xl shadow-xl backdrop-blur-md overflow-hidden space-y-2"
                               >
-                                <span className="text-[10px] uppercase tracking-wider text-accent font-mono font-bold block mb-2 px-1">
-                                  Select Module (2)
+                                <span className="text-[10px] uppercase tracking-wider text-accent font-mono font-bold block px-1">
+                                  Facilities Management Modules
                                 </span>
+
                                 <div className="grid grid-cols-1 gap-2">
-                                  {link.subPages.map((sub) => (
-                                    <Link
-                                      key={sub.title}
-                                      to={sub.href}
-                                      onClick={() => {
-                                        setIsOpen(false);
-                                        setShowSubMenu(false);
-                                      }}
-                                      className="p-2.5 rounded-xl bg-bg-secondary dark:bg-slate-800/80 hover:bg-accent/15 dark:hover:bg-accent/20 border border-border-color dark:border-slate-700/50 hover:border-accent transition-all group/sub flex items-center justify-between"
-                                    >
-                                      <div>
-                                        <div className="text-xs font-bold text-text-primary dark:text-white group-hover/sub:text-accent font-display flex items-center gap-1.5">
-                                          <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
-                                          {sub.title}
+                                  {link.subPages.map((sub) => {
+                                    const hasPages = Boolean(sub.pages);
+                                    return (
+                                      <div key={sub.title} className="rounded-xl border border-border-color dark:border-slate-700/50 bg-bg-secondary dark:bg-slate-800/80 overflow-hidden">
+                                        
+                                        {/* Module Header Row */}
+                                        <div 
+                                          className="p-2.5 flex items-center justify-between hover:bg-accent/10 transition-colors cursor-pointer group/sub"
+                                          onMouseEnter={() => hasPages && setCmmsOpen(true)}
+                                          onClick={() => {
+                                            if (hasPages) {
+                                              setCmmsOpen(!cmmsOpen);
+                                            } else {
+                                              setIsOpen(false);
+                                              setShowSubMenu(false);
+                                            }
+                                          }}
+                                        >
+                                          <Link
+                                            to={sub.href}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              setIsOpen(false);
+                                              setShowSubMenu(false);
+                                            }}
+                                            className="flex-1"
+                                          >
+                                            <div className="text-xs font-extrabold text-text-primary dark:text-white group-hover/sub:text-accent font-display flex items-center gap-1.5">
+                                              <span className="w-2 h-2 rounded-full bg-accent"></span>
+                                              {sub.title}
+                                            </div>
+                                            <span className="text-[10px] text-text-secondary dark:text-slate-400 font-sans block mt-0.5">
+                                              {sub.desc}
+                                            </span>
+                                          </Link>
+
+                                          {hasPages && (
+                                            <button 
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                setCmmsOpen(!cmmsOpen);
+                                              }}
+                                              className="p-1 rounded-md text-accent hover:bg-accent/20 transition-all cursor-pointer ml-2 shrink-0"
+                                            >
+                                              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${cmmsOpen ? 'rotate-180' : ''}`} />
+                                            </button>
+                                          )}
                                         </div>
-                                        <span className="text-[10px] text-text-secondary dark:text-slate-400 font-sans block mt-0.5">
-                                          {sub.desc}
-                                        </span>
+
+                                        {/* Nested 3 Pages for A8 CMMS */}
+                                        {hasPages && cmmsOpen && (
+                                          <div className="p-2 pt-1 border-t border-border-color/50 dark:border-slate-700/40 bg-white/50 dark:bg-slate-900/60 space-y-1.5">
+                                            <span className="text-[9px] uppercase font-mono font-bold text-slate-400 dark:text-slate-500 px-1">
+                                              A8 CMMS Sections (3 Pages)
+                                            </span>
+                                            {sub.pages.map((p, pIdx) => (
+                                              <Link
+                                                key={p.title}
+                                                to={p.href}
+                                                onClick={() => {
+                                                  setIsOpen(false);
+                                                  setShowSubMenu(false);
+                                                }}
+                                                className="p-2 rounded-lg bg-white dark:bg-slate-800 hover:bg-accent/15 dark:hover:bg-accent/25 border border-slate-200/60 dark:border-slate-700/40 hover:border-accent transition-all flex items-center justify-between group/page"
+                                              >
+                                                <div className="flex items-center gap-2">
+                                                  <span className="w-5 h-5 rounded-md bg-red-100 dark:bg-red-950/60 text-[#e30613] text-[10px] font-bold font-mono flex items-center justify-center shrink-0">
+                                                    0{pIdx + 1}
+                                                  </span>
+                                                  <div>
+                                                    <div className="text-[11px] font-bold text-slate-900 dark:text-white group-hover/page:text-[#e30613] font-display">
+                                                      {p.title}
+                                                    </div>
+                                                    <div className="text-[9px] text-slate-500 dark:text-slate-400 font-sans">
+                                                      {p.desc}
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <span className="text-xs text-[#e30613] font-bold opacity-0 group-hover/page:opacity-100 transition-opacity">
+                                                  →
+                                                </span>
+                                              </Link>
+                                            ))}
+                                          </div>
+                                        )}
+
                                       </div>
-                                      <span className="text-xs text-accent font-bold opacity-0 group-hover/sub:opacity-100 transition-opacity">
-                                        →
-                                      </span>
-                                    </Link>
-                                  ))}
+                                    );
+                                  })}
                                 </div>
                               </motion.div>
                             )}

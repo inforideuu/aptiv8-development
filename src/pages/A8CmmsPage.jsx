@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Sparkles, CheckCircle2, ArrowRight, Smartphone, Mic, BookOpen,
@@ -11,7 +12,20 @@ import {
 import Reveal3D from '../components/Reveal3D';
 
 export default function A8CmmsPage() {
-  const [activePage, setActivePage] = React.useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = parseInt(searchParams.get('page'), 10) || 1;
+  const [activePage, setActivePageState] = React.useState(initialPage);
+
+  React.useEffect(() => {
+    const pageVal = parseInt(searchParams.get('page'), 10) || 1;
+    setActivePageState(pageVal);
+  }, [searchParams]);
+
+  const setActivePage = (page) => {
+    setActivePageState(page);
+    setSearchParams({ page: page.toString() });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [activeSolutionTab, setActiveSolutionTab] = React.useState('maintenance');
   const [openFaqIndex, setOpenFaqIndex] = React.useState(0);
 
@@ -133,6 +147,15 @@ export default function A8CmmsPage() {
     }
   ];
 
+  const [expandedFeatures, setExpandedFeatures] = React.useState({});
+
+  const toggleFeatureExpand = (idx) => {
+    setExpandedFeatures(prev => ({
+      ...prev,
+      [idx]: !prev[idx]
+    }));
+  };
+
   return (
     <div className="relative pt-20 bg-bg-primary text-text-primary min-h-screen font-sans selection:bg-[#e30613] selection:text-white overflow-hidden">
 
@@ -184,19 +207,22 @@ export default function A8CmmsPage() {
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">CMMS View:</span>
             <span className="px-3 py-1 rounded-full bg-red-100 border border-red-200 text-[#e30613] dark:bg-red-500/10 dark:border-red-500/20 text-xs font-bold font-mono">
-              {activePage === 1 ? 'Page 1 — Main Overview' : 'Page 2 — Features & Capabilities'}
+              {activePage === 1 && 'Page 1 — Main Overview'}
+              {activePage === 2 && 'Page 2 — Features & Capabilities'}
+              {activePage === 3 && 'Page 3 — Integrated Solutions & FAQ'}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActivePage(1)}
-              className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all ${activePage === 1
+              className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 ${activePage === 1
                   ? 'bg-[#e30613] text-white shadow-lg shadow-red-500/30'
                   : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:border-transparent dark:hover:bg-slate-700 dark:hover:text-white'
                 }`}
             >
-              Page 1
+              <span>Page 1</span>
+              {activePage === 1 && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
             </button>
             <button
               onClick={() => setActivePage(2)}
@@ -206,7 +232,17 @@ export default function A8CmmsPage() {
                 }`}
             >
               <span>Page 2</span>
-              <span className="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400 animate-pulse" />
+              {activePage === 2 && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
+            </button>
+            <button
+              onClick={() => setActivePage(3)}
+              className={`px-5 py-2 rounded-xl text-xs font-extrabold transition-all flex items-center gap-2 ${activePage === 3
+                  ? 'bg-[#e30613] text-white shadow-lg shadow-red-500/30'
+                  : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 dark:bg-slate-800 dark:text-slate-400 dark:border-transparent dark:hover:bg-slate-700 dark:hover:text-white'
+                }`}
+            >
+              <span>Page 3</span>
+              {activePage === 3 && <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />}
             </button>
           </div>
         </div>
@@ -216,113 +252,154 @@ export default function A8CmmsPage() {
         /* PAGE 2 CONTENT: SPLIT INTO SEPARATE DISTINCT SECTIONS */
         <>
 
-          {/* SECTION 1: TOUCHING THE BASICS OF CMMS SOFTWARE */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#fbfcfd] dark:bg-bg-secondary text-slate-900 dark:text-white relative overflow-hidden border-b border-slate-200/60 dark:border-border-color">
-            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+          {/* SECTION 1: TOUCHING THE BASICS OF CMMS SOFTWARE (MATCHING IMAGE DESIGN EXACTLY) */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#f5f8ff] via-[#f9fbff] to-[#f4f7ff] dark:bg-[#070d18] text-slate-900 dark:text-white relative overflow-hidden border-b border-slate-200/80 dark:border-slate-800">
+            {/* Soft decorative background dots / radial glows */}
+            <div className="absolute top-6 left-6 w-72 h-72 bg-red-400/10 dark:bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-6 right-6 w-80 h-80 bg-blue-400/10 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Top Right Decorative Dot Grid */}
+            <div className="absolute top-12 right-12 opacity-30 pointer-events-none hidden md:block bg-[radial-gradient(#94a3b8_2px,transparent_2px)] [background-size:14px_14px] w-36 h-36" />
+            <div className="absolute bottom-12 right-12 opacity-30 pointer-events-none hidden md:block bg-[radial-gradient(#94a3b8_2px,transparent_2px)] [background-size:14px_14px] w-36 h-36" />
+
+            <div className="max-w-7xl mx-auto space-y-14 relative z-10">
 
               {/* Section 1 Header Banner */}
               <Reveal3D direction="up">
                 <div className="text-center max-w-4xl mx-auto space-y-4">
-                  {/* Pill Badge with horizontal accent lines */}
+                  {/* Top Badge: Powerful CMS with Red Lines */}
                   <div className="flex items-center justify-center gap-3">
-                    <span className="w-12 sm:w-16 h-[1px] bg-red-300 dark:bg-red-900/60" />
-                    <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-red-200 dark:border-red-900/40 bg-red-50/50 dark:bg-red-950/30 text-[#e30613] text-[11px] font-bold tracking-widest uppercase font-sans">
-                      <BookOpen className="w-3.5 h-3.5 text-[#e30613]" />
-                      <span>FOUNDATION & BASICS</span>
+                    <span className="w-10 sm:w-14 h-[2px] bg-[#e30613]" />
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-red-200 dark:border-red-900/50 bg-red-50/80 dark:bg-red-950/40 text-[#e30613] text-xs font-bold font-sans tracking-wide shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 text-[#e30613]" />
+                      <span>Powerful CMS</span>
                     </div>
-                    <span className="w-12 sm:w-16 h-[1px] bg-red-300 dark:bg-red-900/60" />
+                    <span className="w-10 sm:w-14 h-[2px] bg-[#e30613]" />
                   </div>
 
-                  {/* Elegant Title */}
-                  <h2 className="text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-[#0f172a] dark:text-white tracking-tight leading-tight">
-                    Touching the basis of CMS software
+                  {/* Main Headline with Red CMS Highlight */}
+                  <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0f172a] dark:text-white font-sans tracking-tight leading-tight">
+                    Touching the Basis of <span className="text-[#e30613]">CMMS</span> Software
                   </h2>
 
                   {/* Subtitle / Intro Description */}
-                  <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto font-normal">
-                    A Computerized Maintenance Management System (CMMS) is a sophisticated software solution to centralize and streamline maintenance management tasks. </p>
+                  <p className="text-xs sm:text-sm md:text-base text-slate-500 dark:text-slate-400 leading-relaxed font-sans max-w-3xl mx-auto font-normal">
+                    A Computerized Maintenance Management System (CMMS) is a sophisticated software solution to centralize asset intelligence and streamline maintenance management tasks.
+                  </p>
                 </div>
               </Reveal3D>
 
-              {/* 10 Strategic Benefits Grid (2 Rows of 5 Cards) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {/* 10 Strategic Benefits Grid (Styling Matching Attached Image) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[
                   {
                     title: "Boost your Bottom line:",
                     desc: "With CMMS, you can significantly reduce maintenance costs and unexpected downtimes, ensuring your assets are always up and running. This means more productivity and more profits!",
-                    icon: Rocket,
-                    iconBg: "bg-emerald-100/70 border-emerald-200/80 text-emerald-600 dark:bg-emerald-950/40 dark:border-emerald-800/60 dark:text-emerald-400"
+                    icon: Leaf,
+                    cardBorder: "border-emerald-200 dark:border-emerald-900/60 bg-gradient-to-b from-emerald-50/40 to-white dark:from-emerald-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400",
+                    arrowBg: "bg-emerald-100/70 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"
                   },
                   {
                     title: "Illuminate your decision making:",
                     desc: "Dive deep into data-driven insights. CMMS provides detailed analytics and reports, helping you make informed decisions that can transform your maintenance operations and drive growth.",
-                    icon: BarChart3,
-                    iconBg: "bg-blue-100/70 border-blue-200/80 text-blue-600 dark:bg-blue-950/40 dark:border-blue-800/60 dark:text-blue-400"
+                    icon: Calendar,
+                    cardBorder: "border-blue-200 dark:border-blue-900/60 bg-gradient-to-b from-blue-50/40 to-white dark:from-blue-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400",
+                    arrowBg: "bg-blue-100/70 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400"
                   },
                   {
                     title: "Global operations, seamless management:",
                     desc: "Whether your assets are in New York or New Delhi, manage them effortlessly from one centralized platform. CMMS offers real-time tracking and management, no matter where your assets are located.",
-                    icon: Globe,
-                    iconBg: "bg-purple-100/70 border-purple-200/80 text-purple-600 dark:bg-purple-950/40 dark:border-purple-800/60 dark:text-purple-400"
+                    icon: Layers,
+                    cardBorder: "border-purple-200 dark:border-purple-900/60 bg-gradient-to-b from-purple-50/40 to-white dark:from-purple-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400",
+                    arrowBg: "bg-purple-100/70 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400"
                   },
                   {
                     title: "Time is money!, save both:",
                     desc: "Automate routine tasks, streamline work orders, and reduce manual paperwork. With CMMS, you get more done in less time, freeing up resources for other revenue-generating activities.",
                     icon: Clock,
-                    iconBg: "bg-amber-100/70 border-amber-200/80 text-amber-600 dark:bg-amber-950/40 dark:border-amber-800/60 dark:text-amber-400"
+                    cardBorder: "border-amber-200 dark:border-amber-900/60 bg-gradient-to-b from-amber-50/40 to-white dark:from-amber-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-amber-100 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400",
+                    arrowBg: "bg-amber-100/70 text-amber-600 dark:bg-amber-900/40 dark:text-amber-400"
                   },
                   {
                     title: "Maximize asset lifespan:",
                     desc: "Ensure your assets are always in tip-top shape. Regular maintenance schedules and timely repairs mean your equipment lasts longer and performs better.",
-                    icon: Zap,
-                    iconBg: "bg-cyan-100/70 border-cyan-200/80 text-cyan-600 dark:bg-cyan-950/40 dark:border-cyan-800/60 dark:text-cyan-400"
+                    icon: ShieldCheck,
+                    cardBorder: "border-cyan-200 dark:border-cyan-900/60 bg-gradient-to-b from-cyan-50/40 to-white dark:from-cyan-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-cyan-100 text-cyan-600 dark:bg-cyan-900/40 dark:text-cyan-400",
+                    arrowBg: "bg-cyan-100/70 text-cyan-600 dark:bg-cyan-900/40 dark:text-cyan-400"
                   },
                   {
                     title: "Stay connected always:",
                     desc: "With mobile integrations, receive real-time notifications and updates. You're always in the loop whether in the office or on the go.",
-                    icon: Smartphone,
-                    iconBg: "bg-red-100/70 border-red-200/80 text-red-500 dark:bg-red-950/40 dark:border-red-800/60 dark:text-red-400"
+                    icon: FileText,
+                    cardBorder: "border-pink-200 dark:border-pink-900/60 bg-gradient-to-b from-pink-50/40 to-white dark:from-pink-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-pink-100 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400",
+                    arrowBg: "bg-pink-100/70 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400"
                   },
                   {
                     title: "Elevate customer satisfaction:",
                     desc: "Deliver consistent and efficient service to your clients. With reduced downtimes and efficient operations, ensure your clients are always satisfied, leading to repeat business and glowing reviews.",
                     icon: Users,
-                    iconBg: "bg-pink-100/70 border-pink-200/80 text-pink-500 dark:bg-pink-950/40 dark:border-pink-800/60 dark:text-pink-400"
+                    cardBorder: "border-purple-200 dark:border-purple-900/60 bg-gradient-to-b from-purple-50/40 to-white dark:from-purple-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-purple-100 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400",
+                    arrowBg: "bg-purple-100/70 text-purple-600 dark:bg-purple-900/40 dark:text-purple-400"
                   },
                   {
                     title: "Safety first always:",
                     desc: "Ensure compliance with industry standards and maintain a safe working environment. CMMS helps track safety protocols and certifications and ensures all equipment is up to code.",
-                    icon: ShieldCheck,
-                    iconBg: "bg-emerald-100/70 border-emerald-200/80 text-emerald-600 dark:bg-emerald-950/40 dark:border-emerald-800/60 dark:text-emerald-400"
+                    icon: Settings,
+                    cardBorder: "border-emerald-200 dark:border-emerald-900/60 bg-gradient-to-b from-emerald-50/40 to-white dark:from-emerald-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-emerald-100 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400",
+                    arrowBg: "bg-emerald-100/70 text-emerald-600 dark:bg-emerald-900/40 dark:text-emerald-400"
                   },
                   {
                     title: "Professionalism at its best:",
                     desc: "Present detailed and professional work order quotations, maintenance reports, and more. Impress clients and stakeholders with your organized and efficient approach.",
-                    icon: Users,
-                    iconBg: "bg-indigo-100/70 border-indigo-200/80 text-indigo-600 dark:bg-indigo-950/40 dark:border-indigo-800/60 dark:text-indigo-400"
+                    icon: BarChart3,
+                    cardBorder: "border-blue-200 dark:border-blue-900/60 bg-gradient-to-b from-blue-50/40 to-white dark:from-blue-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400",
+                    arrowBg: "bg-blue-100/70 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400"
                   },
                   {
                     title: "Go green, save green:",
                     desc: "Implement sustainable maintenance practices, reduce waste, and optimize resource usage. Not only is it good for the planet, but it's also great for your brand image and savings!",
-                    icon: Leaf,
-                    iconBg: "bg-teal-100/70 border-teal-200/80 text-teal-600 dark:bg-teal-950/40 dark:border-teal-800/60 dark:text-teal-400"
+                    icon: TrendingUp,
+                    cardBorder: "border-pink-200 dark:border-pink-900/60 bg-gradient-to-b from-pink-50/40 to-white dark:from-pink-950/20 dark:to-[#0b1528]",
+                    iconBg: "bg-pink-100 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400",
+                    arrowBg: "bg-pink-100/70 text-pink-600 dark:bg-pink-900/40 dark:text-pink-400"
                   }
                 ].map((item, idx) => {
                   const IconComp = item.icon;
                   return (
                     <Reveal3D key={idx} direction="up" delay={0.04 * idx}>
-                      <div className="h-full p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:scale-105 transition-all duration-300 ease-out flex flex-col justify-between cursor-pointer">
+                      <div className={`h-full p-7 rounded-3xl border ${item.cardBorder} shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group`}>
                         <div className="space-y-4">
-                          {/* Soft colored rounded icon badge */}
-                          <div className={`w-11 h-11 rounded-2xl border flex items-center justify-center ${item.iconBg}`}>
-                            <IconComp className="w-5 h-5 stroke-[2]" />
+                          {/* Header Row: Rounded Icon Box + Title + Right Arrow Button */}
+                          <div className="flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-3">
+                              {/* Soft Colored Rounded Square Icon Box */}
+                              <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${item.iconBg}`}>
+                                <IconComp className="w-5 h-5 stroke-[2.2]" />
+                              </div>
+
+                              {/* Title */}
+                              <h3 className="text-sm sm:text-base font-bold text-[#0f172a] dark:text-white font-sans leading-snug">
+                                {item.title}
+                              </h3>
+                            </div>
+
+                            {/* Small Right Arrow Circle Badge */}
+                            <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${item.arrowBg} transition-transform duration-300 group-hover:translate-x-1`}>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </div>
                           </div>
-                          {/* Card Heading */}
-                          <h3 className="text-sm font-extrabold text-[#0f172a] dark:text-white font-sans leading-snug">
-                            {item.title}
-                          </h3>
-                          {/* Card Text */}
-                          <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans">
+
+                          {/* Card Text Description */}
+                          <p className="text-xs sm:text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-sans pt-1">
                             {item.desc}
                           </p>
                         </div>
@@ -335,22 +412,27 @@ export default function A8CmmsPage() {
           </section>
 
           {/* SECTION 2: THE ROBUST FEATURES OF A CMMS */}
-          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary text-slate-900 dark:text-white relative overflow-hidden border-b border-border-color">
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="max-w-7xl mx-auto space-y-12 relative z-10">
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#060c17] text-slate-900 dark:text-white relative overflow-hidden border-b border-border-color">
+            <div className="absolute top-1/3 right-0 w-96 h-96 bg-red-600/5 rounded-full blur-3xl pointer-events-none" />
+            <div className="max-w-7xl mx-auto space-y-14 relative z-10">
 
               {/* Section 2 Header Banner */}
               <Reveal3D direction="up">
-                <div className="text-center max-w-4xl mx-auto space-y-3">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/90 dark:bg-blue-500/10 border border-blue-200/60 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-bold font-mono uppercase tracking-widest">
-                    <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                    <span>Advanced Enterprise Suite</span>
+                <div className="text-center max-w-4xl mx-auto space-y-4">
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="w-12 sm:w-16 h-[1.5px] bg-[#e30613]" />
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[#e30613] text-xs font-bold font-mono uppercase tracking-widest shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 text-[#e30613] animate-pulse" />
+                      <span>Advanced Enterprise Suite</span>
+                    </div>
+                    <span className="w-12 sm:w-16 h-[1.5px] bg-[#e30613]" />
                   </div>
-                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                    The Robust Features of a CMMS
+                  
+                  <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    The Robust Features of <span className="text-[#e30613]">CMMS</span>
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto">
-                    Harness the capabilities of state-of-the-art CMMS Software designed to streamline maintenance operations. With a focus on proactive management, this platform ensures optimal utilization of facilities, assets, equipment, and work orders. Dive into a comprehensive solution that prioritizes preventive measures, mitigating potential issues before they become costly challenges.
+                  <p className="text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto">
+                    Harness the capabilities of state-of-the-art CMMS Software designed to streamline maintenance operations. With a focus on proactive management, this platform ensures optimal utilization of facilities, assets, equipment, and work orders.
                   </p>
                 </div>
               </Reveal3D>
@@ -426,7 +508,7 @@ export default function A8CmmsPage() {
                     desc: "This feature allows assets to be tagged with QR codes, which can be scanned to retrieve all relevant information about the asset, such as its maintenance history, specifications, and current status.\n\nQR code scanning offers a quick and efficient way to access asset information on the go, reducing the time technicians spend searching for asset details and ensuring they have all the information they need at their fingertips.",
                     icon: Fingerprint,
                     color: "text-[#e30613] bg-red-100 border-red-200 dark:text-[#e30613] dark:bg-red-500/10 dark:border-red-500/20",
-                    image: "https://images.unsplash.com/photo-1526304106518-2a900782cfa8?auto=format&fit=crop&w=600&q=80"
+                    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80"
                   },
                   {
                     title: "Work Request:",
@@ -486,32 +568,53 @@ export default function A8CmmsPage() {
                   }
                 ].map((item, idx) => {
                   const IconComp = item.icon;
+                  const isExpanded = !!expandedFeatures[idx];
+                  
                   return (
                     <Reveal3D key={idx} direction="up" delay={0.03 * idx}>
-                      <div className="h-full rounded-3xl bg-slate-50/70 dark:bg-slate-900 hover:bg-white dark:hover:bg-slate-800/90 border border-slate-200/80 dark:border-slate-800 transition-all duration-300 flex flex-col justify-between group shadow-sm hover:shadow-xl overflow-hidden">
+                      <div className="h-full rounded-3xl bg-white/90 dark:bg-[#0b1528]/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/80 transition-all duration-500 flex flex-col justify-between group shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_45px_rgba(227,6,19,0.15)] dark:hover:shadow-[0_20px_45px_rgba(255,59,71,0.2)] hover:border-[#e30613]/50 hover:-translate-y-1.5 overflow-hidden relative">
 
                         {/* Realistic Card Cover Image */}
-                        <div className="relative h-44 sm:h-48 w-full overflow-hidden shrink-0">
+                        <div className="relative h-48 w-full overflow-hidden shrink-0 bg-slate-900/40">
                           <img
                             src={item.image}
                             alt={item.title}
-                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80";
+                            }}
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-80" />
-                          <div className={`absolute top-3 left-3 w-9 h-9 rounded-xl border flex items-center justify-center backdrop-blur-md shadow-md ${item.color}`}>
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0b1528]/80 via-transparent to-transparent opacity-90" />
+                          <div className={`absolute top-3.5 left-3.5 w-10 h-10 rounded-2xl border flex items-center justify-center backdrop-blur-md shadow-md transition-transform duration-300 group-hover:scale-110 ${item.color}`}>
                             <IconComp className="w-4 h-4" />
                           </div>
                         </div>
 
                         {/* Card Content Body */}
-                        <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div className="p-6 flex-1 flex flex-col justify-between space-y-4 relative z-10">
                           <div className="space-y-2.5">
                             <h3 className="text-base font-extrabold text-slate-900 dark:text-white font-display leading-tight group-hover:text-[#e30613] transition-colors">
                               {item.title}
                             </h3>
-                            <div className="space-y-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans whitespace-pre-line">
+                            <div className={`space-y-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-sans whitespace-pre-line ${
+                              isExpanded ? '' : 'line-clamp-3'
+                            }`}>
                               {item.desc}
                             </div>
+                          </div>
+
+                          <div className="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                            <button
+                              onClick={() => toggleFeatureExpand(idx)}
+                              className="inline-flex items-center gap-1.5 text-xs font-bold font-sans text-[#e30613] hover:text-red-700 dark:hover:text-red-400 transition-colors cursor-pointer group/btn"
+                            >
+                              <span>{isExpanded ? 'View Less' : 'View More'}</span>
+                              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'group-hover/btn:translate-y-0.5'}`} />
+                            </button>
+                            <span className="text-[10px] font-mono font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                              Feature #{idx + 1}
+                            </span>
                           </div>
                         </div>
 
@@ -522,178 +625,189 @@ export default function A8CmmsPage() {
               </div>
             </div>
 
-            {/* SECTION: INTEGRATED SOLUTIONS FOR MAINTENANCE, ASSETS, FACILITIES */}
-            <div className="max-w-7xl mx-auto mt-20 pt-16 border-t border-slate-200 dark:border-slate-800 space-y-12 relative z-10">
+            {/* Pagination Controls at Bottom of Page 2 */}
+            <div className="pt-12 flex justify-center items-center gap-4">
+              <button
+                onClick={() => setActivePage(1)}
+                className="px-6 py-3 rounded-2xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 border border-slate-200 dark:border-slate-700 transition-all shadow-md cursor-pointer"
+              >
+                <span>← Page 1</span>
+              </button>
+              <button
+                onClick={() => setActivePage(3)}
+                className="px-6 py-3 rounded-2xl bg-[#e30613] hover:bg-[#c20510] text-white font-bold text-xs flex items-center gap-2 shadow-lg shadow-red-500/25 transition-all cursor-pointer"
+              >
+                <span>Page 3 — Integrated Solutions & FAQ →</span>
+              </button>
+            </div>
+          </section>
+        </>
+      ) : activePage === 3 ? (
+        /* PAGE 3 CONTENT: INTEGRATED SOLUTIONS & FAQ */
+        <>
+          {/* SECTION 3: INTEGRATED SOLUTIONS FOR MAINTENANCE, ASSETS, FACILITIES */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-bg-secondary/40 dark:bg-[#070d18]/80 text-slate-900 dark:text-white relative overflow-hidden border-b border-border-color">
+            <div className="max-w-7xl mx-auto space-y-16 relative z-10">
 
               {/* Section Header */}
               <Reveal3D direction="up">
                 <div className="text-center max-w-3xl mx-auto space-y-4">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-sans">
-                    <Sparkles className="w-4 h-4 text-[#e30613]" />
-                    <span>Integrated Platform</span>
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="w-12 sm:w-16 h-[1.5px] bg-[#e30613]" />
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[#e30613] text-xs font-bold font-mono uppercase tracking-widest shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 text-[#e30613] animate-pulse" />
+                      <span>Integrated Platform</span>
+                    </div>
+                    <span className="w-12 sm:w-16 h-[1.5px] bg-[#e30613]" />
                   </div>
 
-                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                    Integrated Solutions for Maintenance, Assets, Facilities
+                  <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    Integrated Solutions for <span className="text-[#e30613]">Maintenance, Assets & Facilities</span>
                   </h2>
 
-                  <div className="w-16 h-1 bg-[#e30613] rounded-full mx-auto" />
-
-                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl mx-auto">
                     Empower your organization with connected maintenance, asset intelligence, facility automation, and field service management.
                   </p>
                 </div>
               </Reveal3D>
 
-              {/* Interactive Navigation Navbar / Tabs */}
-              <Reveal3D direction="up" delay={0.1}>
-                <div className="flex items-center justify-center">
-                  <div className="inline-flex p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl max-w-full overflow-x-auto gap-1">
-                    {solutionTabs.map((tab) => {
-                      const IconComp = tab.icon;
-                      const isActive = activeSolutionTab === tab.id;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => setActiveSolutionTab(tab.id)}
-                          className={`flex items-center gap-2.5 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap cursor-pointer ${isActive
-                              ? 'bg-[#e30613] text-white shadow-md scale-[1.02]'
-                              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
-                            }`}
-                        >
-                          <IconComp className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-500 dark:text-slate-400'}`} />
-                          <span>{tab.shortTitle}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </Reveal3D>
+              {/* Zigzag Layout for All Solutions */}
+              <div className="space-y-16 sm:space-y-24">
+                {solutionTabs.map((sol, index) => {
+                  const IconComp = sol.icon;
+                  const isEven = index % 2 === 0;
 
-              {/* Dynamic Tab Content (Card Left + Realistic Image Right) */}
-              {(() => {
-                const currentTab = solutionTabs.find(t => t.id === activeSolutionTab) || solutionTabs[0];
-                const DynamicIcon = currentTab.icon;
-                return (
-                  <motion.div
-                    key={currentTab.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
-                  >
-                    {/* Left Side Card */}
-                    <div className="lg:col-span-6 space-y-6">
-                      <div className="p-8 sm:p-10 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-xl relative overflow-hidden group">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 dark:bg-red-500/10 rounded-full blur-2xl pointer-events-none" />
+                  return (
+                    <Reveal3D key={sol.id} direction="up" delay={0.05 * index}>
+                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                        
+                        {/* Text Content Card */}
+                        <div className={`lg:col-span-6 space-y-6 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                          <div className="p-8 sm:p-10 rounded-3xl bg-white/90 dark:bg-[#0b1528]/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/80 shadow-xl relative overflow-hidden group hover:border-[#e30613]/40 transition-all duration-500">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/5 dark:bg-red-500/10 rounded-full blur-2xl pointer-events-none" />
 
-                        <div className="space-y-6 relative z-10">
-                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-mono">
-                            <span className="w-2 h-2 rounded-full bg-[#e30613] animate-pulse" />
-                            {currentTab.badge}
-                          </div>
+                            <div className="space-y-6 relative z-10">
+                              <div className="flex items-center justify-between flex-wrap gap-2">
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-mono">
+                                  <span className="w-2 h-2 rounded-full bg-[#e30613] animate-pulse" />
+                                  {sol.badge}
+                                </div>
+                                <span className="text-xs font-mono font-bold text-slate-400">
+                                  MODULE 0{index + 1}
+                                </span>
+                              </div>
 
-                          <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display leading-tight">
-                            {currentTab.title}
-                          </h3>
+                              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white font-display leading-tight flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#e30613] flex items-center justify-center shrink-0 border border-red-200/50 dark:border-red-900/40">
+                                  <IconComp className="w-5 h-5" />
+                                </div>
+                                <span>{sol.title}</span>
+                              </h3>
 
-                          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                            {currentTab.description}
-                          </p>
+                              <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans text-justify">
+                                {sol.description}
+                              </p>
 
-                          <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
-                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
-                              Key Capabilities & Benefits
-                            </h4>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                              {currentTab.features.map((feat, idx) => (
-                                <div key={idx} className="flex items-start gap-2.5">
-                                  <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5 border border-emerald-200 dark:border-emerald-800/50">
-                                    ✓
+                              <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80 space-y-3">
+                                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 font-mono">
+                                  Key Capabilities & Benefits
+                                </h4>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                  {sol.features.map((feat, fIdx) => (
+                                    <div key={fIdx} className="flex items-start gap-2.5">
+                                      <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 text-xs font-bold mt-0.5 border border-emerald-200 dark:border-emerald-800/50">
+                                        ✓
+                                      </div>
+                                      <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
+                                        {feat}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              {/* Stat badge & CTA */}
+                              <div className="pt-4 flex flex-wrap items-center justify-between gap-4">
+                                <div className="flex items-center gap-3 p-3 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+                                  <div className="text-xl font-black text-[#e30613] font-mono">
+                                    {sol.stats.val}
                                   </div>
-                                  <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
-                                    {feat}
+                                  <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 leading-tight">
+                                    {sol.stats.label}
+                                  </div>
+                                </div>
+
+                                <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#e30613] hover:bg-[#c20510] text-white text-xs sm:text-sm font-bold shadow-lg hover:shadow-red-500/25 transition-all cursor-pointer">
+                                  <span>Explore Solution</span>
+                                  <ArrowRight className="w-4 h-4" />
+                                </button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Image Column */}
+                        <div className={`lg:col-span-6 relative ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                          <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
+                            <img
+                              src={sol.image}
+                              alt={sol.title}
+                              className="w-full h-[380px] sm:h-[440px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                            />
+
+                            {/* Gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+
+                            {/* Floating badge bottom left */}
+                            <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-white/20 dark:border-slate-700/50 shadow-xl flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-[#e30613] text-white flex items-center justify-center shrink-0 shadow-md">
+                                  <IconComp className="w-5 h-5" />
+                                </div>
+                                <div>
+                                  <h5 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
+                                    {sol.title}
+                                  </h5>
+                                  <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                                    {sol.imageTag}
                                   </span>
                                 </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Stat badge & CTA */}
-                          <div className="pt-4 flex flex-wrap items-center justify-between gap-4">
-                            <div className="flex items-center gap-3 p-3 px-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
-                              <div className="text-xl font-black text-[#e30613] font-mono">
-                                {currentTab.stats.val}
                               </div>
-                              <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 leading-tight">
-                                {currentTab.stats.label}
-                              </div>
-                            </div>
-
-                            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#e30613] hover:bg-[#c20510] text-white text-xs sm:text-sm font-bold shadow-lg hover:shadow-red-500/25 transition-all cursor-pointer">
-                              <span>Explore Solution</span>
-                              <ArrowRight className="w-4 h-4" />
-                            </button>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Right Side Realistic Image */}
-                    <div className="lg:col-span-6 relative">
-                      <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 group">
-                        <img
-                          src={currentTab.image}
-                          alt={currentTab.title}
-                          className="w-full h-[400px] sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                        />
-
-                        {/* Gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-
-                        {/* Floating badge bottom left */}
-                        <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-white/20 dark:border-slate-700/50 shadow-xl flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-[#e30613] text-white flex items-center justify-center shrink-0 shadow-md">
-                              <DynamicIcon className="w-5 h-5" />
-                            </div>
-                            <div>
-                              <h5 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">
-                                {currentTab.title}
-                              </h5>
-                              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-mono">
-                                {currentTab.imageTag}
+                              <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50 text-[10px] font-bold font-mono">
+                                Active Module
                               </span>
                             </div>
+
                           </div>
-                          <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/50 text-[10px] font-bold font-mono">
-                            Active Module
-                          </span>
                         </div>
 
                       </div>
-                    </div>
-                  </motion.div>
-                );
-              })()}
+                    </Reveal3D>
+                  );
+                })}
+              </div>
 
             </div>
+          </section>
 
-            {/* SECTION: FREQUENTLY ASKED QUESTIONS */}
-            <div className="max-w-4xl mx-auto mt-20 pt-16 border-t border-slate-200 dark:border-slate-800 space-y-10 relative z-10">
+          {/* SECTION 4: FREQUENTLY ASKED QUESTIONS */}
+          <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#060c17] text-slate-900 dark:text-white relative overflow-hidden">
+            <div className="max-w-4xl mx-auto space-y-12 relative z-10">
               <Reveal3D direction="up">
                 <div className="text-center space-y-4">
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100/90 dark:bg-red-950/40 border border-red-200/60 dark:border-red-900/40 text-[#e30613] text-xs font-bold font-mono">
-                    <HelpCircle className="w-4 h-4 text-[#e30613]" />
-                    <span>Frequently Asked Questions</span>
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="w-12 sm:w-16 h-[1.5px] bg-[#e30613]" />
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[#e30613] text-xs font-bold font-mono uppercase tracking-widest shadow-sm">
+                      <HelpCircle className="w-4 h-4 text-[#e30613]" />
+                      <span>Frequently Asked Questions</span>
+                    </div>
+                    <span className="w-12 sm:w-16 h-[1.5px] bg-[#e30613]" />
                   </div>
 
-                  <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                    Frequently Asked Questions
+                  <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white font-display tracking-tight leading-tight">
+                    Frequently Asked <span className="text-[#e30613]">Questions</span>
                   </h2>
-
-                  <div className="w-16 h-1 bg-[#e30613] rounded-full mx-auto" />
 
                   <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl mx-auto">
                     Get answers to common questions about Aptiv8 CMMS features, cloud architecture, mobile apps, integrations, and deployment.
@@ -706,7 +820,7 @@ export default function A8CmmsPage() {
                   const isOpen = openFaqIndex === idx;
                   return (
                     <Reveal3D key={idx} direction="up" delay={0.03 * idx}>
-                      <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
+                      <div className="rounded-2xl bg-white/90 dark:bg-[#0b1528]/90 backdrop-blur-xl border border-slate-200/90 dark:border-slate-800/80 hover:border-[#e30613]/50 transition-all duration-300 overflow-hidden shadow-sm hover:shadow-md">
                         <button
                           onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
                           className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer group"
@@ -733,7 +847,7 @@ export default function A8CmmsPage() {
                               transition={{ duration: 0.3 }}
                               className="overflow-hidden"
                             >
-                              <div className="px-5 pb-6 sm:px-6 sm:pb-6 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans border-t border-slate-100 dark:border-slate-800/60 pt-4 ml-10">
+                              <div className="px-5 pb-6 sm:px-6 sm:pb-6 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-sans border-t border-slate-100 dark:border-slate-800/60 pt-4 ml-10 text-justify">
                                 {item.a}
                               </div>
                             </motion.div>
@@ -746,16 +860,21 @@ export default function A8CmmsPage() {
               </div>
             </div>
 
-            {/* Pagination Controls at Bottom of Page 2 */}
-            <div className="pt-12 flex justify-center">
+            {/* Pagination Controls at Bottom of Page 3 */}
+            <div className="pt-12 flex justify-center items-center gap-4">
+              <button
+                onClick={() => setActivePage(2)}
+                className="px-6 py-3 rounded-2xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 border border-slate-200 dark:border-slate-700 transition-all shadow-md cursor-pointer"
+              >
+                <span>← Page 2 — Features & Capabilities</span>
+              </button>
               <button
                 onClick={() => setActivePage(1)}
                 className="px-6 py-3 rounded-2xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold text-xs flex items-center gap-2 border border-slate-200 dark:border-slate-700 transition-all shadow-md cursor-pointer"
               >
-                <span>← Return to Page 1 — Main Overview</span>
+                <span>Page 1 — Main Overview</span>
               </button>
             </div>
-
           </section>
         </>
       ) : (
@@ -792,7 +911,7 @@ export default function A8CmmsPage() {
                   </Reveal3D>
 
                   <Reveal3D direction="up" delay={0.2}>
-                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-medium">
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-medium text-justify">
                       Aptiv8 CMMS is the leading all-in-one preventive maintenance management, helping organizations achieve greater asset uptime, reduce downtime, and extend equipment life. With a focus on intuitive design, real-time tracking, and powerful analytics, Aptiv8 empowers businesses in Singapore and beyond to maintain operational excellence across every facility.
                     </p>
                   </Reveal3D>
@@ -985,7 +1104,7 @@ export default function A8CmmsPage() {
 
                   <div className="w-12 h-1 bg-[#e30613] rounded-full mx-auto" />
 
-                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans ">
                     From work order management to asset tracking, <strong className="text-slate-900 dark:text-white font-bold">Aptiv8 CMMS</strong> brings <strong className="text-slate-900 dark:text-white font-bold">everything together</strong> — helping you work smarter, reduce downtime and achieve operational excellence.
                   </p>
                 </div>
@@ -1132,7 +1251,7 @@ export default function A8CmmsPage() {
 
                     <div className="w-16 h-1 bg-[#e30613] rounded-full" />
 
-                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans text-justify">
                       Technicians open work orders, scan QR codes, log hours, capture photos, and update task status — all from their Android or iOS device. GPS tracking shows managers where field teams are in real time. Updates sync instantly to the central system.
                     </p>
 
@@ -1330,7 +1449,7 @@ export default function A8CmmsPage() {
 
                   {/* Paragraph */}
                   <Reveal3D direction="up" delay={0.15}>
-                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
+                    <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans text-justify">
                       Experience unparalleled operational efficiency with Aptiv8 Mobile CMMS. Our platform is designed for on-the-go access and ensures real-time updates, swift task management, and better communication. Whether it's the field or the office, Aptiv8 empowers teams to manage maintenance tasks seamlessly, enhancing optimal performance anytime, anywhere. Embrace the future of maintenance with Aptiv8.
                     </p>
                   </Reveal3D>
