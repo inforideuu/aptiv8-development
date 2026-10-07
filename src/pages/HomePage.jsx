@@ -952,22 +952,6 @@ transition-all duration-500"> */}
                               );
                             })}
                           </ul>
-                          {stage.id === 'planning-design' && (
-                            <div className="mt-4 p-2.5 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-between text-xs text-red-500 font-medium">
-                              <span className="flex items-center gap-2">
-                                <Sparkles className="w-4 h-4 animate-spin text-red-500 shrink-0" />
-                                💡 <strong>Interactive Hint:</strong> Click <u>"Fire Safety (FSSA)"</u> or <u>"Structural Engineering (SESA)"</u> to view detailed AI breakdowns on the right panel.
-                              </span>
-                              {selectedProduct && (
-                                <button 
-                                  onClick={() => setSelectedProduct(null)}
-                                  className="text-[10px] underline hover:text-red-400 shrink-0 ml-2 font-mono font-bold"
-                                >
-                                  Reset View
-                                </button>
-                              )}
-                            </div>
-                          )}
                         </div>
                       </div>
                     </div>

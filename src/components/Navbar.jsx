@@ -35,7 +35,7 @@ export default function Navbar({ theme, toggleTheme }) {
       href: '/a8-cmms',
       subPages: [
         { 
-          title: 'A8 CMMS', 
+          title: 'Aptiv8 CMMS', 
           href: '/a8-cmms?page=1', 
           desc: 'Computerized Maintenance Management System',
           pages: [
@@ -44,7 +44,7 @@ export default function Navbar({ theme, toggleTheme }) {
             { title: 'Page 3 — Integrated Solutions & FAQ', href: '/a8-cmms?page=3', desc: 'Integrated Solutions & Enterprise FAQ' },
           ]
         },
-        { title: 'A8 IOT', href: '/a8-iot', desc: 'IoT & Condition-Based Monitoring Platform' }
+        { title: 'Aptiv8 IOT', href: '/a8-iot', desc: 'IoT & Condition-Based Monitoring Platform' }
       ]
     },
     { name: 'Co-Developed Projects', href: '/projects' },
@@ -252,7 +252,7 @@ export default function Navbar({ theme, toggleTheme }) {
                                         {hasPages && cmmsOpen && (
                                           <div className="p-2 pt-1 border-t border-border-color/50 dark:border-slate-700/40 bg-white/50 dark:bg-slate-900/60 space-y-1.5">
                                             <span className="text-[9px] uppercase font-mono font-bold text-slate-400 dark:text-slate-500 px-1">
-                                              A8 CMMS Sections (3 Pages)
+                                              Aptiv8 CMMS Sections (3 Pages)
                                             </span>
                                             {sub.pages.map((p, pIdx) => (
                                               <Link
