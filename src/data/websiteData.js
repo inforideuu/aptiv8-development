@@ -341,8 +341,8 @@ export const productsList = [
     id: 'dragonfly-controller',
     title: 'Dragonfly — Robotic Mosquito Controller',
     category: 'Operations & Maintenance',
-    status: 'Marketed by Uniqix',
-    description: 'A robotic solution for vector control. Product demonstration videos and brochure are already available. Marketed by Uniqix, our sister company.',
+    status: 'Marketed by Aptiv8',
+    description: 'A robotic solution for vector control. Product demonstration videos and brochure are already available. Marketed by Aptiv8, our sister company.',
     image: 'dragon.png'
   },
   {

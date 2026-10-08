@@ -23,7 +23,6 @@ export default function DragonflyRobotPage() {
   const [selectedImg, setSelectedImg] = useState(null);
 
   const galleryImages = [
-    { src: '/dragonfly_concept.jpg', title: 'Uniqix Dragonfly Concept Design', tag: 'Autonomous Unit' },
     { src: '/fieldunit.png', title: 'Field Deployment Unit', tag: 'Site Operation' },
     { src: '/fieldunit1.png', title: 'Field Unit Monitoring Setup', tag: 'Live Patrol' },
     { src: '/school.png', title: 'Campus & Institutional Deployment', tag: 'Public Space' },
@@ -119,14 +118,14 @@ export default function DragonflyRobotPage() {
               className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6 drop-shadow-lg"
               style={{ fontFamily: "'Times New Roman', Times, serif" }}
             >
-              Leasing of <span className="text-[#ef4444]">Uniqix Dragonfly</span> for Mosquito Control
+              Leasing of <span className="text-[#ef4444]">Aptiv8 Dragonfly</span> for Mosquito Control
             </h1>
           </Reveal3D>
 
           {/* Centered description text */}
           <Reveal3D direction="up" delay={0.15}>
             <p className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl mx-auto leading-relaxed mb-10 text-center font-sans drop-shadow">
-              Uniqix Dragonfly is an autonomous robot designed to tackle Aedes mosquitoes. It patrols spaces independently, attracts mosquitoes using UV light and smart lures, and traps them without chemicals or fogging.
+              Aptiv8 Dragonfly is an autonomous robot designed to tackle Aedes mosquitoes. It patrols spaces independently, attracts mosquitoes using UV light and smart lures, and traps them without chemicals or fogging.
             </p>
           </Reveal3D>
 
@@ -260,7 +259,7 @@ export default function DragonflyRobotPage() {
                 Why Dragonfly Instead of <span className="text-[#e30613]">Traditional Fogging?</span>
               </h2>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl mx-auto">
-                Compare traditional chemical fogging against Uniqix Dragonfly continuous autonomous trapping.
+                Compare traditional chemical fogging against Aptiv8 Dragonfly continuous autonomous trapping.
               </p>
             </div>
           </Reveal3D>
@@ -301,7 +300,7 @@ export default function DragonflyRobotPage() {
               </div>
             </Reveal3D>
 
-            {/* Uniqix Dragonfly Card */}
+            {/* Aptiv8 Dragonfly Card */}
             <Reveal3D direction="left">
               <div className="p-8 sm:p-10 rounded-3xl bg-white/95 dark:bg-[#0b1528]/95 backdrop-blur-xl border-2 border-[#e30613] shadow-[0_20px_50px_rgba(227,6,19,0.18)] dark:shadow-[0_20px_50px_rgba(255,59,71,0.25)] space-y-7 relative overflow-hidden flex flex-col justify-between h-full">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-red-500/10 rounded-bl-full pointer-events-none" />
@@ -309,7 +308,7 @@ export default function DragonflyRobotPage() {
                 <div className="space-y-6 relative z-10">
                   <div className="flex items-center justify-between">
                     <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-950 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400 text-xs font-bold font-mono">
-                      <span>✨ Uniqix Dragonfly Robot</span>
+                      <span>✨ Aptiv8 Dragonfly Robot</span>
                     </div>
                     <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Recommended</span>
                   </div>
@@ -353,7 +352,7 @@ export default function DragonflyRobotPage() {
               </div>
 
               <p className="text-xs sm:text-sm leading-relaxed font-sans text-red-50 text-justify max-w-4xl">
-                Breeding Aedes mosquitoes carries severe financial penalties under Singapore NEA guidelines. First offences can incur fines up to <strong>S$5,000</strong>, while subsequent offences escalate from <strong>S$10,000 to S$50,000</strong> (depending on severity and site type) along with potential Stop Work Orders (SWO). Leasing Uniqix Dragonfly ensures continuous vector suppression to protect your site.
+                Breeding Aedes mosquitoes carries severe financial penalties under Singapore NEA guidelines. First offences can incur fines up to <strong>S$5,000</strong>, while subsequent offences escalate from <strong>S$10,000 to S$50,000</strong> (depending on severity and site type) along with potential Stop Work Orders (SWO). Leasing Aptiv8 Dragonfly ensures continuous vector suppression to protect your site.
               </p>
             </div>
           </Reveal3D>
@@ -446,7 +445,7 @@ export default function DragonflyRobotPage() {
                 Ideal Deployment <span className="text-[#e30613]">Environments</span>
               </h2>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl mx-auto">
-                Uniqix Dragonfly is engineered for high-density, vector-vulnerable commercial, industrial, and institutional premises.
+                Aptiv8 Dragonfly is engineered for high-density, vector-vulnerable commercial, industrial, and institutional premises.
               </p>
             </div>
           </Reveal3D>
@@ -497,7 +496,7 @@ export default function DragonflyRobotPage() {
                 Available for <span className="text-[#e30613]">Monthly Rental</span>
               </h2>
               <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-sans leading-relaxed">
-                Deploy Uniqix Dragonfly at your facility on flexible monthly leasing terms. Zero heavy upfront investment, hassle-free maintenance, and full technical support included.
+                Deploy Aptiv8 Dragonfly at your facility on flexible monthly leasing terms. Zero heavy upfront investment, hassle-free maintenance, and full technical support included.
               </p>
             </div>
 
