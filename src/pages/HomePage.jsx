@@ -992,7 +992,7 @@ transition-all duration-500"> */}
                               {/* 2 Column Comparison Grid */}
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-auto">
                                 {/* Left Box: The bottleneck today */}
-                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-red-500/20 shadow-inner flex flex-col justify-between space-y-4">
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-red-500/20 shadow-inner flex flex-col justify-start space-y-3">
                                   <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
                                     The bottleneck today
                                   </span>
@@ -1013,7 +1013,7 @@ transition-all duration-500"> */}
                                 </div>
 
                                 {/* Right Box: What SESA can do */}
-                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-emerald-500/20 dark:border-red-500/30 shadow-inner flex flex-col justify-between space-y-4">
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-emerald-500/20 dark:border-red-500/30 shadow-inner flex flex-col justify-start space-y-3">
                                   <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
                                     What SESA can do
                                   </span>
@@ -1066,7 +1066,7 @@ transition-all duration-500"> */}
                               {/* 2 Column Comparison Grid */}
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-auto">
                                 {/* Left Box: The bottleneck today */}
-                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-red-500/20 shadow-inner flex flex-col justify-between space-y-4">
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-red-500/20 shadow-inner flex flex-col justify-start space-y-3">
                                   <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
                                     The bottleneck today
                                   </span>
@@ -1087,7 +1087,7 @@ transition-all duration-500"> */}
                                 </div>
 
                                 {/* Right Box: What FSSA does */}
-                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-emerald-500/20 dark:border-red-500/30 shadow-inner flex flex-col justify-between space-y-4">
+                                <div className="p-5 rounded-2xl bg-bg-primary/80 dark:bg-slate-900/90 border border-emerald-500/20 dark:border-red-500/30 shadow-inner flex flex-col justify-start space-y-3">
                                   <span className="text-xs font-bold text-red-500 uppercase font-mono tracking-wider block border-b border-red-500/20 pb-2">
                                     What FSSA does
                                   </span>
