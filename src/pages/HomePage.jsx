@@ -664,8 +664,8 @@ transition-all duration-500"> */}
                     title: 'Dragonfly Robot',
                     subtitle: '',
                     description: 'Autonomous mosquito control for healthier and safer environments.',
-                    href: 'https://uniqix-website.zenelaitproject.workers.dev/#products',
-                    isExternal: true,
+                    href: '/dragonfly-robot',
+                    isExternal: false,
                     icon: (
                       <svg className="w-6 h-6 text-[#e30613] transition-transform duration-500 group-hover:scale-110 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
