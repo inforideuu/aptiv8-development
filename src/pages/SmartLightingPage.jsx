@@ -181,7 +181,7 @@ export default function SmartLightingPage() {
                     <img 
                       src="./slide1.png" 
                       alt="LMZ2 Sensor Diagram" 
-                      className="w-full h-72 object-cover hover:scale-105 transition-transform duration-500"
+                      className="w-full h-70 object-cover hover:scale-105 transition-transform duration-500"
                     />
                   </div>
                 </div>

@@ -43,8 +43,8 @@ export default function A8CmmsPage() {
       a: "CMMS (Computerized Maintenance Management System) and ERP (Enterprise Resource Planning) are distinct systems. However, CMMS can be a module within an ERP or integrated. While ERP manages core business processes, CMMS focuses on maintenance management tasks. Integrating CMMS with ERP allows organizations to streamline operations, share data seamlessly, and optimize asset and resource management across departments."
     },
     {
-      q: "Is Aptiv8 CMMS software cloud based or do I need to install it on premises?",
-      a: "Aptiv8 CMMS software is cloud-based, allowing users to access it from anywhere with an internet connection. This eliminates the need for on-premises installation and provides flexibility, scalability, and real-time data access. With cloud-based solutions like Aptiv8, organizations can reduce IT overhead, ensure automatic updates, and benefit from enhanced security features."
+      q: "Is A8 CMMS software cloud based or do I need to install it on premises?",
+      a: "A8 CMMS software is cloud-based, allowing users to access it from anywhere with an internet connection. This eliminates the need for on-premises installation and provides flexibility, scalability, and real-time data access. With cloud-based solutions like A8, organizations can reduce IT overhead, ensure automatic updates, and benefit from enhanced security features."
     },
     {
       q: "How does the mobile CMMS work and what features does it offer?",
@@ -59,16 +59,16 @@ export default function A8CmmsPage() {
       a: "Our CMMS prioritizes data security. We employ advanced encryption techniques to safeguard your data during transmission and storage. Regular security audits, firewall protections, and secure hosting environments further enhance data safety. Additionally, we adhere to global data protection regulations, ensuring your information remains confidential and secure at all times. Your data's integrity and privacy are our top concerns."
     },
     {
-      q: "How does Aptiv8 CMMS software assist in preventive maintenance scheduling?",
-      a: "Aptiv8 CMMS software streamlines preventive maintenance by allowing users to set routine schedules for equipment checks and services. It sends timely alerts and reminders, ensuring no task is missed. By logging equipment history and performance data, the software aids in predicting potential issues, reducing downtime, and prolonging equipment life. This systematic approach ensures optimal equipment performance and reduces costly breakdowns."
+      q: "How does A8 CMMS software assist in preventive maintenance scheduling?",
+      a: "A8 CMMS software streamlines preventive maintenance by allowing users to set routine schedules for equipment checks and services. It sends timely alerts and reminders, ensuring no task is missed. By logging equipment history and performance data, the software aids in predicting potential issues, reducing downtime, and prolonging equipment life. This systematic approach ensures optimal equipment performance and reduces costly breakdowns."
     },
     {
       q: "Can I track and manage inventory and spare parts using the CMMS?",
-      a: "Yes, with Aptiv8 CMMS, you can efficiently track and manage inventory and spare parts. The software provides real-time visibility into stock levels, helping prevent shortages or overstocking. It logs usage patterns, facilitates reorder triggers, and maintains a detailed record of parts used in maintenance tasks. This centralized system ensures the timely availability of essential parts, optimizing maintenance operations."
+      a: "Yes, with A8 CMMS, you can efficiently track and manage inventory and spare parts. The software provides real-time visibility into stock levels, helping prevent shortages or overstocking. It logs usage patterns, facilitates reorder triggers, and maintains a detailed record of parts used in maintenance tasks. This centralized system ensures the timely availability of essential parts, optimizing maintenance operations."
     },
     {
       q: "How often do you release updates and how are they implemented?",
-      a: "Aptiv8 regularly releases updates to enhance functionality and address user feedback. Updates are rolled out periodically, ensuring the software remains up-to-date with industry standards. Implementation is seamless, with most updates being cloud-based, requiring no manual intervention. Users are notified in advance, and comprehensive support is provided to ensure a smooth transition and minimal disruption to operations."
+      a: "A8 regularly releases updates to enhance functionality and address user feedback. Updates are rolled out periodically, ensuring the software remains up-to-date with industry standards. Implementation is seamless, with most updates being cloud-based, requiring no manual intervention. Users are notified in advance, and comprehensive support is provided to ensure a smooth transition and minimal disruption to operations."
     },
     {
       q: "How does the CMMS software help in reducing equipment downtime?",
@@ -83,7 +83,7 @@ export default function A8CmmsPage() {
       shortTitle: 'Maintenance Management',
       icon: Wrench,
       badge: 'Proactive Maintenance',
-      description: 'Aptiv8 CMMS elevates maintenance management to new heights, streamlining tasks and ensuring equipment longevity. Our platform offers predictive maintenance, real-time monitoring, and efficient scheduling. Reduce downtimes, enhance productivity, and ensure safety with our advanced tools. With Aptiv8, maintenance becomes proactive, not reactive, driving operational excellence and maximizing ROI.',
+      description: 'A8 CMMS elevates maintenance management to new heights, streamlining tasks and ensuring equipment longevity. Our platform offers predictive maintenance, real-time monitoring, and efficient scheduling. Reduce downtimes, enhance productivity, and ensure safety with our advanced tools. With A8, maintenance becomes proactive, not reactive, driving operational excellence and maximizing ROI.',
       image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80',
       imageTag: 'Predictive & Real-Time Monitoring',
       features: [
@@ -100,7 +100,7 @@ export default function A8CmmsPage() {
       shortTitle: 'Asset Management',
       icon: Layers,
       badge: 'Lifecycle Optimization',
-      description: "Aptiv8 CMMS revolutionizes asset management by offering comprehensive tracking and monitoring. Our platform ensures assets' longevity, optimizes their lifecycle, and reduces operational costs. With real-time data analytics, make informed decisions and prevent asset failures. Experience a holistic approach where assets are managed and optimized for peak performance. Trust Aptiv8 for a seamless asset management journey.",
+      description: "A8 CMMS revolutionizes asset management by offering comprehensive tracking and monitoring. Our platform ensures assets' longevity, optimizes their lifecycle, and reduces operational costs. With real-time data analytics, make informed decisions and prevent asset failures. Experience a holistic approach where assets are managed and optimized for peak performance. Trust A8 for a seamless asset management journey.",
       image: 'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&w=1200&q=80',
       imageTag: 'Complete Asset Lifecycle Tracking',
       features: [
@@ -117,7 +117,7 @@ export default function A8CmmsPage() {
       shortTitle: 'Facility Management',
       icon: Monitor,
       badge: 'Smart Building Operations',
-      description: "Aptiv8 CMMS revolutionizes facility management, offering a comprehensive suite to optimize building operations. Our platform provides real-time insights and automated workflows, from space utilization to energy conservation. Ensure safety, enhance comfort, and reduce operational costs with our state-of-the-art solutions. With Aptiv8, facilities are not just managed; they're transformed into efficient, sustainable, and technologically advanced spaces.",
+      description: "A8 CMMS revolutionizes facility management, offering a comprehensive suite to optimize building operations. Our platform provides real-time insights and automated workflows, from space utilization to energy conservation. Ensure safety, enhance comfort, and reduce operational costs with our state-of-the-art solutions. With A8, facilities are not just managed; they're transformed into efficient, sustainable, and technologically advanced spaces.",
       image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80',
       imageTag: 'Automated Facility Operations',
       features: [
@@ -134,7 +134,7 @@ export default function A8CmmsPage() {
       shortTitle: 'Field Service Management',
       icon: Navigation,
       badge: 'On-Demand Service Excellence',
-      description: 'Aptiv8 CMMS streamlines field service operations, ensuring timely and efficient service delivery. Our platform offers real-time tracking, automated scheduling, and detailed reporting. Technicians receive instant updates, reducing response times and enhancing customer satisfaction. Integrated with advanced analytics, Aptiv8 optimizes routes, manages resources, and ensures top-notch service quality. Elevate your field services with precision and reliability through Aptiv8.',
+      description: 'A8 CMMS streamlines field service operations, ensuring timely and efficient service delivery. Our platform offers real-time tracking, automated scheduling, and detailed reporting. Technicians receive instant updates, reducing response times and enhancing customer satisfaction. Integrated with advanced analytics, A8 optimizes routes, manages resources, and ensures top-notch service quality. Elevate your field services with precision and reliability through A8.',
       image: 'https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1200&q=80',
       imageTag: 'Real-Time Field Dispatch & Analytics',
       features: [
@@ -186,7 +186,7 @@ export default function A8CmmsPage() {
             className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6"
             style={{ fontFamily: "'Times New Roman', Times, serif" }}
           >
-            Aptiv8 <span className="text-[#e30613]">CMMS</span>
+            A8 <span className="text-[#e30613]">CMMS</span>
           </motion.h1>
 
           {/* Centered description text */}
@@ -810,7 +810,7 @@ export default function A8CmmsPage() {
                   </h2>
 
                   <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans max-w-2xl mx-auto">
-                    Get answers to common questions about Aptiv8 CMMS features, cloud architecture, mobile apps, integrations, and deployment.
+                    Get answers to common questions about A8 CMMS features, cloud architecture, mobile apps, integrations, and deployment.
                   </p>
                 </div>
               </Reveal3D>
@@ -906,13 +906,13 @@ export default function A8CmmsPage() {
 
                   <Reveal3D direction="up" delay={0.15}>
                     <p className="text-xs font-mono font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
-                      ADVANCED MAINTENANCE EXCELLENCE WITH Aptiv8
+                      ADVANCED MAINTENANCE EXCELLENCE WITH A8
                     </p>
                   </Reveal3D>
 
                   <Reveal3D direction="up" delay={0.2}>
                     <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans font-medium text-justify">
-                      Aptiv8 CMMS is the leading all-in-one preventive maintenance management, helping organizations achieve greater asset uptime, reduce downtime, and extend equipment life. With a focus on intuitive design, real-time tracking, and powerful analytics, Aptiv8 empowers businesses in Singapore and beyond to maintain operational excellence across every facility.
+                      A8 CMMS is the leading all-in-one preventive maintenance management, helping organizations achieve greater asset uptime, reduce downtime, and extend equipment life. With a focus on intuitive design, real-time tracking, and powerful analytics, A8 empowers businesses in Singapore and beyond to maintain operational excellence across every facility.
                     </p>
                   </Reveal3D>
 
@@ -1001,7 +1001,7 @@ export default function A8CmmsPage() {
                         <div className="flex items-center gap-2">
                           <span className="px-3 py-1 rounded-full bg-[#e30613] text-white text-xs font-bold font-mono flex items-center gap-1.5">
                             <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                            Aptiv8
+                            A8
                           </span>
                           <span className="px-3 py-1 rounded-full bg-red-100 text-[#e30613] text-[11px] font-bold">
                             Work Orders
@@ -1086,7 +1086,7 @@ export default function A8CmmsPage() {
 
 
 
-          {/* SECTION 2: HOW DOES Aptiv8 CMMS SOFTWARE SIMPLIFY YOUR MAINTENANCE OPERATIONS? */}
+          {/* SECTION 2: HOW DOES A8 CMMS SOFTWARE SIMPLIFY YOUR MAINTENANCE OPERATIONS? */}
           <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white dark:bg-bg-primary border-b border-border-color relative">
             <div className="max-w-7xl mx-auto space-y-12">
 
@@ -1099,13 +1099,13 @@ export default function A8CmmsPage() {
                   </div>
 
                   <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                    How Does Aptiv8 CMMS Software Simplify Your Maintenance Operations?
+                    How Does A8 CMMS Software Simplify Your Maintenance Operations?
                   </h2>
 
                   <div className="w-12 h-1 bg-[#e30613] rounded-full mx-auto" />
 
                   <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans ">
-                    From work order management to asset tracking, <strong className="text-slate-900 dark:text-white font-bold">Aptiv8 CMMS</strong> brings <strong className="text-slate-900 dark:text-white font-bold">everything together</strong> — helping you work smarter, reduce downtime and achieve operational excellence.
+                    From work order management to asset tracking, <strong className="text-slate-900 dark:text-white font-bold">A8 CMMS</strong> brings <strong className="text-slate-900 dark:text-white font-bold">everything together</strong> — helping you work smarter, reduce downtime and achieve operational excellence.
                   </p>
                 </div>
               </Reveal3D>
@@ -1450,7 +1450,7 @@ export default function A8CmmsPage() {
                   {/* Paragraph */}
                   <Reveal3D direction="up" delay={0.15}>
                     <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans text-justify">
-                      Experience unparalleled operational efficiency with Aptiv8 Mobile CMMS. Our platform is designed for on-the-go access and ensures real-time updates, swift task management, and better communication. Whether it's the field or the office, Aptiv8 empowers teams to manage maintenance tasks seamlessly, enhancing optimal performance anytime, anywhere. Embrace the future of maintenance with Aptiv8.
+                      Experience unparalleled operational efficiency with A8 Mobile CMMS. Our platform is designed for on-the-go access and ensures real-time updates, swift task management, and better communication. Whether it's the field or the office, A8 empowers teams to manage maintenance tasks seamlessly, enhancing optimal performance anytime, anywhere. Embrace the future of maintenance with A8.
                     </p>
                   </Reveal3D>
 
@@ -1658,7 +1658,7 @@ export default function A8CmmsPage() {
             </div>
           </section>
 
-          {/* SECTION 5: BENEFITS OF Aptiv8 MOBILE CMMS SOFTWARE */}
+          {/* SECTION 5: BENEFITS OF A8 MOBILE CMMS SOFTWARE */}
           <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50/80 via-purple-50/20 to-slate-50/80 dark:from-bg-secondary dark:via-bg-primary dark:to-bg-secondary border-b border-border-color relative overflow-hidden">
             {/* Background Image Overlay with Gradient Mask */}
             <div
@@ -1678,10 +1678,10 @@ export default function A8CmmsPage() {
                     <span>Strategic Advantage</span>
                   </div>
                   <h2 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white font-display tracking-tight leading-tight">
-                    Benefits of Aptiv8 Mobile CMMS <span className="text-purple-600 dark:text-purple-400 block sm:inline">Software</span>
+                    Benefits of A8 Mobile CMMS <span className="text-purple-600 dark:text-purple-400 block sm:inline">Software</span>
                   </h2>
                   <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed font-sans">
-                    Discover how Aptiv8 Mobile CMMS helps you work smarter, reduce downtime and get more value from your maintenance operations.
+                    Discover how A8 Mobile CMMS helps you work smarter, reduce downtime and get more value from your maintenance operations.
                   </p>
                 </div>
               </Reveal3D>
@@ -1734,7 +1734,7 @@ export default function A8CmmsPage() {
                         Data-Driven Decision Making
                       </h3>
                       <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                        Harness the power of data. Aptiv8 Mobile CMMS App provides real-time analytics and insights, allowing you to make informed decisions. Data is your strategic ally, from understanding asset performance to predicting potential downtimes.
+                        Harness the power of data. A8 Mobile CMMS App provides real-time analytics and insights, allowing you to make informed decisions. Data is your strategic ally, from understanding asset performance to predicting potential downtimes.
                       </p>
                     </div>
                   </div>
@@ -1773,7 +1773,7 @@ export default function A8CmmsPage() {
                         Streamlined Workflows
                       </h3>
                       <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
-                        Simplify complex maintenance procedures. Aptiv8 Mobile CMMS streamlines work order approvals, task assignments, and checklist completion, ensuring your maintenance operations run smoothly without bottlenecks.
+                        Simplify complex maintenance procedures. A8 Mobile CMMS streamlines work order approvals, task assignments, and checklist completion, ensuring your maintenance operations run smoothly without bottlenecks.
                       </p>
                     </div>
                   </div>
@@ -2412,7 +2412,7 @@ export default function A8CmmsPage() {
 
                 {/* Paragraph */}
                 <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed font-sans">
-                  Experience the power of Aptiv8 CMMS with integrated AI Fault Reporting, Voice AI Dispatch, Knowledge Base, and Automated Checklists.
+                  Experience the power of A8 CMMS with integrated AI Fault Reporting, Voice AI Dispatch, Knowledge Base, and Automated Checklists.
                 </p>
 
                 {/* Interactive CTA Buttons */}
