@@ -35,7 +35,7 @@ export default function Navbar({ theme, toggleTheme }) {
       href: '/a8-cmms',
       subPages: [
         { 
-          title: 'Aptiv8 CMMS', 
+          title: 'A8 CMMS', 
           href: '/a8-cmms?page=1', 
           desc: 'Computerized Maintenance Management System',
           pages: [
@@ -252,7 +252,7 @@ export default function Navbar({ theme, toggleTheme }) {
                                         {hasPages && cmmsOpen && (
                                           <div className="p-2 pt-1 border-t border-border-color/50 dark:border-slate-700/40 bg-white/50 dark:bg-slate-900/60 space-y-1.5">
                                             <span className="text-[9px] uppercase font-mono font-bold text-slate-400 dark:text-slate-500 px-1">
-                                              Aptiv8 CMMS Sections (3 Pages)
+                                              A8 CMMS Sections (3 Pages)
                                             </span>
                                             {sub.pages.map((p, pIdx) => (
                                               <Link
